@@ -51,6 +51,7 @@ namespace ChessB
                 tile.Source = tileImage;
                 tile.Width = squareSize;
                 tile.Height = squareSize;
+                Canvas.SetZIndex(tile, 1);
 
                 Canvas.SetTop(tile, yLocation * squareSize);
                 Canvas.SetLeft(tile, xLocation * squareSize);
@@ -96,7 +97,7 @@ namespace ChessB
                 validMoveImage.Source = validMoveImageSource;
                 validMoveImage.Width = squareSize / 2;
                 validMoveImage.Height = squareSize / 2;
-
+                Canvas.SetZIndex(validMoveImage, 1000);
                 Canvas.SetTop(validMoveImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize) + squareSize / 4);
                 Canvas.SetLeft(validMoveImage, xLocation * squareSize + squareSize / 4);
                 canvas.Children.Add(validMoveImage);
