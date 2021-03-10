@@ -1,0 +1,2 @@
+# ChessB
+ Chess AI application

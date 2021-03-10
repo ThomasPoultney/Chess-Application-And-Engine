@@ -1,0 +1,4 @@
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.csprojAssemblyReference.cache
+C:\Users\tompo\source\repos\ChessB\obj\Release\App.g.cs
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB_MarkupCompile.cache
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB_MarkupCompile.lref
