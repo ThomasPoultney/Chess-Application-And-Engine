@@ -59,9 +59,9 @@ namespace ChessB
             return this.imagePath;
         }
 
-        public virtual List<int> generateValidMoves(Board board)
+        public virtual List<Move> generateValidMoves(Board board)
         {
-            return new List<int>();
+            return new List<Move>();
         }
 
         public virtual void setCanMoveTwice(bool canMoveTwice)
@@ -69,9 +69,9 @@ namespace ChessB
 
         }
 
-        public virtual List<int> generateAttackingMoves(Board board)
+        public virtual List<Move> generateAttackingMoves(Board board)
         {
-            return new List<int>();
+            return new List<Move>();
         }
 
         public void setLocation(int location)

@@ -45,9 +45,6 @@ namespace ChessB
             viewBox.Stretch = Stretch.Fill;
             viewBox.StretchDirection = StretchDirection.Both;
 
-
-
-
             Ui.squareSize = (int)(canvas.Width / board.getBoardSize());
 
             canvas.HorizontalAlignment = HorizontalAlignment.Stretch;

@@ -24,10 +24,10 @@ namespace ChessB
             }
         }
 
-        public override List<int> generateValidMoves(Board board)
+        public override List<Move> generateValidMoves(Board board)
         {
             int currentLocation = this.location;
-            List<int> validMoves = new List<int>();
+            List<Move> validMoves = new List<Move>();
             int nextLocation = currentLocation;
 
 
@@ -35,18 +35,21 @@ namespace ChessB
             //while not on left file or top rank
             while (nextLocation % board.getBoardSize() != 0 & nextLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
             {
-                
+
                 if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)] == null)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     nextLocation += (board.getBoardSize() - 1);
-                } else if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() == this.isWhite)
+                }
+                else if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() == this.isWhite)
                 {
                     break;
                 }
-                else if (board.getPiece()[nextLocation+ (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
+                else if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -54,12 +57,13 @@ namespace ChessB
             //NE Direction
             //while not on Right file or top rank
             nextLocation = currentLocation;
-            while (nextLocation % board.getBoardSize() != (board.getBoardSize()-1) & nextLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
+            while (nextLocation % board.getBoardSize() != (board.getBoardSize() - 1) & nextLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
             {
 
                 if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)] == null)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     nextLocation += (board.getBoardSize() + 1);
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)].getIsWhite() == this.isWhite)
@@ -68,7 +72,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -76,12 +81,13 @@ namespace ChessB
             //SW Direction
             //while not on Right file or bottom rank
             nextLocation = currentLocation;
-            while (nextLocation % board.getBoardSize() != board.getBoardSize()-1 & nextLocation > (board.getBoardSize() - 1))
+            while (nextLocation % board.getBoardSize() != board.getBoardSize() - 1 & nextLocation > (board.getBoardSize() - 1))
             {
 
                 if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)] == null)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     nextLocation -= (board.getBoardSize() - 1);
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)].getIsWhite() == this.isWhite)
@@ -90,7 +96,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation -(board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -103,7 +110,8 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)] == null)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     nextLocation -= (board.getBoardSize() + 1);
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)].getIsWhite() == this.isWhite)
@@ -112,7 +120,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }

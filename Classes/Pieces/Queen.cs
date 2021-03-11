@@ -24,10 +24,10 @@ namespace ChessB
             }
         }
 
-        public override List<int> generateValidMoves(Board board)
+        public override List<Move> generateValidMoves(Board board)
         {
             int currentLocation = this.location;
-            List<int> validMoves = new List<int>();
+            List<Move> validMoves = new List<Move>();
             int nextLocation = currentLocation;
 
 
@@ -38,7 +38,8 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)] == null)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     nextLocation += (board.getBoardSize() - 1);
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() == this.isWhite)
@@ -47,7 +48,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -60,7 +62,9 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)] == null)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
+
                     nextLocation += (board.getBoardSize() + 1);
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)].getIsWhite() == this.isWhite)
@@ -69,7 +73,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -82,7 +87,8 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)] == null)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     nextLocation -= (board.getBoardSize() - 1);
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)].getIsWhite() == this.isWhite)
@@ -91,7 +97,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() - 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -104,7 +111,8 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)] == null)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     nextLocation -= (board.getBoardSize() + 1);
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)].getIsWhite() == this.isWhite)
@@ -113,7 +121,8 @@ namespace ChessB
                 }
                 else if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation - (board.getBoardSize() + 1));
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
                     break;
                 }
             }
@@ -123,13 +132,15 @@ namespace ChessB
             {
                 if (board.getPiece()[nextLocation - 1] == null)
                 {
-                    validMoves.Add(nextLocation - 1);
+                    Move move = new Move(currentLocation, nextLocation - 1, this);
+                    validMoves.Add(move);
                     nextLocation -= 1;
 
                 }
                 else if (board.getPiece()[nextLocation - 1].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation - 1);
+                    Move move = new Move(currentLocation, nextLocation - 1, this);
+                    validMoves.Add(move);
                     nextLocation -= 1;
                     break;
                 }
@@ -147,12 +158,14 @@ namespace ChessB
 
                 if (board.getPiece()[nextLocation + 1] == null)
                 {
-                    validMoves.Add(nextLocation + 1);
+                    Move move = new Move(currentLocation, nextLocation + 1, this);
+                    validMoves.Add(move);
                     nextLocation += 1;
                 }
                 else if (board.getPiece()[nextLocation + 1].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + 1);
+                    Move move = new Move(currentLocation, nextLocation + 1, this);
+                    validMoves.Add(move);
                     nextLocation += 1;
                     break;
                 }
@@ -170,15 +183,17 @@ namespace ChessB
             //up direction
             while (nextLocation < board.getBoardSize() * (board.getBoardSize() - 1))
             {
-                if (board.getPiece()[nextLocation + 8] == null)
+                if (board.getPiece()[nextLocation + board.getBoardSize()] == null)
                 {
-                    validMoves.Add(nextLocation + 8);
-                    nextLocation += 8;
+                    Move move = new Move(currentLocation, nextLocation + board.getBoardSize(), this);
+                    validMoves.Add(move);
+                    nextLocation += board.getBoardSize();
                 }
                 else if (board.getPiece()[nextLocation + 8].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation + 8);
-                    nextLocation += 8;
+                    Move move = new Move(currentLocation, nextLocation + board.getBoardSize(), this);
+                    validMoves.Add(move);
+                    nextLocation += board.getBoardSize();
                     break;
 
                 }
@@ -195,13 +210,15 @@ namespace ChessB
             {
                 if (board.getPiece()[nextLocation - 8] == null)
                 {
-                    validMoves.Add(nextLocation - 8);
-                    nextLocation -= 8;
+                    Move move = new Move(currentLocation, nextLocation - board.getBoardSize(), this);
+                    validMoves.Add(move);
+                    nextLocation -= board.getBoardSize();
                 }
                 else if (board.getPiece()[nextLocation - 8].getIsWhite() != this.isWhite)
                 {
-                    validMoves.Add(nextLocation - 8);
-                    nextLocation -= 8;
+                    Move move = new Move(currentLocation, nextLocation - board.getBoardSize(), this);
+                    validMoves.Add(move);
+                    nextLocation -= board.getBoardSize();
                     break;
                 }
                 else

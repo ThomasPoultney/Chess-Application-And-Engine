@@ -40,10 +40,10 @@ namespace ChessB
             this.canMoveTwice = canMoveTwice;
         }
 
-        public override List<int> generateValidMoves(Board board)
+        public override List<Move> generateValidMoves(Board board)
         {
             int currentLocation = this.location;
-            List<int> validMoves = new List<int>();
+            List<Move> validMoves = new List<Move>();
             int nextLocation = this.location;
             //valid moves for pawns moving up board
             if (movingUp == true)
@@ -53,7 +53,8 @@ namespace ChessB
                 {
                     if (board.getPiece()[nextLocation + board.getBoardSize()] == null)
                     {
-                        validMoves.Add(nextLocation + board.getBoardSize());
+                        Move moveOne = new Move(nextLocation, nextLocation + board.getBoardSize(), this);
+                        validMoves.Add(moveOne);
 
                         //check if we can move forward two if piece hasnt moved yet and not on second from last rank and can moveforward
 
@@ -63,7 +64,9 @@ namespace ChessB
                             {
                                 if (board.getPiece()[nextLocation + (board.getBoardSize() * 2)] == null)
                                 {
-                                    validMoves.Add(nextLocation + (board.getBoardSize() * 2));
+                                    Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() * 2), this);
+                                    validMoves.Add(move);
+
                                 }
                             }
                         }
@@ -78,7 +81,9 @@ namespace ChessB
                         {
                             if (board.getPiece()[nextLocation + (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
                             {
-                                validMoves.Add(nextLocation + (board.getBoardSize() - 1));
+                                Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() - 1), this);
+                                validMoves.Add(move);
+
                             }
                         }
                     }
@@ -91,7 +96,9 @@ namespace ChessB
                         {
                             if (board.getPiece()[nextLocation + (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
                             {
-                                validMoves.Add(nextLocation + (board.getBoardSize() + 1));
+                                Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() + 1), this);
+                                validMoves.Add(move);
+
                             }
                         }
                     }
@@ -107,7 +114,9 @@ namespace ChessB
                 {
                     if (board.getPiece()[nextLocation - board.getBoardSize()] == null)
                     {
-                        validMoves.Add(nextLocation - board.getBoardSize());
+                        Move moveOne = new Move(nextLocation, nextLocation - board.getBoardSize(), this);
+                        validMoves.Add(moveOne);
+
 
                         //check if we can move down two if piece hasnt moved yet and not on first or second rank
 
@@ -117,7 +126,9 @@ namespace ChessB
                             {
                                 if (board.getPiece()[nextLocation - (board.getBoardSize() * 2)] == null)
                                 {
-                                    validMoves.Add(nextLocation - (board.getBoardSize() * 2));
+                                    Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() * 2), this);
+                                    validMoves.Add(move);
+
                                 }
                             }
                         }
@@ -132,7 +143,8 @@ namespace ChessB
                         {
                             if (board.getPiece()[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
                             {
-                                validMoves.Add(nextLocation - (board.getBoardSize() - 1));
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
+                                validMoves.Add(move);
                             }
                         }
                     }
@@ -145,7 +157,9 @@ namespace ChessB
                         {
                             if (board.getPiece()[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
                             {
-                                validMoves.Add(nextLocation - (board.getBoardSize() + 1));
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
+                                validMoves.Add(move);
+
                             }
                         }
                     }
@@ -157,10 +171,10 @@ namespace ChessB
         }
 
         //only returns the diagonal taking moves used for checkmate and check checking
-        public override List<int> generateAttackingMoves(Board board)
+        public override List<Move> generateAttackingMoves(Board board)
         {
             int currentLocation = this.location;
-            List<int> validMoves = new List<int>();
+            List<Move> validMoves = new List<Move>();
 
             if (movingUp == true)
             {
@@ -170,13 +184,16 @@ namespace ChessB
                     //if not on left file
                     if (currentLocation % board.getBoardSize() > 0)
                     {
-                        validMoves.Add(currentLocation + (board.getBoardSize() - 1));
+                        Move move = new Move(currentLocation, currentLocation + (board.getBoardSize() - 1), this);
+                        validMoves.Add(move);
                     }
 
                     //if not on Right file
                     if (currentLocation % board.getBoardSize() < board.getBoardSize() - 1)
                     {
-                        validMoves.Add(currentLocation + (board.getBoardSize() + 1));
+
+                        Move move = new Move(currentLocation, currentLocation + (board.getBoardSize() + 1), this);
+                        validMoves.Add(move);
                     }
 
                 }
@@ -189,17 +206,21 @@ namespace ChessB
                     //if not on left file
                     if (currentLocation % board.getBoardSize() > 0)
                     {
-                        validMoves.Add(currentLocation - (board.getBoardSize() + 1));
+
+                        Move move = new Move(currentLocation, currentLocation - (board.getBoardSize() + 1), this);
+                        validMoves.Add(move);
                     }
 
                     //if not on Right file
                     if (currentLocation % board.getBoardSize() < board.getBoardSize() - 1)
                     {
-                        validMoves.Add(currentLocation - (board.getBoardSize() - 1));
+                        Move move = new Move(currentLocation, currentLocation - (board.getBoardSize() - 1), this);
+                        validMoves.Add(move);
                     }
 
                 }
             }
+
             return validMoves;
         }
 

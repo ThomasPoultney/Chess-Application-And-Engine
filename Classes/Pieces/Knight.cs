@@ -24,10 +24,10 @@ namespace ChessB
             }
         }
 
-        public override List<int> generateValidMoves(Board board)
+        public override List<Move> generateValidMoves(Board board)
         {
             int currentLocation = this.location;
-            List<int> validMoves = new List<int>();
+            List<Move> validMoves = new List<Move>();
 
 
             int twoRightOneUp = currentLocation + board.getBoardSize() + 2;
@@ -49,11 +49,13 @@ namespace ChessB
             {
                 if (board.getPiece()[twoRightOneUp] == null)
                 {
-                    validMoves.Add(twoRightOneUp);
+                    Move move = new Move(currentLocation, twoRightOneUp, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoRightOneUp].getIsWhite())
                 {
-                    validMoves.Add(twoRightOneUp);
+                    Move move = new Move(currentLocation, twoRightOneUp, this);
+                    validMoves.Add(move);
                 }
             }
 
@@ -63,11 +65,13 @@ namespace ChessB
             {
                 if (board.getPiece()[twoLeftOneUp] == null)
                 {
-                    validMoves.Add(twoLeftOneUp);
+                    Move move = new Move(currentLocation, twoLeftOneUp, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoLeftOneUp].getIsWhite())
                 {
-                    validMoves.Add(twoLeftOneUp);
+                    Move move = new Move(currentLocation, twoLeftOneUp, this);
+                    validMoves.Add(move);
                 }
             }
 
@@ -77,11 +81,14 @@ namespace ChessB
             {
                 if (board.getPiece()[twoUpOneRight] == null)
                 {
-                    validMoves.Add(twoUpOneRight);
+                    Move move = new Move(currentLocation, twoUpOneRight, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoUpOneRight].getIsWhite())
                 {
-                    validMoves.Add(twoUpOneRight);
+                    Move move = new Move(currentLocation, twoUpOneRight, this);
+                    validMoves.Add(move);
+
                 }
             }
 
@@ -91,11 +98,14 @@ namespace ChessB
             {
                 if (board.getPiece()[twoUpOneLeft] == null)
                 {
-                    validMoves.Add(twoUpOneLeft);
+                    Move move = new Move(currentLocation, twoUpOneLeft, this);
+                    validMoves.Add(move);
+
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoUpOneLeft].getIsWhite())
                 {
-                    validMoves.Add(twoUpOneLeft);
+                    Move move = new Move(currentLocation, twoUpOneLeft, this);
+                    validMoves.Add(move);
                 }
             }
 
@@ -105,11 +115,13 @@ namespace ChessB
             {
                 if (board.getPiece()[twoLeftOneDown] == null)
                 {
-                    validMoves.Add(twoLeftOneDown);
+                    Move move = new Move(currentLocation, twoLeftOneDown, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoLeftOneDown].getIsWhite())
                 {
-                    validMoves.Add(twoLeftOneDown);
+                    Move move = new Move(currentLocation, twoLeftOneDown, this);
+                    validMoves.Add(move);
                 }
             }
 
@@ -120,11 +132,15 @@ namespace ChessB
             {
                 if (board.getPiece()[twoRightOneDown] == null)
                 {
-                    validMoves.Add(twoRightOneDown);
+                    Move move = new Move(currentLocation, twoRightOneDown, this);
+                    validMoves.Add(move);
+
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoRightOneDown].getIsWhite())
                 {
-                    validMoves.Add(twoRightOneDown);
+                    Move move = new Move(currentLocation, twoRightOneDown, this);
+                    validMoves.Add(move);
+
                 }
             }
 
@@ -134,11 +150,14 @@ namespace ChessB
             {
                 if (board.getPiece()[twoDownOneRight] == null)
                 {
-                    validMoves.Add(twoDownOneRight);
+                    Move move = new Move(currentLocation, twoDownOneRight, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoDownOneRight].getIsWhite())
                 {
-                    validMoves.Add(twoDownOneRight);
+                    Move move = new Move(currentLocation, twoDownOneRight, this);
+                    validMoves.Add(move);
+
                 }
             }
 
@@ -148,11 +167,13 @@ namespace ChessB
             {
                 if (board.getPiece()[twoDownOneLeft] == null)
                 {
-                    validMoves.Add(twoDownOneLeft);
+                    Move move = new Move(currentLocation, twoDownOneLeft, this);
+                    validMoves.Add(move);
                 }
                 else if (board.getPiece()[currentLocation].getIsWhite() != board.getPiece()[twoDownOneLeft].getIsWhite())
                 {
-                    validMoves.Add(twoDownOneLeft);
+                    Move move = new Move(currentLocation, twoDownOneLeft, this);
+                    validMoves.Add(move);
                 }
             }
             return validMoves;

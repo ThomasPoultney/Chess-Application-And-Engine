@@ -9,7 +9,7 @@ namespace ChessB
     public static class Game
     {
         public static Board activeBoard;
-        public static List<int> validMoves;
+        public static List<Move> validMoves;
         private static Player whitePlayer;
         private static Player blackPlayer;
     }

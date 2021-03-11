@@ -86,10 +86,10 @@ namespace ChessB
         public static void drawValidMoves()
         {
             validMoveImages = new List<Image>();
-            foreach (int validMove in Game.validMoves)
+            foreach (Move validMove in Game.validMoves)
             {
-                int xLocation = (validMove) % ((Game.activeBoard.getBoardSize()));
-                int yLocation = (int)(validMove / Game.activeBoard.getBoardSize());
+                int xLocation = (validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize()));
+                int yLocation = (int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize());
                 String validMoveImageURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMove.PNG";
 
                 Image validMoveImage = new Image();

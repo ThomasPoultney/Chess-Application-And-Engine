@@ -85,8 +85,16 @@ namespace ChessB
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();
+            bool moveIsValid = false;
+            foreach (Move validmove in Game.validMoves)
+            {
+                if (validmove.Equals(move))
+                {
+                    moveIsValid = true;
+                }
+            }
 
-            if (!Game.validMoves.Contains(pieceEndLocation))
+            if (moveIsValid == false)
             {
                 return false;
             }
@@ -115,9 +123,9 @@ namespace ChessB
 
         }
 
-        public List<int> generateWhiteAttackingMoves()
+        public List<Move> generateWhiteAttackingMoves()
         {
-            List<int> whiteAttackingMoves = new List<int>();
+            List<Move> whiteAttackingMoves = new List<Move>();
 
             foreach (Piece piece in this.getPiece())
             {
@@ -147,9 +155,9 @@ namespace ChessB
         }
 
 
-        public List<int> generateBlackAttackingMoves()
+        public List<Move> generateBlackAttackingMoves()
         {
-            List<int> blackAttackingMoves = new List<int>();
+            List<Move> blackAttackingMoves = new List<Move>();
 
             foreach (Piece piece in this.getPiece())
             {

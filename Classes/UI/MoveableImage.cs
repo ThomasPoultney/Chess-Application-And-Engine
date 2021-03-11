@@ -49,6 +49,7 @@ namespace ChessB
                         return;
                     }
                     Game.validMoves = Ui.pieceSelected.generateValidMoves(Game.activeBoard);
+
                     Ui.drawValidMoves();
                     base.OnMouseDown(e);
                 }
@@ -78,10 +79,7 @@ namespace ChessB
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
                 Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
 
-                if (Game.activeBoard.getPiece()[pieceEndLocation] != null & Game.validMoves.Contains(pieceEndLocation))
-                {
-                    Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
-                }
+
 
 
                 if (Game.activeBoard.makeMove(move) == false)
@@ -91,7 +89,7 @@ namespace ChessB
 
 
                 //Console.WriteLine("Moved to Location = " + pieceEndLocation);
-
+                setUpTurn();
 
             }
             Ui.pieceSelected = null;
@@ -101,6 +99,10 @@ namespace ChessB
 
         }
 
+        private void setUpTurn()
+        {
+
+        }
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
