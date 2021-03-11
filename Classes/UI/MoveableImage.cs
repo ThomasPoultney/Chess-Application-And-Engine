@@ -109,7 +109,7 @@ namespace ChessB
                     Game.activeBoard.setPieceAtLocation(pieceEndLocation, Ui.pieceSelected);
                     Game.activeBoard.setPieceAtLocation(pieceStartLocation, null);
                     Game.activeBoard.setIsWhiteTurn(!Game.activeBoard.getIsWhiteTurn());
-
+                    Game.activeBoard.generateWhiteAttackingMoves();
                 }
                 else
                 {

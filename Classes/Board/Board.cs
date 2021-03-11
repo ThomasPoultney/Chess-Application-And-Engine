@@ -101,7 +101,54 @@ namespace ChessB
 
         }
 
+        public List<int> generateWhiteAttackingMoves()
+        {
+            List<int> whiteAttackingMoves = new List<int>();
 
+            foreach (Piece piece in this.getPiece())
+            {
+                if (piece != null)
+                {
+
+                    if (piece.GetType() != typeof(Pawn))
+                    {
+                        if (piece.getIsWhite() == true)
+                        {
+                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this));
+                        }
+
+                    }
+
+                }
+            }
+
+            return whiteAttackingMoves;
+        }
+
+
+        public List<int> generateBlackAttackingMoves()
+        {
+            List<int> blackAttackingMoves = new List<int>();
+
+            foreach (Piece piece in this.getPiece())
+            {
+                if (piece != null)
+                {
+
+                    if (piece.GetType() != typeof(Pawn))
+                    {
+                        if (piece.getIsWhite() == false)
+                        {
+                            blackAttackingMoves.AddRange(piece.generateValidMoves(this));
+                        }
+
+                    }
+
+                }
+            }
+
+            return blackAttackingMoves;
+        }
 
 
         public void generateBoardFromFEN()
