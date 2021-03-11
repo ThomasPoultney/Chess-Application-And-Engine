@@ -23,7 +23,8 @@ namespace ChessB
 
         public static Image imageSelected = null;
         public static Piece pieceSelected;
-        public static List<Image> validMoveImages;
+        public static List<Image> validMoveImages = new List<Image>();
+
 
 
         public static void drawBoard(Board board, Canvas canvas)

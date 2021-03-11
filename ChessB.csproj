@@ -81,7 +81,6 @@
     <Compile Include="Classes\Pieces\Piece.cs" />
     <Compile Include="Classes\Pieces\Queen.cs" />
     <Compile Include="Classes\Pieces\Rook.cs" />
-    <Compile Include="Classes\UI\ResizeableViewBox.cs" />
     <Compile Include="Classes\UI\Ui.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
