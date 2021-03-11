@@ -29,7 +29,7 @@ namespace ChessB
         private Piece[] piece;
 
         //stores each move that is made
-        private List<Move> moves;
+        private List<Move> moves = new List<Move>();
 
         //stores all tiles being attacked by a player, used for checking for checkmate. 
         private List<int> whiteAttacking;
@@ -80,29 +80,37 @@ namespace ChessB
             this.isWhiteTurn = isWhiteTurn;
         }
 
-        public void makeMove(Move move)
+        public bool makeMove(Move move)
         {
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();
 
-            if (this.getPiece()[pieceEndLocation] != null)
+            if (!Game.validMoves.Contains(pieceEndLocation))
+            {
+                return false;
+            }
+            else
             {
 
-                Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
-                this.getPiece()[pieceEndLocation] = null;
+                if (this.getPiece()[pieceEndLocation] != null)
+                {
+                    Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
+                    this.getPiece()[pieceEndLocation] = null;
 
+                }
+
+                if (piece is ChessB.Pawn)
+                {
+                    piece.setCanMoveTwice(false);
+                }
+
+                this.setPieceAtLocation(pieceEndLocation, piece);
+                this.setPieceAtLocation(pieceStartLocation, null);
+                this.setIsWhiteTurn(!this.getIsWhiteTurn());
+                moves.Add(move);
+                return true;
             }
-
-            if (piece is ChessB.Pawn)
-            {
-                piece.setCanMoveTwice(false);
-            }
-
-            this.setPieceAtLocation(pieceEndLocation, piece);
-            this.setPieceAtLocation(pieceStartLocation, null);
-            this.setIsWhiteTurn(!this.getIsWhiteTurn());
-            moves.Add(move);
 
 
         }

@@ -76,17 +76,10 @@ namespace ChessB
                 int endXlocation = (int)(leftPosition / Ui.squareSize);
                 int endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
+                Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
 
 
-
-                if (Game.validMoves.Contains(pieceEndLocation))
-                {
-                    Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
-
-                    Game.activeBoard.makeMove(move);
-
-                }
-                else
+                if (Game.activeBoard.makeMove(move) == false)
                 {
                     resetImage();
                 }
