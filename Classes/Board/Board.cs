@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ChessB
 {
@@ -21,7 +24,7 @@ namespace ChessB
         private bool whiteCanCastle = true;
 
         /*This is the number of halfmoves since the last capture or pawn advance. 
-        The reason for this field is that the value is used in the fifty-move rule.*/
+        The field is used in the fifty-move rule.*/
         private int numHalfMoves = 50;
 
         //The number of the full move. It starts at 1, and is incremented after Black's move.
@@ -117,18 +120,14 @@ namespace ChessB
                 if (piece.getIsWhite() == true)
                 {
                     attackingMoves = generateBlackAttackingMoves(boardStateAfterMove);
-                    Console.WriteLine(attackingMoves.Count);
                     if (!attackingMoves.Contains(wKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
                     }
-
-
                 }
                 else
                 {
                     attackingMoves = generateWhiteAttackingMoves(boardStateAfterMove);
-                    Console.WriteLine(attackingMoves.Count);
                     if (!attackingMoves.Contains(bKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
@@ -162,6 +161,45 @@ namespace ChessB
                 if (this.getPiece()[pieceEndLocation] != null)
                 {
                     Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
+
+                    if (this.getPiece()[pieceEndLocation].getIsWhite())
+                    {
+                        Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
+                        image.Stretch = Stretch.Fill;
+                        Ui.blackImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        Grid.SetRow(image, 0);
+                        Grid.SetColumn(image, Ui.numBlackPieceCaptured + 1);
+                        Ui.blackScore += this.getPiece()[pieceEndLocation].getStrength();
+
+                        Ui.whiteScoreLabel.Content = (Ui.whiteScore - Ui.blackScore).ToString();
+                        Ui.blackScoreLabel.Content = (Ui.blackScore - Ui.whiteScore).ToString();
+
+
+
+                        Ui.blackImageGrid.Children.Add(image);
+
+                        Ui.numBlackPieceCaptured++;
+
+                    }
+                    else
+                    {
+                        Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
+                        image.Stretch = Stretch.Fill;
+                        Ui.whiteImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                        Grid.SetRow(image, 0);
+                        Grid.SetColumn(image, Ui.numWhitePieceCaptured + 1);
+
+                        Ui.whiteScore += this.getPiece()[pieceEndLocation].getStrength();
+                        Ui.whiteScoreLabel.Content = (Ui.whiteScore - Ui.blackScore).ToString();
+                        Ui.blackScoreLabel.Content = (Ui.blackScore - Ui.whiteScore).ToString();
+
+
+                        Ui.whiteImageGrid.Children.Add(image);
+                        Ui.numWhitePieceCaptured++;
+
+                    }
+
+
                     this.getPiece()[pieceEndLocation] = null;
 
                 }

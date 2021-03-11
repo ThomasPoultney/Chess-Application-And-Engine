@@ -52,6 +52,11 @@ namespace ChessB
             return this.location;
         }
 
+        public int getStrength()
+        {
+            return this.strength;
+        }
+
 
 
         public string getImagePath()

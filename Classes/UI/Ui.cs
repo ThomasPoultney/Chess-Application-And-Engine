@@ -24,7 +24,19 @@ namespace ChessB
         public static Image imageSelected = null;
         public static Piece pieceSelected;
         public static List<Image> validMoveImages = new List<Image>();
+        public static Grid grid;
 
+        public static Grid whiteImageGrid;
+        public static Grid blackImageGrid;
+
+        public static int numBlackPieceCaptured = 0;
+        public static int numWhitePieceCaptured = 0;
+
+        public static Label blackScoreLabel = new Label();
+        public static Label whiteScoreLabel = new Label();
+
+        public static int blackScore = 0;
+        public static int whiteScore = 0;
 
 
         public static void drawBoard(Board board, Canvas canvas)
