@@ -97,15 +97,28 @@ namespace ChessB
 
                 boardStateAfterMove[pieceEndLocation] = piece;
                 boardStateAfterMove[pieceStartLocation] = null;
-                Console.WriteLine("Black King: " + blackKingLocation);
-                Console.WriteLine("white King: " + whiteKingLocation);
+                int bKingLocation = this.blackKingLocation;
+                int wKingLocation = this.whiteKingLocation;
+
+                if (piece is ChessB.King)
+                {
+                    if (piece.getIsWhite() == true)
+                    {
+                        wKingLocation = pieceEndLocation;
+                    }
+                    else
+                    {
+                        bKingLocation = pieceEndLocation;
+                    }
+                }
+
                 List<int> attackingMoves;
 
                 if (piece.getIsWhite() == true)
                 {
                     attackingMoves = generateBlackAttackingMoves(boardStateAfterMove);
                     Console.WriteLine(attackingMoves.Count);
-                    if (!attackingMoves.Contains(whiteKingLocation))
+                    if (!attackingMoves.Contains(wKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
                     }
@@ -116,7 +129,7 @@ namespace ChessB
                 {
                     attackingMoves = generateWhiteAttackingMoves(boardStateAfterMove);
                     Console.WriteLine(attackingMoves.Count);
-                    if (!attackingMoves.Contains(blackKingLocation))
+                    if (!attackingMoves.Contains(bKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
                     }
