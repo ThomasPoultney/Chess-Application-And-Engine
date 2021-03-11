@@ -14,6 +14,9 @@ namespace ChessB
 
         private bool isWhiteTurn = true;
 
+        private int blackKingLocation;
+        private int whiteKingLocation;
+
         private bool blackCanCastle = true;
         private bool whiteCanCastle = true;
 
@@ -80,6 +83,48 @@ namespace ChessB
             this.isWhiteTurn = isWhiteTurn;
         }
 
+        public List<Move> removeMovesThatPutInCheck(List<Move> validMoves)
+        {
+            List<Move> finalvalidMoves = new List<Move>();
+
+
+            foreach (Move validMove in validMoves)
+            {
+                Piece[] boardStateAfterMove = this.getPiece().ToArray();
+                int pieceEndLocation = validMove.getEndLocation();
+                int pieceStartLocation = validMove.getStartLocation();
+                Piece piece = validMove.getPiece();
+
+                boardStateAfterMove[pieceEndLocation] = piece;
+                boardStateAfterMove[pieceStartLocation] = null;
+                Console.WriteLine("Black King: " + blackKingLocation);
+                Console.WriteLine("white King: " + whiteKingLocation);
+                List<int> attackingMoves;
+
+                if (piece.getIsWhite() == true)
+                {
+                    attackingMoves = generateBlackAttackingMoves(boardStateAfterMove);
+                    Console.WriteLine(attackingMoves.Count);
+                    if (!attackingMoves.Contains(whiteKingLocation))
+                    {
+                        finalvalidMoves.Add(validMove);
+                    }
+
+
+                }
+                else
+                {
+                    attackingMoves = generateWhiteAttackingMoves(boardStateAfterMove);
+                    Console.WriteLine(attackingMoves.Count);
+                    if (!attackingMoves.Contains(blackKingLocation))
+                    {
+                        finalvalidMoves.Add(validMove);
+                    }
+                }
+            }
+
+            return finalvalidMoves;
+        }
         public bool makeMove(Move move)
         {
             int pieceEndLocation = move.getEndLocation();
@@ -113,6 +158,18 @@ namespace ChessB
                     piece.setCanMoveTwice(false);
                 }
 
+                if (piece is ChessB.King)
+                {
+                    if (piece.getIsWhite() == true)
+                    {
+                        this.whiteKingLocation = pieceEndLocation;
+                    }
+                    else
+                    {
+                        this.blackKingLocation = pieceEndLocation;
+                    }
+                }
+
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
@@ -123,11 +180,11 @@ namespace ChessB
 
         }
 
-        public List<Move> generateWhiteAttackingMoves()
+        public List<int> generateWhiteAttackingMoves(Piece[] pieceArray)
         {
             List<Move> whiteAttackingMoves = new List<Move>();
 
-            foreach (Piece piece in this.getPiece())
+            foreach (Piece piece in pieceArray)
             {
                 if (piece != null)
                 {
@@ -136,7 +193,7 @@ namespace ChessB
                     {
                         if (piece.getIsWhite() == true)
                         {
-                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this));
+                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray));
                         }
 
                     }
@@ -151,15 +208,22 @@ namespace ChessB
                 }
             }
 
-            return whiteAttackingMoves.Distinct().ToList();
+            List<int> tilesAttacked = new List<int>();
+
+            foreach (Move move in whiteAttackingMoves)
+            {
+                tilesAttacked.Add(move.getEndLocation());
+            }
+
+            return tilesAttacked.Distinct().ToList();
         }
 
 
-        public List<Move> generateBlackAttackingMoves()
+        public List<int> generateBlackAttackingMoves(Piece[] pieceArray)
         {
             List<Move> blackAttackingMoves = new List<Move>();
 
-            foreach (Piece piece in this.getPiece())
+            foreach (Piece piece in pieceArray)
             {
                 if (piece != null)
                 {
@@ -168,7 +232,7 @@ namespace ChessB
                     {
                         if (piece.getIsWhite() == false)
                         {
-                            blackAttackingMoves.AddRange(piece.generateValidMoves(this));
+                            blackAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray));
                         }
 
                     }
@@ -185,7 +249,14 @@ namespace ChessB
 
             }
 
-            return blackAttackingMoves.Distinct().ToList();
+            List<int> tilesAttacked = new List<int>();
+
+            foreach (Move move in blackAttackingMoves)
+            {
+                tilesAttacked.Add(move.getEndLocation());
+            }
+
+            return tilesAttacked.Distinct().ToList();
         }
 
 
@@ -258,12 +329,14 @@ namespace ChessB
                 {
                     King king = new King(true, location);
                     piece[location] = king;
+                    this.whiteKingLocation = location;
                     currentFile++;
                 }
                 else if (symbol == 'k')
                 {
                     King king = new King(false, location);
                     piece[location] = king;
+                    this.blackKingLocation = location;
                     currentFile++;
                 }
                 else if (symbol == 'P')

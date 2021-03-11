@@ -59,7 +59,7 @@ namespace ChessB
             return this.imagePath;
         }
 
-        public virtual List<Move> generateValidMoves(Board board)
+        public virtual List<Move> generateValidMoves(Board board, Piece[] piece)
         {
             return new List<Move>();
         }

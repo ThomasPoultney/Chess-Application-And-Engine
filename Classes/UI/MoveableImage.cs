@@ -48,7 +48,8 @@ namespace ChessB
                         Ui.imageSelected = null;
                         return;
                     }
-                    Game.validMoves = Ui.pieceSelected.generateValidMoves(Game.activeBoard);
+
+                    Game.validMoves = Game.activeBoard.removeMovesThatPutInCheck(Ui.pieceSelected.generateValidMoves(Game.activeBoard, Game.activeBoard.getPiece()));
 
                     Ui.drawValidMoves();
                     base.OnMouseDown(e);
