@@ -156,5 +156,52 @@ namespace ChessB
             return validMoves;
         }
 
+        //only returns the diagonal taking moves used for checkmate and check checking
+        public override List<int> generateAttackingMoves(Board board)
+        {
+            int currentLocation = this.location;
+            List<int> validMoves = new List<int>();
+
+            if (movingUp == true)
+            {
+                //if not on top rank
+                if (currentLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
+                {
+                    //if not on left file
+                    if (currentLocation % board.getBoardSize() > 0)
+                    {
+                        validMoves.Add(currentLocation + (board.getBoardSize() - 1));
+                    }
+
+                    //if not on Right file
+                    if (currentLocation % board.getBoardSize() < board.getBoardSize() - 1)
+                    {
+                        validMoves.Add(currentLocation + (board.getBoardSize() + 1));
+                    }
+
+                }
+            }
+            else
+            {
+                //if not on bottom rank
+                if (currentLocation > ((board.getBoardSize() - 1)))
+                {
+                    //if not on left file
+                    if (currentLocation % board.getBoardSize() > 0)
+                    {
+                        validMoves.Add(currentLocation - (board.getBoardSize() + 1));
+                    }
+
+                    //if not on Right file
+                    if (currentLocation % board.getBoardSize() < board.getBoardSize() - 1)
+                    {
+                        validMoves.Add(currentLocation - (board.getBoardSize() - 1));
+                    }
+
+                }
+            }
+            return validMoves;
+        }
+
     }
 }

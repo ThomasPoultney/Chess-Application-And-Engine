@@ -80,24 +80,30 @@ namespace ChessB
             this.isWhiteTurn = isWhiteTurn;
         }
 
-        public bool makeMove(Move move)
+        public void makeMove(Move move)
         {
-            int startLocation = move.getStartLocation();
-            int endLocation = move.getEndLocation();
+            int pieceEndLocation = move.getEndLocation();
+            int pieceStartLocation = move.getStartLocation();
+            Piece piece = move.getPiece();
 
-            Piece movePiece = move.getPiece();
-            bool isValidMove = false;
-
-            if (isValidMove == true)
+            if (this.getPiece()[pieceEndLocation] != null)
             {
-                Moves.Add(move);
 
-                return true;
+                Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
+                this.getPiece()[pieceEndLocation] = null;
+
             }
-            else
+
+            if (piece is ChessB.Pawn)
             {
-                return false;
+                piece.setCanMoveTwice(false);
             }
+
+            this.setPieceAtLocation(pieceEndLocation, piece);
+            this.setPieceAtLocation(pieceStartLocation, null);
+            this.setIsWhiteTurn(!this.getIsWhiteTurn());
+            moves.Add(move);
+
 
         }
 
@@ -118,11 +124,18 @@ namespace ChessB
                         }
 
                     }
+                    else
+                    {
+                        if (piece.getIsWhite() == true)
+                        {
+                            whiteAttackingMoves.AddRange(piece.generateAttackingMoves(this));
+                        }
+                    }
 
                 }
             }
 
-            return whiteAttackingMoves;
+            return whiteAttackingMoves.Distinct().ToList();
         }
 
 
@@ -143,11 +156,20 @@ namespace ChessB
                         }
 
                     }
+                    else
+                    {
+                        if (piece.getIsWhite() == false)
+                        {
+                            blackAttackingMoves.AddRange(piece.generateAttackingMoves(this));
+                        }
 
+                    }
                 }
+
+
             }
 
-            return blackAttackingMoves;
+            return blackAttackingMoves.Distinct().ToList();
         }
 
 

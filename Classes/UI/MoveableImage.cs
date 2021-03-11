@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Timers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessB
 {
@@ -49,8 +50,6 @@ namespace ChessB
                     }
                     Game.validMoves = Ui.pieceSelected.generateValidMoves(Game.activeBoard);
                     Ui.drawValidMoves();
-                    Console.WriteLine("Piece Selected = " + Ui.pieceSelected.getLocation());
-
                     base.OnMouseDown(e);
                 }
                 else
@@ -60,19 +59,6 @@ namespace ChessB
             }
 
 
-
-        }
-
-        private void drawValidMoves()
-        {
-            List<int> validMoves = Game.validMoves;
-
-            Console.WriteLine("-------------------------------Valid Moves---------------------------------");
-            foreach (int move in Game.validMoves)
-            {
-
-                Console.WriteLine(move);
-            }
 
         }
 
@@ -91,25 +77,14 @@ namespace ChessB
                 int endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
 
+
+
                 if (Game.validMoves.Contains(pieceEndLocation))
                 {
-                    if (Game.activeBoard.getPiece()[pieceEndLocation] != null)
-                    {
+                    Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
 
-                        Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
-                        Game.activeBoard.getPiece()[pieceEndLocation] = null;
+                    Game.activeBoard.makeMove(move);
 
-                    }
-
-                    if (Ui.pieceSelected is ChessB.Pawn)
-                    {
-                        Ui.pieceSelected.setCanMoveTwice(false);
-                    }
-
-                    Game.activeBoard.setPieceAtLocation(pieceEndLocation, Ui.pieceSelected);
-                    Game.activeBoard.setPieceAtLocation(pieceStartLocation, null);
-                    Game.activeBoard.setIsWhiteTurn(!Game.activeBoard.getIsWhiteTurn());
-                    Game.activeBoard.generateWhiteAttackingMoves();
                 }
                 else
                 {

@@ -69,6 +69,11 @@ namespace ChessB
 
         }
 
+        public virtual List<int> generateAttackingMoves(Board board)
+        {
+            return new List<int>();
+        }
+
         public void setLocation(int location)
         {
             this.location = location;
