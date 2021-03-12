@@ -139,11 +139,11 @@ namespace ChessB
                     //if not on left file check left diagonal
                     if (nextLocation % board.getBoardSize() != 0)
                     {
-                        if (piece[nextLocation - (board.getBoardSize() - 1)] != null)
+                        if (piece[nextLocation - (board.getBoardSize() + 1)] != null)
                         {
-                            if (piece[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
+                            if (piece[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
                             {
-                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
                                 validMoves.Add(move);
                             }
                         }
@@ -153,11 +153,11 @@ namespace ChessB
                     //if not on Right file check left diagonal
                     if (nextLocation % board.getBoardSize() != (board.getBoardSize() - 1))
                     {
-                        if (piece[nextLocation - (board.getBoardSize() + 1)] != null)
+                        if (piece[nextLocation - (board.getBoardSize() - 1)] != null)
                         {
-                            if (piece[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
+                            if (piece[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
                             {
-                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
                                 validMoves.Add(move);
 
                             }
