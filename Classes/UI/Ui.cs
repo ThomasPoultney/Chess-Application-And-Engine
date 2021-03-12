@@ -61,7 +61,7 @@ namespace ChessB
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
                 Image tile = new Image();
-                //
+
                 ImageSource tileImage = new BitmapImage(new Uri(nextImageURL));
                 tile.Source = tileImage;
                 tile.Width = squareSize;
