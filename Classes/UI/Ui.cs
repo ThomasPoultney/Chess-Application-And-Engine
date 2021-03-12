@@ -101,19 +101,34 @@ namespace ChessB
             {
                 int xLocation = (validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize()));
                 int yLocation = (int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize());
-                String validMoveImageURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMove.PNG";
-
+                String VMImageEmptyTileURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMoveEmpty.PNG";
+                String VMImagePieceTileURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMovePiece.PNG";
                 Image validMoveImage = new Image();
 
-                ImageSource validMoveImageSource = new BitmapImage(new Uri(validMoveImageURL));
-                validMoveImage.Source = validMoveImageSource;
-                validMoveImage.Width = squareSize / 2;
-                validMoveImage.Height = squareSize / 2;
-                Canvas.SetZIndex(validMoveImage, 1000);
-                Canvas.SetTop(validMoveImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize) + squareSize / 4);
-                Canvas.SetLeft(validMoveImage, xLocation * squareSize + squareSize / 4);
-                canvas.Children.Add(validMoveImage);
+                if (Game.activeBoard.getPiece()[validMove.getEndLocation()] == null)
+                {
+                    ImageSource validMoveImageSource = new BitmapImage(new Uri(VMImageEmptyTileURL));
+                    validMoveImage.Source = validMoveImageSource;
+                    validMoveImage.Width = squareSize / 2;
+                    validMoveImage.Height = squareSize / 2;
+                    Canvas.SetZIndex(validMoveImage, 1000);
+                    Canvas.SetTop(validMoveImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize + squareSize / 4));
+                    Canvas.SetLeft(validMoveImage, xLocation * squareSize + squareSize / 4);
+                }
+                else
+                {
+                    ImageSource validMoveImageSource = new BitmapImage(new Uri(VMImagePieceTileURL));
+                    validMoveImage.Source = validMoveImageSource;
+                    validMoveImage.Width = squareSize;
+                    validMoveImage.Height = squareSize;
+                    Canvas.SetZIndex(validMoveImage, 1000);
+                    Canvas.SetTop(validMoveImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize));
+                    Canvas.SetLeft(validMoveImage, xLocation * squareSize);
+                }
 
+
+
+                canvas.Children.Add(validMoveImage);
                 validMoveImages.Add(validMoveImage);
 
             }
