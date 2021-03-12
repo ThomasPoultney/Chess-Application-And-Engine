@@ -38,6 +38,8 @@ namespace ChessB
         public static int blackScore = 0;
         public static int whiteScore = 0;
 
+        public static List<Image> whiteCapturedImages = new List<Image>();
+        public static List<Image> blackCapturedImages = new List<Image>();
 
         public static void drawBoard(Board board, Canvas canvas)
         {
@@ -53,8 +55,8 @@ namespace ChessB
 
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
-                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/White.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/Black.PNG";
+                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/CreamTile.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/GreenTIle.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
@@ -72,15 +74,12 @@ namespace ChessB
 
                 if (piece[i] != null)
                 {
-
                     MoveableImage mpi = new MoveableImage();
-
 
                     ImageSource pieceImage = new BitmapImage(new Uri(piece[i].getImagePath()));
                     mpi.Source = pieceImage;
                     mpi.Width = squareSize;
                     mpi.Height = squareSize;
-
 
                     Canvas.SetZIndex(mpi, 1500);
 
@@ -140,6 +139,36 @@ namespace ChessB
             value += letters[index % letters.Length];
 
             return value;
+        }
+
+        public static void addBlackCaptureImage(Image image, int pieceValue)
+        {
+            image.Stretch = Stretch.Fill;
+            blackImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            Grid.SetRow(image, 0);
+            Grid.SetColumn(image, numBlackPieceCaptured + 1);
+            blackScore += pieceValue;
+
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            blackImageGrid.Children.Add(image);
+
+            numBlackPieceCaptured++;
+        }
+
+        public static void addWhiteCaptureImage(Image image, int pieceValue)
+        {
+            image.Stretch = Stretch.Fill;
+            whiteImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            Grid.SetRow(image, 0);
+            Grid.SetColumn(image, numWhitePieceCaptured + 1);
+            whiteScore += pieceValue;
+
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            whiteImageGrid.Children.Add(image);
+
+            numWhitePieceCaptured++;
         }
     }
 }

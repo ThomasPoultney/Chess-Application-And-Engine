@@ -165,40 +165,13 @@ namespace ChessB
                     if (this.getPiece()[pieceEndLocation].getIsWhite())
                     {
                         Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
-                        image.Stretch = Stretch.Fill;
-                        Ui.blackImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                        Grid.SetRow(image, 0);
-                        Grid.SetColumn(image, Ui.numBlackPieceCaptured + 1);
-                        Ui.blackScore += this.getPiece()[pieceEndLocation].getStrength();
-
-                        Ui.whiteScoreLabel.Content = (Ui.whiteScore - Ui.blackScore).ToString();
-                        Ui.blackScoreLabel.Content = (Ui.blackScore - Ui.whiteScore).ToString();
-
-
-
-                        Ui.blackImageGrid.Children.Add(image);
-
-                        Ui.numBlackPieceCaptured++;
-
+                        Ui.addBlackCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
                     }
                     else
                     {
                         Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
-                        image.Stretch = Stretch.Fill;
-                        Ui.whiteImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
-                        Grid.SetRow(image, 0);
-                        Grid.SetColumn(image, Ui.numWhitePieceCaptured + 1);
-
-                        Ui.whiteScore += this.getPiece()[pieceEndLocation].getStrength();
-                        Ui.whiteScoreLabel.Content = (Ui.whiteScore - Ui.blackScore).ToString();
-                        Ui.blackScoreLabel.Content = (Ui.blackScore - Ui.whiteScore).ToString();
-
-
-                        Ui.whiteImageGrid.Children.Add(image);
-                        Ui.numWhitePieceCaptured++;
-
+                        Ui.addWhiteCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
                     }
-
 
                     this.getPiece()[pieceEndLocation] = null;
 

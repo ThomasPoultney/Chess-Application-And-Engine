@@ -25,7 +25,7 @@ namespace ChessB
             mainWindow.Title = "Chess";
 
             mainWindow.AllowsTransparency = AllowsTransparency;
-            mainWindow.Background = new SolidColorBrush(Color.FromArgb(255, 90, 88, 92));
+            mainWindow.Background = Brushes.DarkGray;
 
             mainWindow.Margin = new Thickness(0, 0, 0, 0);
 
@@ -64,9 +64,9 @@ namespace ChessB
             grid.RowDefinitions.Add(rowDef1);
             grid.RowDefinitions.Add(rowDef2);
 
-            colDef0.Width = new GridLength(9.0, GridUnitType.Star);
+            colDef0.Width = new GridLength(4.0, GridUnitType.Star);
             colDef1.Width = new GridLength(2.0, GridUnitType.Star);
-            rowDef1.Height = new GridLength(9.0, GridUnitType.Star);
+            rowDef1.Height = new GridLength(10.0, GridUnitType.Star);
 
             Grid.SetColumn(viewBox, 0);
             Grid.SetRow(viewBox, 1);
@@ -148,11 +148,5 @@ namespace ChessB
                 Canvas.SetLeft(imageSelected, (int)(Canvas.GetLeft(imageSelected) + point2.X - MoveableImage.point.X));
             }
         }
-
-
-
     }
-
-
-
 }
