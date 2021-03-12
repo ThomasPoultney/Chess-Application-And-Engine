@@ -32,6 +32,7 @@ namespace ChessB
             {
                 if (Ui.imageSelected == null)
                 {
+
                     Ui.imageSelected = this;
                     Console.WriteLine(this.name);
                     point = e.GetPosition(Ui.imageSelected);
@@ -42,12 +43,15 @@ namespace ChessB
                     int ylocation = Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize);
                     pieceStartLocation = Board.boardSize * ylocation + xlocation;
                     Ui.pieceSelected = Game.activeBoard.getPiece()[pieceStartLocation];
-
-                    if (Ui.pieceSelected.getIsWhite() != Game.activeBoard.getIsWhiteTurn())
+                    if (Ui.pieceSelected != null)
                     {
-                        Ui.imageSelected = null;
-                        return;
+                        if (Ui.pieceSelected.getIsWhite() != Game.activeBoard.getIsWhiteTurn())
+                        {
+                            Ui.imageSelected = null;
+                            return;
+                        }
                     }
+                
 
                     Game.validMoves = Game.activeBoard.removeMovesThatPutInCheck(Ui.pieceSelected.generateValidMoves(Game.activeBoard, Game.activeBoard.getPiece()));
 

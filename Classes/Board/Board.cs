@@ -197,10 +197,20 @@ namespace ChessB
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
+                this.setUpNextTurn();
                 moves.Add(move);
                 return true;
             }
 
+
+        }
+
+        private void setUpNextTurn()
+        {
+            //generate all current players moves
+            //generate all openents moves, check if we are in check// if in check play check sounds
+            //if current player has no valid moves and we are in check then oppenent wins
+            //if current player has valid moves and not in check it is stalemate
 
         }
 
