@@ -8,6 +8,7 @@ namespace ChessB
 {
     class King : Piece
     {
+        private bool hasMoved = false;
         public King(bool isWhite, int location) : base(isWhite, location)
         {
 
@@ -24,7 +25,17 @@ namespace ChessB
             }
         }
 
-        public override List<Move> generateValidMoves(Board board, Piece[] piece)
+        public override bool getHasMoved()
+        {
+            return this.hasMoved;
+        }
+
+        public override void setHasMoved(bool hasMoved)
+        {
+            this.hasMoved = hasMoved;
+        }
+
+        public override List<Move> generateValidMoves(Board board, Piece[] piece, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
         {
             int currentLocation = this.location;
             List<Move> validMoves = new List<Move>();
@@ -174,8 +185,102 @@ namespace ChessB
             }
 
 
+            /*Castling consists of moving the king two squares towards a rook on the player's first rank, 
+             * then moving the rook to the square that the king crossed.
+             * Castling may be done only if the king has never moved, 
+             * the rook involved has never moved, the squares between the king and the rook involved are unoccupied, 
+             * the king is not in check, and the king does not cross over or end on a square attacked by an enemy piece.
+            */
+            if (hasMoved == false)
+            {
+                List<int> tilesAttacked;
+
+                if (this.getIsWhite() == true)
+                {
+                    tilesAttacked = blackAttackingMoves;
+                }
+                else
+                {
+                    tilesAttacked = whiteAttackingMoves;
+                }
+
+                //if king is not in check
+                if (!tilesAttacked.Contains(this.location))
+                {
+                    int rookShortLocation = 0;
+                    int rookLongLocation = 0;
+                    //find rook locations
+                    if (this.location == 4)
+                    {
+                        rookLongLocation = 0;
+                        rookShortLocation = board.getBoardSize() - 1;
+                    }
+                    else if (this.location == (board.getBoardSize() * (board.getBoardSize() - 1)) + 4)
+                    {
+                        rookLongLocation = (board.getBoardSize() * (board.getBoardSize() - 1));
+                        rookShortLocation = (board.getBoardSize() * (board.getBoardSize())) - 1;
+                    }
+
+                    //if the rook short hasnt moved
+                    if (piece[rookLongLocation] is Rook && piece[rookLongLocation].getHasMoved() == false)
+                    {
+                        bool inBetweenAttacked = false;
+                        bool squaresBetweenNotEmpty = false;
+                        for (int i = rookLongLocation + 1; i < this.location; i++)
+                        {
+                            if (i != rookLongLocation + 1)
+                            {
+                                if (tilesAttacked.Contains(i))
+                                {
+                                    inBetweenAttacked = true;
+                                }
+                            }
+
+
+                            if (piece[i] != null)
+                            {
+                                squaresBetweenNotEmpty = true;
+                            }
+                        }
+
+                        if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
+                        {
+                            Move move = new Move(currentLocation, currentLocation - 2, this);
+                            validMoves.Add(move);
+                        }
+
+
+                    }
+
+                    if (piece[rookShortLocation] is Rook && piece[rookShortLocation].getHasMoved() == false)
+                    {
+                        bool inBetweenAttacked = false;
+                        bool squaresBetweenNotEmpty = false;
+                        for (int i = rookShortLocation - 1; i > this.location; i--)
+                        {
+                            if (blackAttackingMoves.Contains(i))
+                            {
+                                inBetweenAttacked = true;
+                            }
+
+                            if (piece[i] != null)
+                            {
+                                squaresBetweenNotEmpty = true;
+                            }
+                        }
+
+                        if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
+                        {
+                            Move move = new Move(currentLocation, currentLocation + 2, this);
+                            validMoves.Add(move);
+                        }
+                    }
+
+
+
+                }
+            }
             return validMoves;
         }
-
     }
 }

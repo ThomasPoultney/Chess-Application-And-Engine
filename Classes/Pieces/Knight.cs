@@ -29,7 +29,6 @@ namespace ChessB
             int currentLocation = this.location;
             List<Move> validMoves = new List<Move>();
 
-
             int twoRightOneUp = currentLocation + board.getBoardSize() + 2;
             int twoLeftOneUp = currentLocation + (board.getBoardSize() - 2);
 

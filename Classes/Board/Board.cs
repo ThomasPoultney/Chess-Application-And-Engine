@@ -32,20 +32,21 @@ namespace ChessB
 
 
         //represents current state of board
-        private Piece[] piece;
+        private Piece[] piece = new Piece[boardSize * boardSize];
 
         //stores each move that is made
         private List<Move> moves = new List<Move>();
 
         //stores all tiles being attacked by a player, used for checking for checkmate. 
-        private List<int> whiteAttacking;
-        private List<int> blackAttacking;
+        private List<int> whiteAttacking = new List<int>();
+        private List<int> blackAttacking = new List<int>();
 
         public static int boardSize = 8;
 
         public Board()
         {
             piece = new Piece[boardSize * boardSize];
+
         }
 
         private List<Move> Moves { get => moves; set => moves = value; }
@@ -53,6 +54,16 @@ namespace ChessB
         public Piece[] getPiece()
         {
             return this.piece;
+        }
+
+        public int getWhiteKingLocation()
+        {
+            return this.whiteKingLocation;
+        }
+
+        public int getBlackKingLocation()
+        {
+            return this.blackKingLocation;
         }
 
         public void setPiece(Piece[] piece)
@@ -69,6 +80,17 @@ namespace ChessB
 
             this.piece[location] = piece;
 
+        }
+
+
+        public List<int> getBlackAttackingMoves()
+        {
+            return this.blackAttacking;
+        }
+
+        public List<int> getWhiteAttackingMoves()
+        {
+            return this.whiteAttacking;
         }
 
         public int getBoardSize()
@@ -89,7 +111,6 @@ namespace ChessB
         public List<Move> removeMovesThatPutInCheck(List<Move> validMoves)
         {
             List<Move> finalvalidMoves = new List<Move>();
-
 
             foreach (Move validMove in validMoves)
             {
@@ -187,12 +208,21 @@ namespace ChessB
                     if (piece.getIsWhite() == true)
                     {
                         this.whiteKingLocation = pieceEndLocation;
+                        piece.setHasMoved(true);
                     }
                     else
                     {
                         this.blackKingLocation = pieceEndLocation;
+                        piece.setHasMoved(true);
                     }
                 }
+
+                if (piece is ChessB.Rook)
+                {
+                    piece.setHasMoved(true);
+                }
+
+
 
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
@@ -223,7 +253,7 @@ namespace ChessB
                 if (piece != null)
                 {
 
-                    if (piece.GetType() != typeof(Pawn))
+                    if (piece.GetType() != typeof(Pawn) && piece.GetType() != typeof(King))
                     {
                         if (piece.getIsWhite() == true)
                         {
@@ -231,11 +261,18 @@ namespace ChessB
                         }
 
                     }
-                    else
+                    else if (piece.GetType() == typeof(Pawn))
                     {
                         if (piece.getIsWhite() == true)
                         {
                             whiteAttackingMoves.AddRange(piece.generateAttackingMoves(this));
+                        }
+                    }
+                    else if (piece.GetType() == typeof(King))
+                    {
+                        if (piece.getIsWhite() == true)
+                        {
+                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
                         }
                     }
 
@@ -262,7 +299,7 @@ namespace ChessB
                 if (piece != null)
                 {
 
-                    if (piece.GetType() != typeof(Pawn))
+                    if (piece.GetType() != typeof(Pawn) && piece.GetType() != typeof(King))
                     {
                         if (piece.getIsWhite() == false)
                         {
@@ -270,13 +307,21 @@ namespace ChessB
                         }
 
                     }
-                    else
+                    else if (piece.GetType() == typeof(Pawn))
                     {
                         if (piece.getIsWhite() == false)
                         {
                             blackAttackingMoves.AddRange(piece.generateAttackingMoves(this));
                         }
 
+                    }
+                    else if (piece.GetType() == typeof(King))
+                    {
+                        if (piece.getIsWhite() == false)
+                        {
+                            blackAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
+
+                        }
                     }
                 }
 
@@ -401,6 +446,9 @@ namespace ChessB
                     return;
                 }
             }
+
+            this.blackAttacking = generateBlackAttackingMoves(piece);
+            this.whiteAttacking = generateWhiteAttackingMoves(piece);
         }
     }
 }

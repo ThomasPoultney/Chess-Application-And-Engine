@@ -17,6 +17,7 @@ namespace ChessB
         protected string imagePath;
         private Image image;
 
+
         public Piece(bool isWhite, int location)
         {
             this.isWhite = isWhite;
@@ -69,6 +70,12 @@ namespace ChessB
             return new List<Move>();
         }
 
+        public virtual List<Move> generateValidMoves(Board board, Piece[] piece, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
+        {
+            return new List<Move>();
+        }
+
+
         public virtual void setCanMoveTwice(bool canMoveTwice)
         {
 
@@ -77,6 +84,15 @@ namespace ChessB
         public virtual List<Move> generateAttackingMoves(Board board)
         {
             return new List<Move>();
+        }
+
+        public virtual bool getHasMoved()
+        {
+            return true;
+        }
+        public virtual void setHasMoved(bool hasMoved)
+        {
+
         }
 
         public void setLocation(int location)

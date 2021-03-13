@@ -34,7 +34,6 @@ namespace ChessB
                 {
 
                     Ui.imageSelected = this;
-                    Console.WriteLine(this.name);
                     point = e.GetPosition(Ui.imageSelected);
                     Ui.resetPositionY = Canvas.GetTop(Ui.imageSelected);
                     Ui.resetPositionX = Canvas.GetLeft(Ui.imageSelected);
@@ -51,9 +50,20 @@ namespace ChessB
                             return;
                         }
                     }
-                
 
-                    Game.validMoves = Game.activeBoard.removeMovesThatPutInCheck(Ui.pieceSelected.generateValidMoves(Game.activeBoard, Game.activeBoard.getPiece()));
+                    Board activeBoard = Game.activeBoard;
+                    Piece pieceSelected = Ui.pieceSelected;
+                    Piece[] pieceArray = activeBoard.getPiece();
+                    if (Ui.pieceSelected.GetType() == typeof(King))
+                    {
+                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray,
+                                                                               activeBoard.generateBlackAttackingMoves(pieceArray),
+                                                                               activeBoard.generateWhiteAttackingMoves(pieceArray)));
+                    }
+                    else
+                    {
+                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray));
+                    }
 
                     Ui.drawValidMoves();
                     base.OnMouseDown(e);
@@ -91,9 +101,6 @@ namespace ChessB
                 {
                     resetImage();
                 }
-
-
-                //Console.WriteLine("Moved to Location = " + pieceEndLocation);
                 setUpTurn();
 
             }

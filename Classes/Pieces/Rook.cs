@@ -8,6 +8,7 @@ namespace ChessB
 {
     class Rook : Piece
     {
+        private bool hasMoved = false;
         public Rook(bool isWhite, int location) : base(isWhite, location)
         {
 
@@ -22,6 +23,16 @@ namespace ChessB
             {
                 this.imagePath = "C:/Users/tompo/source/repos/ChessAI/ChessImages/bR.PNG"; ;
             }
+        }
+
+        public override bool getHasMoved()
+        {
+            return this.hasMoved;
+        }
+
+        public override void setHasMoved(bool hasMoved)
+        {
+            this.hasMoved = hasMoved;
         }
 
         public override List<Move> generateValidMoves(Board board, Piece[] piece)
