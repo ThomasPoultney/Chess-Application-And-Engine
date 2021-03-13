@@ -11,12 +11,22 @@ namespace ChessB
         private readonly int startLoction;
         private readonly int endLocation;
         public Piece piece;
+        private readonly string tag;
+
+        public Move(int startLocation, int endLocation, Piece piece, string tag = "None")
+        {
+            this.startLoction = startLocation;
+            this.endLocation = endLocation;
+            this.piece = piece;
+            this.tag = tag;
+        }
 
         public Move(int startLocation, int endLocation, Piece piece)
         {
             this.startLoction = startLocation;
             this.endLocation = endLocation;
             this.piece = piece;
+            this.tag = "None";
         }
 
         public int getStartLocation()
@@ -34,4 +44,6 @@ namespace ChessB
             return this.piece;
         }
     }
+
+
 }
