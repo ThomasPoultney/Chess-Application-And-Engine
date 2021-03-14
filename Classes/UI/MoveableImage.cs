@@ -140,6 +140,15 @@ namespace ChessB
             }
         }
 
+        public void MoveImage(Image image, int location, Board board)
+        {
+
+            int xLocation = (location) % ((board.getBoardSize()));
+            int yLocation = (int)(location / board.getBoardSize());
+            Canvas.SetTop(image, xLocation);
+            Canvas.SetLeft(image, yLocation);
+        }
+
 
 
 

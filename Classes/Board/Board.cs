@@ -121,6 +121,20 @@ namespace ChessB
 
                 boardStateAfterMove[pieceEndLocation] = piece;
                 boardStateAfterMove[pieceStartLocation] = null;
+                if (validMove.getTag() == "CastleShort")
+                {
+                    Piece rook = validMove.getSecondaryPiece();
+                    boardStateAfterMove[rook.getLocation()] = null;
+                    boardStateAfterMove[validMove.getPiece().getLocation() - 1] = rook;
+                }
+
+                if (validMove.getTag() == "CastleLong")
+                {
+                    Piece rook = validMove.getSecondaryPiece();
+                    boardStateAfterMove[rook.getLocation()] = null;
+                    boardStateAfterMove[validMove.getPiece().getLocation() + 1] = rook;
+
+                }
                 int bKingLocation = this.blackKingLocation;
                 int wKingLocation = this.whiteKingLocation;
 
@@ -163,17 +177,23 @@ namespace ChessB
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();
+            String tag = move.getTag();
+            Piece secondaryPiece = null;
+
             bool moveIsValid = false;
             foreach (Move validmove in Game.validMoves)
             {
-                if (validmove.Equals(move))
+                if (validmove.getStartLocation() == move.getStartLocation() & validmove.getEndLocation() == move.getEndLocation() & validmove.getPiece() == move.getPiece())
                 {
                     moveIsValid = true;
+                    tag = validmove.getTag();
+                    secondaryPiece = validmove.getSecondaryPiece();
                 }
             }
 
             if (moveIsValid == false)
             {
+                Console.WriteLine("Invalid Move");
                 return false;
             }
             else
@@ -224,8 +244,37 @@ namespace ChessB
 
 
 
+
+
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
+
+                if (tag == "CastleShort")
+                {
+                    Console.WriteLine("CastleShort");
+                    Piece rook = move.getSecondaryPiece();
+                    int location = move.getPiece().getLocation() - 1;
+                    int xLocationForRook = (location) % ((this.getBoardSize())); ;
+                    int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
+                    Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
+                    Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
+                    this.setPieceAtLocation(secondaryPiece.getLocation(), null);
+                    this.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
+                }
+
+                if (tag == "CastleLong")
+                {
+                    Console.WriteLine("CastleLong");
+                    Piece rook = move.getSecondaryPiece();
+                    int location = move.getPiece().getLocation() + 1;
+                    int xLocationForRook = (location) % ((this.getBoardSize())); ;
+                    int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
+                    Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
+                    Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
+                    this.setPieceAtLocation(secondaryPiece.getLocation(), null);
+                    this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
+
+                }
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
                 this.setUpNextTurn();
                 moves.Add(move);

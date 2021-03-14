@@ -215,10 +215,10 @@ namespace ChessB
                         rookLongLocation = 0;
                         rookShortLocation = board.getBoardSize() - 1;
                     }
-                    else if (this.location == (board.getBoardSize() * (board.getBoardSize() - 1)) + 4)
+                    else if (this.location == ((board.getBoardSize() * (board.getBoardSize() - 1)) + 4))
                     {
                         rookLongLocation = (board.getBoardSize() * (board.getBoardSize() - 1));
-                        rookShortLocation = (board.getBoardSize() * (board.getBoardSize())) - 1;
+                        rookShortLocation = (board.getBoardSize() * board.getBoardSize()) - 1;
                     }
 
                     //if the rook short hasnt moved
@@ -245,7 +245,7 @@ namespace ChessB
 
                         if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
                         {
-                            Move move = new Move(currentLocation, currentLocation - 2, this, "CastleLong");
+                            Move move = new Move(currentLocation, currentLocation - 2, this, "CastleLong", piece[rookLongLocation]);
                             validMoves.Add(move);
                         }
 
@@ -258,7 +258,7 @@ namespace ChessB
                         bool squaresBetweenNotEmpty = false;
                         for (int i = rookShortLocation - 1; i > this.location; i--)
                         {
-                            if (blackAttackingMoves.Contains(i))
+                            if (tilesAttacked.Contains(i))
                             {
                                 inBetweenAttacked = true;
                             }
@@ -271,7 +271,7 @@ namespace ChessB
 
                         if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
                         {
-                            Move move = new Move(currentLocation, currentLocation + 2, this, "CastleShort");
+                            Move move = new Move(currentLocation, currentLocation + 2, this, "CastleShort", piece[rookShortLocation]);
                             validMoves.Add(move);
                         }
                     }

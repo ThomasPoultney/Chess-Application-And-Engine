@@ -36,10 +36,10 @@ namespace ChessB
             Canvas canvas = new Canvas();
             canvas.Margin = new Thickness(0, 0, 0, 0);
             Viewbox viewBox = new Viewbox();
-            canvas.Width = 500;
-            canvas.Height = 500;
-            mainWindow.Width = 500;
-            mainWindow.Height = 500;
+            canvas.Width = 600;
+            canvas.Height = 600;
+            mainWindow.Width = 800;
+            mainWindow.Height = 800;
 
             viewBox.Child = canvas;
 
@@ -64,9 +64,11 @@ namespace ChessB
             grid.RowDefinitions.Add(rowDef1);
             grid.RowDefinitions.Add(rowDef2);
 
-            colDef0.Width = new GridLength(4.0, GridUnitType.Star);
-            colDef1.Width = new GridLength(2.0, GridUnitType.Star);
-            rowDef1.Height = new GridLength(10.0, GridUnitType.Star);
+            colDef0.Width = new GridLength(5.0, GridUnitType.Star);
+            colDef1.Width = new GridLength(1.0, GridUnitType.Star);
+            rowDef0.Height = new GridLength(1.0, GridUnitType.Star);
+            rowDef1.Height = new GridLength(5.0, GridUnitType.Star);
+            rowDef2.Height = new GridLength(1.0, GridUnitType.Star);
 
             Grid.SetColumn(viewBox, 0);
             Grid.SetRow(viewBox, 1);

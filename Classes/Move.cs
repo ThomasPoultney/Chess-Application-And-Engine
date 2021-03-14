@@ -10,8 +10,19 @@ namespace ChessB
     {
         private readonly int startLoction;
         private readonly int endLocation;
-        public Piece piece;
+        private Piece piece;
         private readonly string tag;
+        //if another piece is involved e.g. castleing
+        private Piece secondaryPiece;
+
+        public Move(int startLocation, int endLocation, Piece piece, string tag = "None", Piece secondaryPiece = null)
+        {
+            this.startLoction = startLocation;
+            this.endLocation = endLocation;
+            this.piece = piece;
+            this.tag = tag;
+            this.secondaryPiece = secondaryPiece;
+        }
 
         public Move(int startLocation, int endLocation, Piece piece, string tag = "None")
         {
@@ -19,6 +30,7 @@ namespace ChessB
             this.endLocation = endLocation;
             this.piece = piece;
             this.tag = tag;
+            this.secondaryPiece = null;
         }
 
         public Move(int startLocation, int endLocation, Piece piece)
@@ -27,6 +39,7 @@ namespace ChessB
             this.endLocation = endLocation;
             this.piece = piece;
             this.tag = "None";
+            this.secondaryPiece = null;
         }
 
         public int getStartLocation()
@@ -42,6 +55,16 @@ namespace ChessB
         public Piece getPiece()
         {
             return this.piece;
+        }
+
+        public string getTag()
+        {
+            return this.tag;
+        }
+
+        public Piece getSecondaryPiece()
+        {
+            return this.secondaryPiece;
         }
     }
 
