@@ -35,7 +35,7 @@ namespace ChessB
         private Piece[] piece = new Piece[boardSize * boardSize];
 
         //stores each move that is made
-        private List<Move> moves = new List<Move>();
+        public List<Move> moves = new List<Move>();
 
         //stores all tiles being attacked by a player, used for checking for checkmate. 
         private List<int> whiteAttacking = new List<int>();
@@ -79,7 +79,11 @@ namespace ChessB
             }
 
             this.piece[location] = piece;
+        }
 
+        public List<Move> getMoves()
+        {
+            return this.moves;
         }
 
 
@@ -241,11 +245,6 @@ namespace ChessB
                 {
                     piece.setHasMoved(true);
                 }
-
-
-
-
-
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
 
@@ -277,7 +276,9 @@ namespace ChessB
                 }
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
                 this.setUpNextTurn();
-                moves.Add(move);
+                this.moves.Add(move);
+                Ui.moveList.ItemsSource = Game.activeBoard.moves;
+
                 return true;
             }
 

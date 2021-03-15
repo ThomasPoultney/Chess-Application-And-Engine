@@ -41,6 +41,8 @@ namespace ChessB
         public static List<Image> whiteCapturedImages = new List<Image>();
         public static List<Image> blackCapturedImages = new List<Image>();
 
+        public static ListView moveList = new ListView();
+
         public static void drawBoard(Board board, Canvas canvas)
         {
 
@@ -48,15 +50,12 @@ namespace ChessB
 
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
-
                 int xLocation = (i) % ((board.getBoardSize()));
                 int yLocation = (int)(i / board.getBoardSize());
 
-
-
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
-                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/CreamTile.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/GreenTIle.PNG";
+                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/White.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/Black.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
@@ -74,21 +73,18 @@ namespace ChessB
                 if (piece[i] != null)
                 {
                     MoveableImage mpi = new MoveableImage();
-
                     ImageSource pieceImage = new BitmapImage(new Uri(piece[i].getImagePath()));
+
                     mpi.Source = pieceImage;
                     mpi.Width = squareSize;
                     mpi.Height = squareSize;
 
                     Canvas.SetZIndex(mpi, 1500);
-
                     Canvas.SetTop(mpi, (board.getBoardSize() - 1 - yLocation) * squareSize);
                     Canvas.SetLeft(mpi, xLocation * squareSize);
                     canvas.Children.Add(mpi);
                     mpi.name = piece[i].getImagePath();
                     piece[i].setImage(mpi);
-
-
                 }
             }
         }
@@ -125,8 +121,6 @@ namespace ChessB
                     Canvas.SetLeft(validMoveImage, xLocation * squareSize);
                 }
 
-
-
                 canvas.Children.Add(validMoveImage);
                 validMoveImages.Add(validMoveImage);
 
@@ -157,10 +151,8 @@ namespace ChessB
 
         public static void addBlackCaptureImage(Image image, int pieceValue)
         {
-            image.Stretch = Stretch.Fill;
-            blackImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
             Grid.SetRow(image, 0);
-            Grid.SetColumn(image, numBlackPieceCaptured + 1);
+            Grid.SetColumn(image, numBlackPieceCaptured);
             blackScore += pieceValue;
 
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
@@ -172,10 +164,8 @@ namespace ChessB
 
         public static void addWhiteCaptureImage(Image image, int pieceValue)
         {
-            image.Stretch = Stretch.Fill;
-            whiteImageGrid.ColumnDefinitions.Add(new ColumnDefinition());
             Grid.SetRow(image, 0);
-            Grid.SetColumn(image, numWhitePieceCaptured + 1);
+            Grid.SetColumn(image, numWhitePieceCaptured);
             whiteScore += pieceValue;
 
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();

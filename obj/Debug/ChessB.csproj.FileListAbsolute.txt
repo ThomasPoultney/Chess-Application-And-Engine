@@ -1,6 +1,5 @@
 C:\Users\tompo\source\repos\ChessB\obj\Debug\App.g.cs
 C:\Users\tompo\source\repos\ChessB\obj\Debug\ChessB_MarkupCompile.cache
-C:\Users\tompo\source\repos\ChessB\obj\Debug\ChessB_MarkupCompile.lref
 C:\Users\tompo\source\repos\ChessB\obj\Debug\ChessB.csprojAssemblyReference.cache
 C:\Users\tompo\source\repos\ChessB\bin\Debug\ChessB.exe.config
 C:\Users\tompo\source\repos\ChessB\bin\Debug\ChessB.exe

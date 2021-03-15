@@ -8,8 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/chess.dll")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/chess.exe")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/chess.pdb")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("bp.png")]
 
 

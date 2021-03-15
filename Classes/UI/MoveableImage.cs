@@ -57,8 +57,8 @@ namespace ChessB
                     if (Ui.pieceSelected.GetType() == typeof(King))
                     {
                         Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray,
-                                                                               activeBoard.generateBlackAttackingMoves(pieceArray),
-                                                                               activeBoard.generateWhiteAttackingMoves(pieceArray)));
+                                                                                activeBoard.generateBlackAttackingMoves(pieceArray),
+                                                                                activeBoard.generateWhiteAttackingMoves(pieceArray)));
                     }
                     else
                     {
@@ -93,9 +93,6 @@ namespace ChessB
                 int endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
                 Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
-
-
-
 
                 if (Game.activeBoard.makeMove(move) == false)
                 {
@@ -142,17 +139,10 @@ namespace ChessB
 
         public void MoveImage(Image image, int location, Board board)
         {
-
             int xLocation = (location) % ((board.getBoardSize()));
             int yLocation = (int)(location / board.getBoardSize());
             Canvas.SetTop(image, xLocation);
             Canvas.SetLeft(image, yLocation);
         }
-
-
-
-
-
     }
-
 }

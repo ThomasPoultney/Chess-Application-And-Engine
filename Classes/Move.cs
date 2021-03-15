@@ -8,7 +8,7 @@ namespace ChessB
 {
     public struct Move
     {
-        private readonly int startLoction;
+        private readonly int startLocation;
         private readonly int endLocation;
         private Piece piece;
         private readonly string tag;
@@ -17,7 +17,7 @@ namespace ChessB
 
         public Move(int startLocation, int endLocation, Piece piece, string tag = "None", Piece secondaryPiece = null)
         {
-            this.startLoction = startLocation;
+            this.startLocation = startLocation;
             this.endLocation = endLocation;
             this.piece = piece;
             this.tag = tag;
@@ -26,7 +26,7 @@ namespace ChessB
 
         public Move(int startLocation, int endLocation, Piece piece, string tag = "None")
         {
-            this.startLoction = startLocation;
+            this.startLocation = startLocation;
             this.endLocation = endLocation;
             this.piece = piece;
             this.tag = tag;
@@ -35,7 +35,7 @@ namespace ChessB
 
         public Move(int startLocation, int endLocation, Piece piece)
         {
-            this.startLoction = startLocation;
+            this.startLocation = startLocation;
             this.endLocation = endLocation;
             this.piece = piece;
             this.tag = "None";
@@ -44,7 +44,7 @@ namespace ChessB
 
         public int getStartLocation()
         {
-            return this.startLoction;
+            return this.startLocation;
         }
 
         public int getEndLocation()
