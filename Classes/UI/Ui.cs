@@ -155,8 +155,15 @@ namespace ChessB
             Grid.SetColumn(image, numBlackPieceCaptured);
             blackScore += pieceValue;
 
-            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+            if (whiteScore - blackScore > 0)
+            {
+                whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+                blackScoreLabel.Content = "";
+            }
+
+
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
             blackImageGrid.Children.Add(image);
 
             numBlackPieceCaptured++;
@@ -168,8 +175,9 @@ namespace ChessB
             Grid.SetColumn(image, numWhitePieceCaptured);
             whiteScore += pieceValue;
 
-            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+
             whiteImageGrid.Children.Add(image);
 
             numWhitePieceCaptured++;

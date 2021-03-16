@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="mainWindow" x:Class="ChessB.MainWindow"
         mc:Ignorable="d"
-        Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="800" Height="800">
+        Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="800" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
 
     <Grid x:Name="UiGrid" Margin="0" ShowGridLines="True">
         <Grid.RowDefinitions>
@@ -14,7 +14,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
@@ -43,7 +43,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="whiteCapturedLabel" Content="Score" Grid.Column="16" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="18"/>
+                <Label x:Name="whiteCapturedLabel" Content="" Grid.Column="16" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="18"/>
 
             </Grid>
         </Viewbox>
@@ -68,7 +68,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label x:Name="blackCapturedLabel" Content="Score" Grid.Column="16" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="18"/>
+                <Label x:Name="blackCapturedLabel" Content="" Grid.Column="16" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="18"/>
 
             </Grid>
         </Viewbox>

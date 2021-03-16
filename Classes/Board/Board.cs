@@ -25,8 +25,9 @@ namespace ChessB
 
         /*This is the number of halfmoves since the last capture or pawn advance. 
         The field is used in the fifty-move rule.*/
-        private int numHalfMoves = 50;
+        private int fiftyMoveRule = 50;
 
+        private int moveNumber = 0;
         //The number of the full move. It starts at 1, and is incremented after Black's move.
         private int fullMoveNumber = 1;
 
@@ -274,11 +275,10 @@ namespace ChessB
                     this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
 
                 }
+                this.moveNumber++;
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
                 this.setUpNextTurn();
                 this.moves.Add(move);
-                Ui.moveList.ItemsSource = Game.activeBoard.moves;
-
                 return true;
             }
 
@@ -291,6 +291,59 @@ namespace ChessB
             //generate all openents moves, check if we are in check// if in check play check sounds
             //if current player has no valid moves and we are in check then oppenent wins
             //if current player has valid moves and not in check it is stalemate
+            List<Move> validMovesAfterCheck = new List<Move>();
+            blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
+            whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
+
+            Console.WriteLine(this.getIsWhiteTurn());
+            //genearates all moves for each piece
+            foreach (Piece piece in this.getPiece())
+            {
+                if (piece != null)
+                {
+                    if (piece.getIsWhite() == this.isWhiteTurn)
+                    {
+                        if (piece is ChessB.King)
+                        {
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece(), this.getBlackAttackingMoves(), this.getWhiteAttackingMoves())));
+                        }
+                        else
+                        {
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece())));
+                        }
+                    }
+                }
+
+            }
+
+            //removes moves that would leave king in check.
+
+            if (validMovesAfterCheck.Count == 0)
+            {
+                if (this.isWhiteTurn == true)
+                {
+                    if (blackAttacking.Contains(whiteKingLocation))
+                    {
+                        Console.WriteLine("Black Wins");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Stalemate");
+                    }
+                }
+                else
+                {
+                    if (whiteAttacking.Contains(blackKingLocation))
+                    {
+                        Console.WriteLine("White Wins");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Stalemate");
+                    }
+                }
+
+            }
 
         }
 
