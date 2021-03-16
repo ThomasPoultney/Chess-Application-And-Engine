@@ -10,7 +10,6 @@ namespace ChessB
     public class Piece
     {
         protected bool isWhite;
-
         //The relative point value of each piece e.g. 5 for rook
         protected int strength;
         protected int location;

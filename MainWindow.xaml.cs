@@ -21,7 +21,6 @@ namespace ChessB
         public MainWindow()
         {
 
-
             InitializeComponent();
 
             board = new Board();
@@ -39,7 +38,6 @@ namespace ChessB
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
             Window window = new Window();
-
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
