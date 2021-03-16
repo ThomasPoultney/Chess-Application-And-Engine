@@ -287,6 +287,7 @@ namespace ChessB
 
         private void setUpNextTurn()
         {
+            Ui.removeCheckTile();
             //generate all current players moves
             //generate all openents moves, check if we are in check// if in check play check sounds
             //if current player has no valid moves and we are in check then oppenent wins
@@ -295,6 +296,23 @@ namespace ChessB
             blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
             whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
 
+            if (this.isWhiteTurn == true)
+            {
+                if (blackAttacking.Contains(whiteKingLocation))
+                {
+                    Console.WriteLine("Check");
+                    Ui.drawCheckTile(whiteKingLocation);
+
+                }
+            }
+            else
+            {
+                if (whiteAttacking.Contains(blackKingLocation))
+                {
+                    Console.WriteLine("Check");
+                    Ui.drawCheckTile(blackKingLocation);
+                }
+            }
             Console.WriteLine(this.getIsWhiteTurn());
             //genearates all moves for each piece
             foreach (Piece piece in this.getPiece())

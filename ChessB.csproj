@@ -132,5 +132,26 @@
   <ItemGroup>
     <Resource Include="bP.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Red.Png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\GreenTile.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\WhiteTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BlueTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DarkBlueTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ValidMovePiece.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ValidMoveEmpty.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

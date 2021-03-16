@@ -43,6 +43,8 @@ namespace ChessB
 
         public static ListView moveList = new ListView();
 
+        public static Image checkImageToRemove;
+
         public static void drawBoard(Board board, Canvas canvas)
         {
 
@@ -54,8 +56,8 @@ namespace ChessB
                 int yLocation = (int)(i / board.getBoardSize());
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
-                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/White.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/Black.PNG";
+                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/creamTile.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/darkBlueTile.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
@@ -104,6 +106,7 @@ namespace ChessB
                 {
                     ImageSource validMoveImageSource = new BitmapImage(new Uri(VMImageEmptyTileURL));
                     validMoveImage.Source = validMoveImageSource;
+                    validMoveImage.Opacity = 0.5;
                     validMoveImage.Width = squareSize / 2;
                     validMoveImage.Height = squareSize / 2;
                     Canvas.SetZIndex(validMoveImage, 1000);
@@ -125,6 +128,29 @@ namespace ChessB
                 validMoveImages.Add(validMoveImage);
 
             }
+        }
+
+        public static void drawCheckTile(int kingLocation)
+        {
+            int xLocation = (kingLocation) % ((Game.activeBoard.getBoardSize()));
+            int yLocation = (int)(kingLocation / Game.activeBoard.getBoardSize());
+
+            Image checkImage = new Image();
+            String checkImageURL = "C:/Users/tompo/source/repos/ChessB/Images/red.PNG";
+            ImageSource checkImageSource = new BitmapImage(new Uri(checkImageURL));
+            checkImage.Source = checkImageSource;
+            checkImage.Width = squareSize;
+            checkImage.Height = squareSize;
+            Canvas.SetTop(checkImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize));
+            Canvas.SetLeft(checkImage, xLocation * squareSize);
+            Canvas.SetZIndex(checkImage, 500);
+            checkImageToRemove = checkImage;
+            canvas.Children.Add(checkImage);
+        }
+
+        public static void removeCheckTile()
+        {
+            canvas.Children.Remove(checkImageToRemove);
         }
 
         public static void removeValidMovesImages()
