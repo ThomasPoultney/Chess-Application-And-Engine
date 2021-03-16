@@ -210,12 +210,12 @@ namespace ChessB
 
                     if (this.getPiece()[pieceEndLocation].getIsWhite())
                     {
-                        Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
+                        MoveableImage image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
                         Ui.addBlackCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
                     }
                     else
                     {
-                        Image image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
+                        MoveableImage image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
                         Ui.addWhiteCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
                     }
 

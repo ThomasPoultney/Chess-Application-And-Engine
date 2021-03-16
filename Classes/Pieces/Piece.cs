@@ -15,7 +15,7 @@ namespace ChessB
         protected int strength;
         protected int location;
         protected string imagePath;
-        private Image image;
+        private MoveableImage image;
 
 
         public Piece(bool isWhite, int location)
@@ -25,7 +25,7 @@ namespace ChessB
 
         }
 
-        public Piece(bool isWhite, int location, Image image)
+        public Piece(bool isWhite, int location, MoveableImage image)
         {
             this.isWhite = isWhite;
             this.location = location;
@@ -33,12 +33,12 @@ namespace ChessB
 
         }
 
-        public void setImage(Image image)
+        public void setImage(MoveableImage image)
         {
             this.image = image;
         }
 
-        public Image getImage()
+        public MoveableImage getImage()
         {
             return this.image;
         }

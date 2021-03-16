@@ -8,12 +8,13 @@ using System.Linq;
 
 namespace ChessB
 {
-    class MoveableImage : Image
+    public class MoveableImage : Image
     {
 
         public static Point point;
         public String name;
         static int pieceStartLocation;
+        public bool isCapturedPiece;
 
         public MoveableImage()
         {
@@ -24,13 +25,22 @@ namespace ChessB
         {
         }
 
+        public bool getIsCapturedPiece()
+        {
+            return this.isCapturedPiece;
+        }
+
+        public void setIsCapturedPiece(bool isCaptured)
+        {
+            this.isCapturedPiece = isCaptured;
+        }
 
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
-                if (Ui.imageSelected == null)
+                if (Ui.imageSelected == null && this.getIsCapturedPiece() == false)
                 {
 
                     Ui.imageSelected = this;
@@ -67,6 +77,7 @@ namespace ChessB
 
                     Ui.drawValidMoves();
                     base.OnMouseDown(e);
+
                 }
                 else
                 {

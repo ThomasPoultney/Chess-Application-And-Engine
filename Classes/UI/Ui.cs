@@ -21,7 +21,7 @@ namespace ChessB
         public static Window MainWindow;
         public static Canvas canvas;
 
-        public static Image imageSelected = null;
+        public static MoveableImage imageSelected = null;
         public static Piece pieceSelected;
         public static List<Image> validMoveImages = new List<Image>();
         public static Grid grid;
@@ -175,10 +175,11 @@ namespace ChessB
             return value;
         }
 
-        public static void addBlackCaptureImage(Image image, int pieceValue)
+        public static void addBlackCaptureImage(MoveableImage image, int pieceValue)
         {
             Grid.SetRow(image, 0);
             Grid.SetColumn(image, numBlackPieceCaptured);
+            image.setIsCapturedPiece(true);
             blackScore += pieceValue;
 
             if (whiteScore - blackScore > 0)
@@ -195,10 +196,11 @@ namespace ChessB
             numBlackPieceCaptured++;
         }
 
-        public static void addWhiteCaptureImage(Image image, int pieceValue)
+        public static void addWhiteCaptureImage(MoveableImage image, int pieceValue)
         {
             Grid.SetRow(image, 0);
             Grid.SetColumn(image, numWhitePieceCaptured);
+            image.setIsCapturedPiece(true);
             whiteScore += pieceValue;
 
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();

@@ -38,6 +38,7 @@ namespace ChessB
             Ui.blackImageGrid = this.blackCapturedGrid;
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
+            Window window = new Window();
 
         }
 
