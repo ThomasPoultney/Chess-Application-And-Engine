@@ -73,6 +73,30 @@ namespace ChessB
             this.piece = piece;
         }
 
+        public void printBoard()
+        {
+            Console.WriteLine(this.getPiece().Length);
+            for (int i = 0; i < (boardSize * boardSize); i++)
+            {
+                if (this.getPiece()[i] == null)
+                {
+                    Console.Write('N');
+                }
+                else
+                {
+                    Console.Write(this.getPiece()[i].getLetterRepresentation());
+                }
+
+                if (i % boardSize == boardSize - 1)
+                {
+                    Console.Write("\n");
+                }
+            }
+        }
+
+
+
+
         public void setPieceAtLocation(int location, Piece piece)
         {
             if (piece != null)
@@ -204,7 +228,6 @@ namespace ChessB
             }
             else
             {
-
                 if (this.getPiece()[pieceEndLocation] != null)
                 {
                     Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
@@ -235,11 +258,13 @@ namespace ChessB
                     {
                         this.whiteKingLocation = pieceEndLocation;
                         piece.setHasMoved(true);
+                        this.whiteCanCastle = false;
                     }
                     else
                     {
                         this.blackKingLocation = pieceEndLocation;
                         piece.setHasMoved(true);
+                        this.blackCanCastle = false;
                     }
                 }
 
@@ -261,6 +286,14 @@ namespace ChessB
                     Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
                     this.setPieceAtLocation(secondaryPiece.getLocation(), null);
                     this.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
+                    if (move.getPiece().getIsWhite() == true)
+                    {
+                        this.whiteCanCastle = false;
+                    }
+                    else
+                    {
+                        this.blackCanCastle = false;
+                    }
                 }
 
                 if (tag == "CastleLong")
@@ -275,10 +308,18 @@ namespace ChessB
                     this.setPieceAtLocation(secondaryPiece.getLocation(), null);
                     this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
 
+                    if (move.getPiece().getIsWhite() == true)
+                    {
+                        this.whiteCanCastle = false;
+                    }
+                    else
+                    {
+                        this.blackCanCastle = false;
+                    }
                 }
 
 
-                if (tag == "promoteToRook")
+                if (move.getTag() == "promoteToRook")
                 {
                     Console.WriteLine("promoteToRook");
                     Ui.canvas.Children.Remove(move.getPiece().getImage());
@@ -302,7 +343,7 @@ namespace ChessB
 
                     Ui.canvas.Children.Add(promotedImage);
                 }
-                else if (tag == "promoteToBishop")
+                else if (move.getTag() == "promoteToBishop")
                 {
                     Console.WriteLine("promoteToBishop");
                     Ui.canvas.Children.Remove(move.getPiece().getImage());
@@ -326,7 +367,7 @@ namespace ChessB
                     Canvas.SetZIndex(promotedImage, 1100);
                     Ui.canvas.Children.Add(promotedImage);
                 }
-                else if (tag == "promoteToQueen")
+                else if (move.getTag() == "promoteToQueen")
                 {
                     Console.WriteLine("promoteToQueen");
                     Ui.canvas.Children.Remove(move.getPiece().getImage());
@@ -351,7 +392,7 @@ namespace ChessB
 
                     Ui.canvas.Children.Add(promotedImage);
                 }
-                else if (tag == "promoteToKnight")
+                else if (move.getTag() == "promoteToKnight")
                 {
                     Console.WriteLine("promoteToKnight");
                     Ui.canvas.Children.Remove(move.getPiece().getImage());
@@ -380,15 +421,13 @@ namespace ChessB
                 this.moves.Add(move);
                 return true;
             }
-
-
         }
 
         private void setUpNextTurn()
         {
             Ui.removeCheckTile();
             //generate all current players moves
-            //generate all openents moves, check if we are in check// if in check play check sounds
+            //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
             //if current player has no valid moves and we are in check then oppenent wins
             //if current player has valid moves and not in check it is stalemate
             List<Move> validMovesAfterCheck = new List<Move>();

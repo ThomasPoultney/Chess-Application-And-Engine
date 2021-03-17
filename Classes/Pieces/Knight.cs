@@ -14,6 +14,7 @@ namespace ChessB
             this.location = location;
             this.isWhite = isWhite;
             this.strength = 3;
+            this.letterRepresentation = 'N';
             if (isWhite == true)
             {
                 this.imagePath = "C:/Users/tompo/source/repos/ChessAI/ChessImages/wN.PNG"; ;

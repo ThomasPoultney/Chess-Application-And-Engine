@@ -8,12 +8,14 @@ namespace ChessB
 {
     class Bishop : Piece
     {
+
         public Bishop(bool isWhite, int location) : base(isWhite, location)
         {
 
             this.location = location;
             this.isWhite = isWhite;
             this.strength = 3;
+            this.letterRepresentation = 'B';
             if (isWhite == true)
             {
                 this.imagePath = "C:/Users/tompo/source/repos/ChessAI/ChessImages/wB.PNG";

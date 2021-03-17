@@ -10,7 +10,7 @@ namespace ChessB
     {
         public Queen(bool isWhite, int location) : base(isWhite, location)
         {
-
+            this.letterRepresentation = 'Q';
             this.location = location;
             this.isWhite = isWhite;
             this.strength = 8;

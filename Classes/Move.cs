@@ -11,7 +11,7 @@ namespace ChessB
         private readonly int startLocation;
         private readonly int endLocation;
         private Piece piece;
-        private readonly string tag;
+        private string tag;
         //if another piece is involved e.g. castleing
         private Piece secondaryPiece;
 
@@ -60,6 +60,11 @@ namespace ChessB
         public string getTag()
         {
             return this.tag;
+        }
+
+        public void setTag(String tag)
+        {
+            this.tag = tag;
         }
 
         public Piece getSecondaryPiece()

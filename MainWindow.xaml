@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ChessB"
     x:Name="mainWindow" x:Class="ChessB.MainWindow"
         mc:Ignorable="d"
-        Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="1000" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="1080" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
 
     <Grid x:Name="UiGrid" Margin="-4,0,4,0">
         <Grid.RowDefinitions>
@@ -73,7 +73,50 @@
             </Grid>
         </Viewbox>
         <Viewbox x:Name="chessNotationVB" Grid.Column="2" Margin="0" Grid.Row="1"/>
-        <Viewbox Grid.Column="2" Grid.Row="0" Margin="0" Stretch="Fill"/>
+        <Viewbox x:Name="BlackPromotionVB" Grid.Column="2" Grid.Row="2" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Grid.Row="0" Source="Images/wQ.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="1" Grid.Row="0" Source="Images/wR.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="2" Grid.Row="0" Source="Images/wN.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="3" Grid.Row="0" Source="Images/wB.PNG" Stretch="Fill" Width="15" Height="15" />
+                <RadioButton x:Name="wQRB" Grid.Column="0" Grid.Row="1" Margin="0" Height="14" VerticalAlignment="Top"/>
+                <RadioButton x:Name="wRRB" Grid.Column="1" Grid.Row="1" Margin="0"/>
+                <RadioButton x:Name="wNRB" Grid.Column="2" Grid.Row="1" Margin="0"/>
+                <RadioButton x:Name="wBRB" Grid.Column="3" Grid.Row="1" Margin="0"/>
+            </Grid>
+        </Viewbox>
+        <Viewbox x:Name="whitePromotionVB" Grid.Column="2" Grid.Row="0" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Grid.Row="0" Source="bQ.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="1" Grid.Row="0" Source="bR.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="2" Grid.Row="0" Source="Images/bN.PNG" Stretch="Fill" Width="15" Height="15" />
+                <Image Grid.Column="3" Grid.Row="0" Source="Images/bB.PNG" Stretch="Fill" Width="15" Height="15" />
+                <RadioButton x:Name="bQRB" Grid.Column="0" Grid.Row="1" Margin="0"/>
+                <RadioButton x:Name="bRRB" Grid.Column="1" Grid.Row="1" Margin="0"/>
+                <RadioButton x:Name="bNRB" Grid.Column="2" Grid.Row="1" Margin="0"/>
+                <RadioButton x:Name="bBRB" Grid.Column="3" Grid.Row="1" Margin="0"/>
+            </Grid>
+        </Viewbox>
     </Grid>
 
 </Window>

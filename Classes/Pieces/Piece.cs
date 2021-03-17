@@ -15,6 +15,7 @@ namespace ChessB
         protected int location;
         protected string imagePath;
         private MoveableImage image;
+        protected char letterRepresentation;
 
 
         public Piece(bool isWhite, int location)
@@ -67,6 +68,11 @@ namespace ChessB
         public virtual List<Move> generateValidMoves(Board board, Piece[] piece)
         {
             return new List<Move>();
+        }
+
+        public virtual char getLetterRepresentation()
+        {
+            return this.letterRepresentation;
         }
 
         public virtual List<Move> generateValidMoves(Board board, Piece[] piece, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)

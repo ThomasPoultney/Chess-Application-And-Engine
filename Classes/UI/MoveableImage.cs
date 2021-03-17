@@ -77,21 +77,16 @@ namespace ChessB
 
                     Ui.drawValidMoves();
                     base.OnMouseDown(e);
-
                 }
                 else
                 {
                     return;
                 }
             }
-
-
-
         }
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-
 
             if (Ui.imageSelected != null)
             {
@@ -104,6 +99,16 @@ namespace ChessB
                 int endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
                 Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
+                int boardSize = Game.activeBoard.getBoardSize();
+
+                if (Ui.pieceSelected is ChessB.Pawn)
+                {
+                    if (pieceEndLocation < boardSize || pieceEndLocation > boardSize * (boardSize - 1))
+                    {
+                        move.setTag("promoteToRook");
+                    }
+                }
+
 
                 if (Game.activeBoard.makeMove(move) == false)
                 {
@@ -111,11 +116,12 @@ namespace ChessB
                 }
                 setUpTurn();
 
+
             }
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();
-
+            Game.activeBoard.printBoard();
 
         }
 

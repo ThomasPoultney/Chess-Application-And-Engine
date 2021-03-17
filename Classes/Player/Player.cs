@@ -8,5 +8,6 @@ namespace ChessB
 {
     class Player
     {
+        bool isComputer = false;
     }
 }

@@ -153,5 +153,11 @@
   <ItemGroup>
     <Resource Include="Images\ValidMoveEmpty.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bQ.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bR.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
