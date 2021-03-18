@@ -211,6 +211,7 @@ namespace ChessB
             Piece piece = move.getPiece();
             String tag = move.getTag();
             Piece secondaryPiece = null;
+            Ui.removeHighlightTile();
 
             bool moveIsValid = false;
             foreach (Move validmove in Game.validMoves)
@@ -428,6 +429,8 @@ namespace ChessB
                 this.moveNumber++;
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
                 this.moves.Add(move);
+                Ui.drawHighlightTile(pieceStartLocation);
+                Ui.drawHighlightTile(pieceEndLocation);
                 this.setUpNextTurn();
                 return true;
             }

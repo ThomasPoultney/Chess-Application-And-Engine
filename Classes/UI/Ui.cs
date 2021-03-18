@@ -44,6 +44,8 @@ namespace ChessB
         public static ListView moveList = new ListView();
 
         public static Image checkImageToRemove;
+        public static List<Image> hightlightImages = new List<Image>();
+
 
         public static void drawBoard(Board board, Canvas canvas)
         {
@@ -146,6 +148,34 @@ namespace ChessB
             Canvas.SetZIndex(checkImage, 500);
             checkImageToRemove = checkImage;
             canvas.Children.Add(checkImage);
+        }
+
+        public static void drawHighlightTile(int highLightLocation)
+        {
+            int xLocation = (highLightLocation) % ((Game.activeBoard.getBoardSize()));
+            int yLocation = (int)(highLightLocation / Game.activeBoard.getBoardSize());
+
+            Image highlightImage = new Image();
+            String highlightImageURL = "C:/Users/tompo/source/repos/ChessB/Images/HighlightTile.PNG";
+            ImageSource highlightImageSource = new BitmapImage(new Uri(highlightImageURL));
+            highlightImage.Source = highlightImageSource;
+            highlightImage.Width = squareSize;
+            highlightImage.Height = squareSize;
+            highlightImage.Opacity = 0.75;
+            Canvas.SetTop(highlightImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize));
+            Canvas.SetLeft(highlightImage, xLocation * squareSize);
+            Canvas.SetZIndex(highlightImage, 500);
+            hightlightImages.Add(highlightImage);
+            canvas.Children.Add(highlightImage);
+        }
+
+        public static void removeHighlightTile()
+        {
+            foreach (Image image in hightlightImages)
+            {
+                canvas.Children.Remove(image);
+
+            }
         }
 
         public static void removeCheckTile()
