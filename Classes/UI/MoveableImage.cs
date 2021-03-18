@@ -105,7 +105,7 @@ namespace ChessB
                 {
                     if (pieceEndLocation < boardSize || pieceEndLocation > boardSize * (boardSize - 1))
                     {
-                        move.setTag("promoteToRook");
+                        move.setTag("promoteToQueen");
                     }
                 }
 
@@ -121,8 +121,6 @@ namespace ChessB
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();
-            Game.activeBoard.printBoard();
-
         }
 
         private void setUpTurn()

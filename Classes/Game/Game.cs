@@ -12,6 +12,5 @@ namespace ChessB
         public static List<Move> validMoves;
         private static Player whitePlayer;
         private static Player blackPlayer;
-
     }
 }

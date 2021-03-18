@@ -210,5 +210,10 @@ namespace ChessB
 
             numWhitePieceCaptured++;
         }
+
+        public static void applyMoveToGUI(Board board, Move move)
+        {
+
+        }
     }
 }

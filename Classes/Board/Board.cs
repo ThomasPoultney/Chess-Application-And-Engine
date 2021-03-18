@@ -138,6 +138,7 @@ namespace ChessB
             this.isWhiteTurn = isWhiteTurn;
         }
 
+        //Checks if board state after the move would leave you in checks, if it does it is removed
         public List<Move> removeMovesThatPutInCheck(List<Move> validMoves)
         {
             List<Move> finalvalidMoves = new List<Move>();
@@ -163,8 +164,8 @@ namespace ChessB
                     Piece rook = validMove.getSecondaryPiece();
                     boardStateAfterMove[rook.getLocation()] = null;
                     boardStateAfterMove[validMove.getPiece().getLocation() + 1] = rook;
-
                 }
+
                 int bKingLocation = this.blackKingLocation;
                 int wKingLocation = this.whiteKingLocation;
 
@@ -202,6 +203,7 @@ namespace ChessB
 
             return finalvalidMoves;
         }
+
         public bool makeMove(Move move)
         {
             int pieceEndLocation = move.getEndLocation();
@@ -228,6 +230,14 @@ namespace ChessB
             }
             else
             {
+
+                int endLocation = move.getEndLocation();
+                int endXLocation = (endLocation) % ((this.getBoardSize())); ;
+                int endYLocation = boardSize - 1 - (int)(endLocation / this.getBoardSize());
+                Canvas.SetTop(move.getPiece().getImage(), endYLocation * Ui.squareSize);
+                Canvas.SetLeft(move.getPiece().getImage(), endXLocation * Ui.squareSize);
+
+
                 if (this.getPiece()[pieceEndLocation] != null)
                 {
                     Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
@@ -417,8 +427,8 @@ namespace ChessB
                 }
                 this.moveNumber++;
                 this.setIsWhiteTurn(!this.getIsWhiteTurn());
-                this.setUpNextTurn();
                 this.moves.Add(move);
+                this.setUpNextTurn();
                 return true;
             }
         }
@@ -431,11 +441,10 @@ namespace ChessB
             //if current player has no valid moves and we are in check then oppenent wins
             //if current player has valid moves and not in check it is stalemate
             List<Move> validMovesAfterCheck = new List<Move>();
-            blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
-            whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
 
             if (this.isWhiteTurn == true)
             {
+                blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
                 if (blackAttacking.Contains(whiteKingLocation))
                 {
                     Console.WriteLine("Check");
@@ -445,14 +454,14 @@ namespace ChessB
             }
             else
             {
+                whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
                 if (whiteAttacking.Contains(blackKingLocation))
                 {
                     Console.WriteLine("Check");
                     Ui.drawCheckTile(blackKingLocation);
                 }
             }
-            Console.WriteLine(this.getIsWhiteTurn());
-            //genearates all moves for each piece
+            //genearates all valid moves for each piece
             foreach (Piece piece in this.getPiece())
             {
                 if (piece != null)
@@ -498,8 +507,44 @@ namespace ChessB
                         Console.WriteLine("Stalemate");
                     }
                 }
-
+                return;
             }
+
+            if (this.getIsWhiteTurn() == false)
+            {
+                makeRandomMove();
+            }
+        }
+
+        public void makeRandomMove()
+        {
+            whiteAttacking = generateWhiteAttackingMoves(this.getPiece());
+            blackAttacking = generateBlackAttackingMoves(this.getPiece());
+            List<Move> validMovesAfterCheck = new List<Move>();
+            foreach (Piece piece in this.getPiece())
+            {
+                if (piece != null)
+                {
+                    if (piece.getIsWhite() == this.isWhiteTurn)
+                    {
+                        if (piece is ChessB.King)
+                        {
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece(), this.getBlackAttackingMoves(), this.getWhiteAttackingMoves())));
+                        }
+                        else
+                        {
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece())));
+                        }
+                    }
+                }
+            }
+            var random = new Random();
+            int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
+            Console.WriteLine("Making Random Move");
+            Console.WriteLine(randomIndex);
+            Console.WriteLine(validMovesAfterCheck[randomIndex].getPiece());
+            Game.validMoves = validMovesAfterCheck;
+            makeMove(validMovesAfterCheck[randomIndex]);
 
         }
 
