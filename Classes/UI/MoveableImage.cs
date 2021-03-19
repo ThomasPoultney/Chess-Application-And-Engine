@@ -15,6 +15,7 @@ namespace ChessB
         public String name;
         static int pieceStartLocation;
         public bool isCapturedPiece;
+        private int currentPoint;
 
         public MoveableImage()
         {
@@ -134,6 +135,11 @@ namespace ChessB
             {
                 resetImage();
             }
+        }
+
+        protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
+        {
+
 
         }
 

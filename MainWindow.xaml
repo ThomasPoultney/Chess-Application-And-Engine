@@ -10,9 +10,9 @@
 
     <Grid x:Name="UiGrid" Margin="-4,0,4,0">
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="12*"/>
-            <RowDefinition/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -20,7 +20,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="boardVB" Grid.Column="1" Grid.Row="1" Stretch="Fill">
-            <Canvas x:Name="boardCanvas" Height="600" Width="600"/>
+            <Canvas x:Name="boardCanvas" Height="600" Width="600" MouseRightButtonDown="Canvas_RightMouseDown" MouseRightButtonUp="Canvas_RightMouseUp"/>
 
         </Viewbox>
         <Viewbox x:Name="whiteCapturedVB" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
