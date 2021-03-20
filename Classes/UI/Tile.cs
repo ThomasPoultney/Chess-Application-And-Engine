@@ -24,9 +24,11 @@ namespace ChessB
 
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
+
             if (Ui.tileSelected != null)
             {
                 Ui.drawArrow(this);
+                Ui.tileSelected = null;
             }
         }
 

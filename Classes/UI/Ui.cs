@@ -51,6 +51,8 @@ namespace ChessB
         public static UIElement tileSelected;
         public static Point ArrowStartingPosition;
 
+        public static List<Line> arrows = new List<Line>();
+        public static List<Polyline> polyArrows = new List<Polyline>();
 
         public static void drawBoard(Board board, Canvas canvas)
         {
@@ -271,11 +273,11 @@ namespace ChessB
             else
             {
                 Line line = new Line();
-                SolidColorBrush blackBrush = new SolidColorBrush();
-                blackBrush.Color = Colors.Red;
-                line.StrokeThickness = 10;
-                line.Stroke = blackBrush;
-                line.Opacity = 0.75;
+                SolidColorBrush brush = new SolidColorBrush();
+                brush.Color = Colors.DarkRed;
+                line.StrokeThickness = 7;
+                line.Stroke = brush;
+                line.Opacity = 1;
                 PointCollection polygonPoints = new PointCollection();
 
                 Console.WriteLine("start Position = \t\t\t " + Ui.ArrowStartingPosition + "\n");
@@ -306,26 +308,37 @@ namespace ChessB
                 polygonPoints.Add(rightArrowPoint);
 
                 poly.Points = polygonPoints;
-                poly.StrokeThickness = 10;
-                poly.Stroke = blackBrush;
-                poly.Opacity = 0.75;
-
-
-
+                poly.StrokeThickness = 7;
+                poly.Stroke = brush;
+                poly.Opacity = 1;
 
                 Canvas.SetLeft(line, 0 + Ui.squareSize / 2);
                 Canvas.SetTop(line, 0 + Ui.squareSize / 2);
-                Canvas.SetZIndex(line, 10000);
+                Canvas.SetZIndex(line, 10);
                 Ui.canvas.Children.Add(line);
 
                 Canvas.SetLeft(poly, 0 + Ui.squareSize / 2);
                 Canvas.SetTop(poly, 0 + Ui.squareSize / 2);
-                Canvas.SetZIndex(poly, 100001);
+                Canvas.SetZIndex(poly, 10);
                 Ui.canvas.Children.Add(poly);
-
+                Ui.arrows.Add(line);
+                Ui.polyArrows.Add(poly);
                 Ui.tileSelected = null;
             }
 
+        }
+
+        public static void removeArrows()
+        {
+            foreach (Line line in arrows)
+            {
+                canvas.Children.Remove(line);
+            }
+
+            foreach (Polyline polyline in polyArrows)
+            {
+                canvas.Children.Remove(polyline);
+            }
         }
     }
 }
