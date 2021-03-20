@@ -20,7 +20,7 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="boardVB" Grid.Column="1" Grid.Row="1" Stretch="Fill">
-            <Canvas x:Name="boardCanvas" Height="600" Width="600" MouseRightButtonDown="Canvas_RightMouseDown" MouseRightButtonUp="Canvas_RightMouseUp"/>
+            <Canvas x:Name="boardCanvas" Height="600" Width="600"/>
 
         </Viewbox>
         <Viewbox x:Name="whiteCapturedVB" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">

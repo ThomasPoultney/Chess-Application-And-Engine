@@ -17,7 +17,7 @@ namespace ChessB
 
     public partial class MainWindow : Window
     {
-        Point startingPosition;
+        Point startingPosition = new Point(0, 0);
         Board board;
         public MainWindow()
         {
@@ -55,35 +55,9 @@ namespace ChessB
 
         }
 
-        private void Canvas_RightMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void rectangleMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
         {
-
-            startingPosition = e.GetPosition(this);
-            Console.WriteLine("start Postion X = \t\t\t " + startingPosition + "\n");
-        }
-
-        private void Canvas_RightMouseUp(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            Polyline line = new Polyline();
-            SolidColorBrush blackBrush = new SolidColorBrush();
-            blackBrush.Color = Colors.Black;
-            line.StrokeThickness = 10;
-            line.Stroke = blackBrush;
-            PointCollection polygonPoints = new PointCollection();
-            Point endPosition = e.GetPosition(this);
-            Console.WriteLine("end Postion X = \t\t\t " + endPosition + "\n");
-
-            polygonPoints.Add(startingPosition);
-            polygonPoints.Add(endPosition);
-            line.Points = polygonPoints;
-
-            Canvas.SetLeft(line, startingPosition.X);
-            Canvas.SetTop(line, startingPosition.Y);
-            Canvas.SetZIndex(line, 2000);
-            Ui.canvas.Children.Add(line);
-
-
+            Console.WriteLine("click");
         }
     }
 }

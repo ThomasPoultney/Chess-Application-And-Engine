@@ -15,7 +15,8 @@ namespace ChessB
         public String name;
         static int pieceStartLocation;
         public bool isCapturedPiece;
-        private int currentPoint;
+        private Point lineStartPoint;
+        private Image tileSelected;
 
         public MoveableImage()
         {
@@ -135,12 +136,20 @@ namespace ChessB
             {
                 resetImage();
             }
+
+            if (Ui.tileSelected == null)
+            {
+                Ui.tileSelected = this;
+                Ui.ArrowStartingPosition = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+            }
         }
 
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
         {
-
-
+            if (Ui.tileSelected != null)
+            {
+                Ui.drawArrow(this);
+            }
         }
 
         public void resetImage()
