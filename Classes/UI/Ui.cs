@@ -237,7 +237,6 @@ namespace ChessB
                 blackScoreLabel.Content = "";
             }
 
-
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
             blackImageGrid.Children.Add(image);
@@ -281,11 +280,12 @@ namespace ChessB
                 line.StrokeThickness = 7;
                 line.Stroke = brush;
                 line.Opacity = 1;
+                line.IsHitTestVisible = false;
                 PointCollection polygonPoints = new PointCollection();
 
-                Console.WriteLine("start Position = \t\t\t " + Ui.ArrowStartingPosition + "\n");
+                //Console.WriteLine("start Position = \t\t\t " + Ui.ArrowStartingPosition + "\n");
 
-                Console.WriteLine("end Position = \t\t\t " + endPosition + "\n");
+                //Console.WriteLine("end Position = \t\t\t " + endPosition + "\n");
 
                 line.X1 = Ui.ArrowStartingPosition.X;
                 line.Y1 = Ui.ArrowStartingPosition.Y;
@@ -309,7 +309,7 @@ namespace ChessB
                 polygonPoints.Add(leftArrowPoint);
                 polygonPoints.Add(centerArrowPoint);
                 polygonPoints.Add(rightArrowPoint);
-
+                poly.IsHitTestVisible = false;
                 poly.Points = polygonPoints;
                 poly.StrokeThickness = 7;
                 poly.Stroke = brush;
