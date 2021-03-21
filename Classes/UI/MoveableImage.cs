@@ -38,7 +38,7 @@ namespace ChessB
         }
 
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
@@ -78,7 +78,7 @@ namespace ChessB
                     }
 
                     Ui.drawValidMoves();
-                    base.OnMouseDown(e);
+
                 }
                 else
                 {
@@ -134,14 +134,19 @@ namespace ChessB
         {
             if (Ui.imageSelected != null)
             {
+
                 resetImage();
             }
-
-            if (Ui.tileSelected == null)
+            else
             {
-                Ui.tileSelected = this;
-                Ui.ArrowStartingPosition = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+                if (Ui.tileSelected == null)
+                {
+                    Ui.tileSelected = this;
+                    Ui.ArrowStartingPosition = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
+                }
             }
+
+
         }
 
         protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
@@ -149,6 +154,7 @@ namespace ChessB
             if (Ui.tileSelected != null)
             {
                 Ui.drawArrow(this);
+                Ui.tileSelected = null;
             }
         }
 

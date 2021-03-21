@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="1080" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
 
-    <Grid x:Name="UiGrid" Margin="-4,0,4,0">
+    <Grid x:Name="UiGrid" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="12*"/>

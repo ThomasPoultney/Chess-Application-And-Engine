@@ -206,6 +206,7 @@ namespace ChessB
 
         public bool makeMove(Move move)
         {
+            Ui.removeArrows();
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();

@@ -314,12 +314,12 @@ namespace ChessB
 
                 Canvas.SetLeft(line, 0 + Ui.squareSize / 2);
                 Canvas.SetTop(line, 0 + Ui.squareSize / 2);
-                Canvas.SetZIndex(line, 10);
+                Canvas.SetZIndex(line, 10000);
                 Ui.canvas.Children.Add(line);
 
                 Canvas.SetLeft(poly, 0 + Ui.squareSize / 2);
                 Canvas.SetTop(poly, 0 + Ui.squareSize / 2);
-                Canvas.SetZIndex(poly, 10);
+                Canvas.SetZIndex(poly, 10000);
                 Ui.canvas.Children.Add(poly);
                 Ui.arrows.Add(line);
                 Ui.polyArrows.Add(poly);
