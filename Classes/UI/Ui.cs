@@ -227,6 +227,8 @@ namespace ChessB
             Grid.SetRow(image, 0);
             Grid.SetColumn(image, numBlackPieceCaptured);
             image.setIsCapturedPiece(true);
+            image.Width = 15;
+            image.Height = 15;
             blackScore += pieceValue;
 
             if (whiteScore - blackScore > 0)
@@ -249,7 +251,8 @@ namespace ChessB
             Grid.SetColumn(image, numWhitePieceCaptured);
             image.setIsCapturedPiece(true);
             whiteScore += pieceValue;
-
+            image.Width = 15;
+            image.Height = 15;
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
 
@@ -274,7 +277,7 @@ namespace ChessB
             {
                 Line line = new Line();
                 SolidColorBrush brush = new SolidColorBrush();
-                brush.Color = Colors.DarkRed;
+                brush.Color = Colors.DarkGoldenrod;
                 line.StrokeThickness = 7;
                 line.Stroke = brush;
                 line.Opacity = 1;
@@ -289,6 +292,7 @@ namespace ChessB
 
                 line.X2 = endPosition.X;
                 line.Y2 = endPosition.Y;
+
                 double theta = Math.Atan2(Ui.ArrowStartingPosition.Y - endPosition.Y, Ui.ArrowStartingPosition.X - endPosition.X);
                 double sint = Math.Sin(theta);
                 double cost = Math.Cos(theta);
@@ -301,7 +305,6 @@ namespace ChessB
                 Point leftArrowPoint = new Point(endPosition.X + (pointLength * cost + pointLength * sint),
                 endPosition.Y - (pointLength * cost - pointLength * sint));
                 Point centerArrowPoint = new Point(endPosition.X, endPosition.Y);
-
 
                 polygonPoints.Add(leftArrowPoint);
                 polygonPoints.Add(centerArrowPoint);
