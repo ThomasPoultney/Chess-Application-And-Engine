@@ -284,11 +284,13 @@ namespace ChessB
                             Ui.canvas.Children.Remove(capturedPawn.getImage());
                             if (capturedPawn.getIsWhite() == true)
                             {
-                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+
                             }
                             else
                             {
-                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+
                             }
 
                             setPieceAtLocation(endLocation - boardSize, null);
@@ -300,13 +302,12 @@ namespace ChessB
                             Ui.canvas.Children.Remove(capturedPawn.getImage());
                             if (capturedPawn.getIsWhite() == true)
                             {
-                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
                             }
                             else
                             {
-                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
                             }
-
 
                             setPieceAtLocation(endLocation + boardSize, null);
                         }
@@ -612,7 +613,7 @@ namespace ChessB
             var random = new Random();
             int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
             Game.validMoves = validMovesAfterCheck;
-            makeMove(validMovesAfterCheck[randomIndex]);
+            //makeMove(validMovesAfterCheck[randomIndex]);
 
         }
 
