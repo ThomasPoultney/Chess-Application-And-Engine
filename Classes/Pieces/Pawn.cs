@@ -86,7 +86,6 @@ namespace ChessB
                                     else
                                     {
                                         validMoves.Add(move);
-                                        board.setEnPassantLocation(move.getEndLocation() - board.getBoardSize());
                                     }
 
                                 }
@@ -118,6 +117,14 @@ namespace ChessB
 
                             }
                         }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation + (board.getBoardSize() - 1))
+                            {
+                                Move move = new Move(currentLocation, currentLocation + (board.getBoardSize() - 1), this, "enPassant");
+                                validMoves.Add(move);
+                            }
+                        }
                     }
 
 
@@ -143,9 +150,19 @@ namespace ChessB
 
                             }
                         }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation + (board.getBoardSize() + 1))
+                            {
+                                Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this, "enPassant");
+                                validMoves.Add(move);
+                            }
+                        }
                     }
 
                 }
+
+
 
                 //pawns moving down
             }
@@ -179,7 +196,6 @@ namespace ChessB
                                     else
                                     {
                                         validMoves.Add(move);
-                                        board.setEnPassantLocation(move.getEndLocation() + board.getBoardSize());
                                     }
 
                                 }
@@ -210,6 +226,15 @@ namespace ChessB
                                 }
                             }
                         }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() + 1))
+                            {
+                                Move move = new Move(currentLocation, (nextLocation - (board.getBoardSize() + 1)), this, "enPassant");
+                                validMoves.Add(move);
+
+                            }
+                        }
                     }
 
 
@@ -232,8 +257,14 @@ namespace ChessB
                                 {
                                     validMoves.Add(move);
                                 }
-
-
+                            }
+                        }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() - 1))
+                            {
+                                Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this, "enPassant");
+                                validMoves.Add(move);
                             }
                         }
                     }

@@ -217,6 +217,7 @@ namespace ChessB
 
         public bool makeMove(Move move)
         {
+            setEnPassantLocation(-50);
             Ui.removeArrows();
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
@@ -273,6 +274,60 @@ namespace ChessB
                 if (piece is ChessB.Pawn)
                 {
                     piece.setCanMoveTwice(false);
+                    //set enpassant squares
+                    Console.WriteLine("EP" + getEnPassantLocation());
+                    if (tag == "enPassant")
+                    {
+                        Console.WriteLine("EnPassant");
+                        if (pieceStartLocation < pieceEndLocation)
+                        {
+                            Piece capturedPawn = getPiece()[endLocation - boardSize];
+                            Ui.canvas.Children.Remove(capturedPawn.getImage());
+                            if (capturedPawn.getIsWhite() == true)
+                            {
+                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                            }
+                            else
+                            {
+                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                            }
+
+                            setPieceAtLocation(endLocation - boardSize, null);
+
+                        }
+                        else
+                        {
+                            Piece capturedPawn = getPiece()[endLocation + boardSize];
+                            Ui.canvas.Children.Remove(capturedPawn.getImage());
+                            if (capturedPawn.getIsWhite() == true)
+                            {
+                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                            }
+                            else
+                            {
+                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
+                            }
+
+
+                            setPieceAtLocation(endLocation + boardSize, null);
+                        }
+                    }
+                    else
+                    {
+                        if (move.getStartLocation() - move.getEndLocation() == -(this.getBoardSize() * 2))
+                        {
+                            setEnPassantLocation(move.getStartLocation() + this.getBoardSize());
+                        }
+
+                        if (move.getStartLocation() - move.getEndLocation() == (this.getBoardSize() * 2))
+                        {
+                            setEnPassantLocation(move.getStartLocation() - this.getBoardSize());
+                        }
+                    }
+                    Console.WriteLine("EP" + getEnPassantLocation());
+
+
+
                 }
 
                 if (piece is ChessB.King)
@@ -291,12 +346,16 @@ namespace ChessB
                     }
                 }
 
+
+
                 if (piece is ChessB.Rook)
                 {
                     piece.setHasMoved(true);
                 }
                 this.setPieceAtLocation(pieceEndLocation, piece);
                 this.setPieceAtLocation(pieceStartLocation, null);
+
+
 
                 if (tag == "CastleShort")
                 {
@@ -451,6 +510,8 @@ namespace ChessB
         private void setUpNextTurn()
         {
             Ui.removeCheckTile();
+            //reset enpassant square
+
             //generate all current players moves
             //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
             //if current player has no valid moves and we are in check then oppenent wins
@@ -559,7 +620,7 @@ namespace ChessB
             Console.WriteLine(randomIndex);
             Console.WriteLine(validMovesAfterCheck[randomIndex].getPiece());
             Game.validMoves = validMovesAfterCheck;
-            makeMove(validMovesAfterCheck[randomIndex]);
+            // makeMove(validMovesAfterCheck[randomIndex]);
 
         }
 
