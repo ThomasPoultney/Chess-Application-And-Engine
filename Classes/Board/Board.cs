@@ -613,7 +613,7 @@ namespace ChessB
             var random = new Random();
             int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
             Game.validMoves = validMovesAfterCheck;
-            //makeMove(validMovesAfterCheck[randomIndex]);
+            makeMove(validMovesAfterCheck[randomIndex]);
 
         }
 
