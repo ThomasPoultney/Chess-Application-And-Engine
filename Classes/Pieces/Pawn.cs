@@ -86,6 +86,7 @@ namespace ChessB
                                     else
                                     {
                                         validMoves.Add(move);
+                                        board.setEnPassantLocation(move.getEndLocation() - board.getBoardSize());
                                     }
 
                                 }

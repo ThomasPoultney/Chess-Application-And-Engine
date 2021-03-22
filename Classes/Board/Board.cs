@@ -32,6 +32,7 @@ namespace ChessB
         //The number of the full move. It starts at 1, and is incremented after Black's move.
         private int fullMoveNumber = 1;
 
+        private int enPassantLocation;
 
         //represents current state of board
         private Piece[] piece = new Piece[boardSize * boardSize];
@@ -71,6 +72,16 @@ namespace ChessB
         public void setPiece(Piece[] piece)
         {
             this.piece = piece;
+        }
+
+        public void setEnPassantLocation(int location)
+        {
+            this.enPassantLocation = location;
+        }
+
+        public int getEnPassantLocation()
+        {
+            return this.enPassantLocation;
         }
 
         public void printBoard()
