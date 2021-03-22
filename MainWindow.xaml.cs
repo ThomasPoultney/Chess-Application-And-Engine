@@ -57,7 +57,6 @@ namespace ChessB
 
         private void rectangleMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Console.WriteLine("click");
         }
     }
 }

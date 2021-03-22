@@ -275,7 +275,6 @@ namespace ChessB
                 {
                     piece.setCanMoveTwice(false);
                     //set enpassant squares
-                    Console.WriteLine("EP" + getEnPassantLocation());
                     if (tag == "enPassant")
                     {
                         Console.WriteLine("EnPassant");
@@ -324,10 +323,6 @@ namespace ChessB
                             setEnPassantLocation(move.getStartLocation() - this.getBoardSize());
                         }
                     }
-                    Console.WriteLine("EP" + getEnPassantLocation());
-
-
-
                 }
 
                 if (piece is ChessB.King)
@@ -616,11 +611,8 @@ namespace ChessB
             }
             var random = new Random();
             int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
-            Console.WriteLine("Making Random Move");
-            Console.WriteLine(randomIndex);
-            Console.WriteLine(validMovesAfterCheck[randomIndex].getPiece());
             Game.validMoves = validMovesAfterCheck;
-            // makeMove(validMovesAfterCheck[randomIndex]);
+            makeMove(validMovesAfterCheck[randomIndex]);
 
         }
 
