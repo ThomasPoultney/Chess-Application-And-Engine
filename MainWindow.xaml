@@ -11,17 +11,16 @@
     <Grid x:Name="UiGrid" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="16*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="boardVB" Grid.Column="1" Grid.Row="1">
-            <Canvas x:Name="boardCanvas" Height="600" Width="600"/>
-
+            <Canvas x:Name="boardCanvas" MinWidth="200" MinHeight="200" Width="500" Height="500"/>
         </Viewbox>
         <Viewbox x:Name="whiteCapturedVB" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid x:Name="whiteCapturedGrid" HorizontalAlignment="Left">
@@ -72,7 +71,7 @@
                 <Label x:Name="blackCapturedLabel" Content="" Grid.Column="16" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" FontSize="11"/>
             </Grid>
         </Viewbox>
-        <Viewbox x:Name="chessNotationVB" Grid.Column="2" Margin="0" Grid.Row="1"/>
+        <Viewbox x:Name="chessNotationVB" Grid.Column="2" Margin="0" Grid.Row="1" Stretch="Fill"/>
         <Viewbox x:Name="BlackPromotionVB" Grid.Column="2" Grid.Row="2" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>

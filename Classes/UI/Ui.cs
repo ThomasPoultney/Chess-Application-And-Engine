@@ -277,7 +277,7 @@ namespace ChessB
                 Line line = new Line();
                 SolidColorBrush brush = new SolidColorBrush();
                 brush.Color = Colors.DarkGoldenrod;
-                line.StrokeThickness = 7;
+                line.StrokeThickness = 2;
                 line.Stroke = brush;
                 line.Opacity = 1;
                 line.IsHitTestVisible = false;
@@ -311,7 +311,7 @@ namespace ChessB
                 polygonPoints.Add(rightArrowPoint);
                 poly.IsHitTestVisible = false;
                 poly.Points = polygonPoints;
-                poly.StrokeThickness = 7;
+                poly.StrokeThickness = 2;
                 poly.Stroke = brush;
                 poly.Opacity = 1;
 

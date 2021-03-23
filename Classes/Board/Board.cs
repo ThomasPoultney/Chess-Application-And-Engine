@@ -233,6 +233,7 @@ namespace ChessB
                 {
                     moveIsValid = true;
                     tag = validmove.getTag();
+                    Console.WriteLine(tag);
                     secondaryPiece = validmove.getSecondaryPiece();
                 }
             }
@@ -324,183 +325,188 @@ namespace ChessB
                             setEnPassantLocation(move.getStartLocation() - this.getBoardSize());
                         }
                     }
+
                 }
-
-                if (piece is ChessB.King)
-                {
-                    if (piece.getIsWhite() == true)
-                    {
-                        this.whiteKingLocation = pieceEndLocation;
-                        piece.setHasMoved(true);
-                        this.whiteCanCastle = false;
-                    }
-                    else
-                    {
-                        this.blackKingLocation = pieceEndLocation;
-                        piece.setHasMoved(true);
-                        this.blackCanCastle = false;
-                    }
-                }
-
-
-
-                if (piece is ChessB.Rook)
-                {
-                    piece.setHasMoved(true);
-                }
-                this.setPieceAtLocation(pieceEndLocation, piece);
-                this.setPieceAtLocation(pieceStartLocation, null);
-
-
-
-                if (tag == "CastleShort")
-                {
-                    Console.WriteLine("CastleShort");
-                    Piece rook = move.getSecondaryPiece();
-                    int location = move.getPiece().getLocation() - 1;
-                    int xLocationForRook = (location) % ((this.getBoardSize())); ;
-                    int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
-                    Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
-                    Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
-                    this.setPieceAtLocation(secondaryPiece.getLocation(), null);
-                    this.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
-                    if (move.getPiece().getIsWhite() == true)
-                    {
-                        this.whiteCanCastle = false;
-                    }
-                    else
-                    {
-                        this.blackCanCastle = false;
-                    }
-                }
-
-                if (tag == "CastleLong")
-                {
-                    Console.WriteLine("CastleLong");
-                    Piece rook = move.getSecondaryPiece();
-                    int location = move.getPiece().getLocation() + 1;
-                    int xLocationForRook = (location) % ((this.getBoardSize())); ;
-                    int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
-                    Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
-                    Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
-                    this.setPieceAtLocation(secondaryPiece.getLocation(), null);
-                    this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
-
-                    if (move.getPiece().getIsWhite() == true)
-                    {
-                        this.whiteCanCastle = false;
-                    }
-                    else
-                    {
-                        this.blackCanCastle = false;
-                    }
-                }
-
-
-                if (move.getTag() == "promoteToRook")
-                {
-                    Console.WriteLine("promoteToRook");
-                    Ui.canvas.Children.Remove(move.getPiece().getImage());
-                    int location = move.getPiece().getLocation();
-                    int xLocation = (location) % ((this.getBoardSize())); ;
-                    int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                    Rook promotedPiece = new Rook(move.getPiece().getIsWhite(), move.getEndLocation());
-                    MoveableImage promotedImage = new MoveableImage();
-                    promotedPiece.setImage(promotedImage);
-                    String promotedImageURL = promotedPiece.getImagePath();
-
-                    ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                    promotedImage.Source = promotedPieceSource;
-                    promotedImage.Width = Ui.squareSize;
-                    promotedImage.Height = Ui.squareSize;
-                    setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                    Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                    Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                    Canvas.SetZIndex(promotedImage, 1100);
-
-                    Ui.canvas.Children.Add(promotedImage);
-                }
-                else if (move.getTag() == "promoteToBishop")
-                {
-                    Console.WriteLine("promoteToBishop");
-                    Ui.canvas.Children.Remove(move.getPiece().getImage());
-                    int location = move.getPiece().getLocation();
-                    int xLocation = (location) % ((this.getBoardSize())); ;
-                    int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                    Bishop promotedPiece = new Bishop(move.getPiece().getIsWhite(), move.getEndLocation());
-
-                    MoveableImage promotedImage = new MoveableImage();
-                    promotedPiece.setImage(promotedImage);
-                    String promotedImageURL = promotedPiece.getImagePath();
-
-                    ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                    promotedImage.Source = promotedPieceSource;
-                    promotedImage.Width = Ui.squareSize;
-                    promotedImage.Height = Ui.squareSize;
-                    setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                    Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                    Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                    Canvas.SetZIndex(promotedImage, 1100);
-                    Ui.canvas.Children.Add(promotedImage);
-                }
-                else if (move.getTag() == "promoteToQueen")
-                {
-                    Console.WriteLine("promoteToQueen");
-                    Ui.canvas.Children.Remove(move.getPiece().getImage());
-                    int location = move.getPiece().getLocation();
-                    int xLocation = (location) % ((this.getBoardSize())); ;
-                    int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                    Queen promotedPiece = new Queen(move.getPiece().getIsWhite(), move.getEndLocation());
-                    MoveableImage promotedImage = new MoveableImage();
-                    promotedPiece.setImage(promotedImage);
-                    String promotedImageURL = promotedPiece.getImagePath();
-
-
-                    ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                    promotedImage.Source = promotedPieceSource;
-                    promotedImage.Width = Ui.squareSize;
-                    promotedImage.Height = Ui.squareSize;
-                    setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                    Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                    Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                    Canvas.SetZIndex(promotedImage, 1100);
-
-                    Ui.canvas.Children.Add(promotedImage);
-                }
-                else if (move.getTag() == "promoteToKnight")
-                {
-                    Console.WriteLine("promoteToKnight");
-                    Ui.canvas.Children.Remove(move.getPiece().getImage());
-                    int location = move.getPiece().getLocation();
-                    int xLocation = (location) % ((this.getBoardSize())); ;
-                    int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                    Knight promotedPiece = new Knight(move.getPiece().getIsWhite(), move.getEndLocation());
-                    MoveableImage promotedImage = new MoveableImage();
-                    promotedPiece.setImage(promotedImage);
-                    String promotedImageURL = promotedPiece.getImagePath();
-
-                    ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                    promotedImage.Source = promotedPieceSource;
-                    promotedImage.Width = Ui.squareSize;
-                    promotedImage.Height = Ui.squareSize;
-                    setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                    Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                    Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                    Canvas.SetZIndex(promotedImage, 1100);
-                    Ui.canvas.Children.Add(promotedImage);
-                }
-                this.moveNumber++;
-                this.setIsWhiteTurn(!this.getIsWhiteTurn());
-                this.moves.Add(move);
-                Ui.drawHighlightTile(pieceStartLocation);
-                Ui.drawHighlightTile(pieceEndLocation);
-                this.setUpNextTurn();
-                return true;
             }
+
+            if (piece is ChessB.King)
+            {
+                if (piece.getIsWhite() == true)
+                {
+                    this.whiteKingLocation = pieceEndLocation;
+                    piece.setHasMoved(true);
+                    this.whiteCanCastle = false;
+                }
+                else
+                {
+                    this.blackKingLocation = pieceEndLocation;
+                    piece.setHasMoved(true);
+                    this.blackCanCastle = false;
+                }
+            }
+
+
+
+            if (piece is ChessB.Rook)
+            {
+                piece.setHasMoved(true);
+            }
+            this.setPieceAtLocation(pieceEndLocation, piece);
+            this.setPieceAtLocation(pieceStartLocation, null);
+
+
+
+            if (tag == "CastleShort")
+            {
+                Console.WriteLine("CastleShort");
+                Piece rook = move.getSecondaryPiece();
+                int location = move.getPiece().getLocation() - 1;
+                int xLocationForRook = (location) % ((this.getBoardSize())); ;
+                int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
+                Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
+                Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
+                this.setPieceAtLocation(secondaryPiece.getLocation(), null);
+                this.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    this.whiteCanCastle = false;
+                }
+                else
+                {
+                    this.blackCanCastle = false;
+                }
+            }
+
+            if (tag == "CastleLong")
+            {
+                Console.WriteLine("CastleLong");
+                Piece rook = move.getSecondaryPiece();
+                int location = move.getPiece().getLocation() + 1;
+                int xLocationForRook = (location) % ((this.getBoardSize())); ;
+                int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
+                Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
+                Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
+                this.setPieceAtLocation(secondaryPiece.getLocation(), null);
+                this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
+
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    this.whiteCanCastle = false;
+                }
+                else
+                {
+                    this.blackCanCastle = false;
+                }
+            }
+
+            if (move.getTag() == "promoteToRook")
+            {
+                Console.WriteLine("promoteToRook");
+                Ui.canvas.Children.Remove(move.getPiece().getImage());
+                int location = move.getPiece().getLocation();
+                int xLocation = (location) % ((this.getBoardSize())); ;
+                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
+                Rook promotedPiece = new Rook(move.getPiece().getIsWhite(), move.getEndLocation());
+                MoveableImage promotedImage = new MoveableImage();
+                promotedPiece.setImage(promotedImage);
+                String promotedImageURL = promotedPiece.getImagePath();
+
+                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
+                promotedImage.Source = promotedPieceSource;
+                promotedImage.Width = Ui.squareSize;
+                promotedImage.Height = Ui.squareSize;
+                setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
+                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
+                Canvas.SetZIndex(promotedImage, 1100);
+
+                Ui.canvas.Children.Add(promotedImage);
+            }
+            else if (move.getTag() == "promoteToBishop")
+            {
+                Console.WriteLine("promoteToBishop");
+                Ui.canvas.Children.Remove(move.getPiece().getImage());
+                int location = move.getPiece().getLocation();
+                int xLocation = (location) % ((this.getBoardSize())); ;
+                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
+                Bishop promotedPiece = new Bishop(move.getPiece().getIsWhite(), move.getEndLocation());
+
+                MoveableImage promotedImage = new MoveableImage();
+                promotedPiece.setImage(promotedImage);
+                String promotedImageURL = promotedPiece.getImagePath();
+
+                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
+                promotedImage.Source = promotedPieceSource;
+                promotedImage.Width = Ui.squareSize;
+                promotedImage.Height = Ui.squareSize;
+                setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
+                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
+                Canvas.SetZIndex(promotedImage, 1100);
+                Ui.canvas.Children.Add(promotedImage);
+            }
+            else if (move.getTag() == "promoteToQueen")
+            {
+                Console.WriteLine("promoteToQueen");
+                Ui.canvas.Children.Remove(move.getPiece().getImage());
+                int location = move.getPiece().getLocation();
+                int xLocation = (location) % ((this.getBoardSize())); ;
+                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
+                Queen promotedPiece = new Queen(move.getPiece().getIsWhite(), move.getEndLocation());
+                MoveableImage promotedImage = new MoveableImage();
+                promotedPiece.setImage(promotedImage);
+                String promotedImageURL = promotedPiece.getImagePath();
+
+
+                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
+                promotedImage.Source = promotedPieceSource;
+                promotedImage.Width = Ui.squareSize;
+                promotedImage.Height = Ui.squareSize;
+                setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
+                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
+                Canvas.SetZIndex(promotedImage, 1100);
+
+                Ui.canvas.Children.Add(promotedImage);
+                this.printBoard();
+            }
+            else if (move.getTag() == "promoteToKnight")
+            {
+                Console.WriteLine("promoteToKnight");
+                Ui.canvas.Children.Remove(move.getPiece().getImage());
+                int location = move.getPiece().getLocation();
+                int xLocation = (location) % ((this.getBoardSize())); ;
+                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
+                Knight promotedPiece = new Knight(move.getPiece().getIsWhite(), move.getEndLocation());
+                MoveableImage promotedImage = new MoveableImage();
+                promotedPiece.setImage(promotedImage);
+                String promotedImageURL = promotedPiece.getImagePath();
+
+                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
+                promotedImage.Source = promotedPieceSource;
+                promotedImage.Width = Ui.squareSize;
+                promotedImage.Height = Ui.squareSize;
+                setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
+                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
+                Canvas.SetZIndex(promotedImage, 1100);
+                Ui.canvas.Children.Add(promotedImage);
+            }
+
+
+
+            this.moveNumber++;
+            this.setIsWhiteTurn(!this.getIsWhiteTurn());
+            this.moves.Add(move);
+            Ui.drawHighlightTile(pieceStartLocation);
+            Ui.drawHighlightTile(pieceEndLocation);
+            this.setUpNextTurn();
+            return true;
+
         }
 
         private void setUpNextTurn()
@@ -584,7 +590,7 @@ namespace ChessB
 
             if (this.getIsWhiteTurn() == false)
             {
-                makeRandomMove();
+                //makeRandomMove();
             }
         }
 
