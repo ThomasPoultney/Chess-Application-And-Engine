@@ -105,7 +105,7 @@ namespace ChessB
 
                 if (Ui.pieceSelected is ChessB.Pawn)
                 {
-                    if (pieceEndLocation < boardSize || pieceEndLocation > boardSize * (boardSize - 1))
+                    if (pieceEndLocation < boardSize || pieceEndLocation >= boardSize * (boardSize - 1))
                     {
                         move.setTag("promoteToQueen");
                     }

@@ -55,7 +55,7 @@ namespace ChessB
                     if (piece[nextLocation + board.getBoardSize()] == null)
                     {
                         Move moveOneForward = new Move(nextLocation, nextLocation + board.getBoardSize(), this);
-                        if (moveOneForward.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || moveOneForward.getEndLocation() < board.getBoardSize())
+                        if (moveOneForward.getEndLocation() >= (board.getBoardSize() * (board.getBoardSize() - 1)) || moveOneForward.getEndLocation() < board.getBoardSize())
                         {
                             validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToRook"));
                             validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToQueen"));
@@ -71,7 +71,7 @@ namespace ChessB
 
                         if (canMoveTwice == true)
                         {
-                            if (nextLocation + board.getBoardSize() < (board.getBoardSize() * (board.getBoardSize() - 2)))
+                            if (nextLocation + board.getBoardSize() <= (board.getBoardSize() * (board.getBoardSize() - 2)))
                             {
                                 if (piece[nextLocation + (board.getBoardSize() * 2)] == null)
                                 {
