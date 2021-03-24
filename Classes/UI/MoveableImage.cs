@@ -107,7 +107,14 @@ namespace ChessB
                 {
                     if (pieceEndLocation < boardSize || pieceEndLocation >= boardSize * (boardSize - 1))
                     {
-                        move.setTag("promoteToQueen");
+                        if (move.getPiece().getIsWhite() == true)
+                        {
+                            move.setTag(Ui.whiteUpgradeChoice);
+                        }
+                        else
+                        {
+                            move.setTag(Ui.blackUpgradeChoice);
+                        }
                     }
                 }
 

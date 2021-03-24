@@ -58,5 +58,53 @@ namespace ChessB
         private void rectangleMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
         {
         }
+        /*-------------------------------------------------
+        ---------------Black Radio Buttons-----------------
+        -------------------------------------------------*/
+
+        private void BRRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.blackUpgradeChoice = "promoteToRook";
+        }
+
+        private void BQRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.blackUpgradeChoice = "promoteToQueen";
+        }
+
+        private void BNRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.blackUpgradeChoice = "promoteToKnight";
+        }
+
+        private void BBRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.blackUpgradeChoice = "promoteToBishop";
+        }
+
+        /*-------------------------------------------------
+        ---------------White Radio Buttons-----------------
+        -------------------------------------------------*/
+
+        private void WRRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.whiteUpgradeChoice = "promoteToRook";
+        }
+
+        private void WQRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.whiteUpgradeChoice = "promoteToQueen";
+        }
+
+        private void WNRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.whiteUpgradeChoice = "promoteToKnight";
+        }
+
+        private void WBRB_Checked(object sender, RoutedEventArgs e)
+        {
+            Ui.whiteUpgradeChoice = "promoteToBishop";
+        }
+
     }
 }

@@ -54,6 +54,9 @@ namespace ChessB
         public static List<Line> arrows = new List<Line>();
         public static List<Polyline> polyArrows = new List<Polyline>();
 
+        public static string whiteUpgradeChoice;
+        public static string blackUpgradeChoice;
+
         public static void drawBoard(Board board, Canvas canvas)
         {
 
@@ -99,6 +102,7 @@ namespace ChessB
                     mpi.Height = squareSize;
 
                     Canvas.SetZIndex(mpi, 1500);
+                    // Canvas.SetTop(mpi, (board.getBoardSize() - 1 - yLocation) * squareSize);
                     Canvas.SetTop(mpi, (board.getBoardSize() - 1 - yLocation) * squareSize);
                     Canvas.SetLeft(mpi, xLocation * squareSize);
                     canvas.Children.Add(mpi);

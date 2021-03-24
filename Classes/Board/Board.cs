@@ -590,7 +590,7 @@ namespace ChessB
 
             if (this.getIsWhiteTurn() == false)
             {
-                //makeRandomMove();
+                makeRandomMove();
             }
         }
 
