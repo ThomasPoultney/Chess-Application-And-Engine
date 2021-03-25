@@ -6,17 +6,17 @@
     xmlns:local="clr-namespace:ChessB"
     x:Name="mainWindow" x:Class="ChessB.MainWindow"
         mc:Ignorable="d"
-        Title="Chess" Icon="bP.PNG" Background="#FFD4CACA" Width="800" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="Chess" Icon="bP.PNG" Background="#FF292727" Width="800" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
 
     <Grid x:Name="UiGrid" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="16*"/>
+            <RowDefinition Height="12*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="12*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="boardVB" Grid.Column="1" Grid.Row="1">
@@ -75,7 +75,7 @@
         <Viewbox x:Name="BlackPromotionVB" Grid.Column="2" Grid.Row="2" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
+                    <RowDefinition Height="5*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -89,7 +89,7 @@
                 <Image Grid.Column="1" Grid.Row="0" Source="Images/wR.PNG" Stretch="Fill" Width="15" Height="15" />
                 <Image Grid.Column="2" Grid.Row="0" Source="Images/wN.PNG" Stretch="Fill" Width="15" Height="15" />
                 <Image Grid.Column="3" Grid.Row="0" Source="Images/wB.PNG" Stretch="Fill" Width="15" Height="15" />
-                <RadioButton x:Name="wQRB" Grid.Column="0" Grid.Row="1" Margin="0" Height="14" VerticalAlignment="Top" IsChecked="True" Checked="WQRB_Checked"/>
+                <RadioButton x:Name="wQRB" Grid.Column="0" Grid.Row="1" Margin="0"  VerticalAlignment="Top" IsChecked="True" Checked="WQRB_Checked"/>
                 <RadioButton x:Name="wRRB" Grid.Column="1" Grid.Row="1" Margin="0" Checked="WRRB_Checked"/>
                 <RadioButton x:Name="wNRB" Grid.Column="2" Grid.Row="1" Margin="0" Checked="WNRB_Checked"/>
                 <RadioButton x:Name="wBRB" Grid.Column="3" Grid.Row="1" Margin="0" Checked="WBRB_Checked"/>

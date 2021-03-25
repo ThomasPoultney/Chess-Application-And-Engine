@@ -72,7 +72,7 @@ namespace ChessB
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
                 string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/creamTile.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/darkBlueTile.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/DarkBlueTile.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
                 Rectangle rectangle = new Rectangle();
@@ -195,8 +195,15 @@ namespace ChessB
 
         public static void addMarkedTile(int markedLocation)
         {
-
-            if (!markedImageLocations.Contains(markedLocation))
+            //if the tile is already marked we remove it.
+            if (markedImageLocations.Contains(markedLocation))
+            {
+                Image imageToRemove = markedImages[markedImageLocations.IndexOf(markedLocation)];
+                markedImages.Remove(imageToRemove);
+                markedImageLocations.Remove(markedLocation);
+                canvas.Children.Remove(imageToRemove);
+            }
+            else
             {
                 int xLocation = (markedLocation) % ((Game.activeBoard.getBoardSize()));
                 int yLocation = (int)(markedLocation / Game.activeBoard.getBoardSize());
@@ -217,6 +224,8 @@ namespace ChessB
                 markedImageLocations.Add(markedLocation);
                 canvas.Children.Add(markedImage);
             }
+
+
         }
 
         public static void removeMarkedTiles()

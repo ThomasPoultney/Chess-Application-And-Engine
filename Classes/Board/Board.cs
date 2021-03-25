@@ -234,7 +234,7 @@ namespace ChessB
                 {
                     moveIsValid = true;
                     tag = validmove.getTag();
-                    Console.WriteLine(tag);
+                    //Console.WriteLine(tag);
                     secondaryPiece = validmove.getSecondaryPiece();
                 }
             }
