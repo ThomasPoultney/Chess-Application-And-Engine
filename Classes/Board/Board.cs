@@ -358,7 +358,6 @@ namespace ChessB
 
             if (tag == "CastleShort")
             {
-                Console.WriteLine("CastleShort");
                 Piece rook = move.getSecondaryPiece();
                 int location = move.getPiece().getLocation() - 1;
                 int xLocationForRook = (location) % ((this.getBoardSize())); ;
@@ -379,7 +378,6 @@ namespace ChessB
 
             if (tag == "CastleLong")
             {
-                Console.WriteLine("CastleLong");
                 Piece rook = move.getSecondaryPiece();
                 int location = move.getPiece().getLocation() + 1;
                 int xLocationForRook = (location) % ((this.getBoardSize())); ;
@@ -401,7 +399,6 @@ namespace ChessB
 
             if (move.getTag() == "promoteToRook")
             {
-                Console.WriteLine("promoteToRook");
                 Ui.canvas.Children.Remove(move.getPiece().getImage());
                 int location = move.getPiece().getLocation();
                 int xLocation = (location) % ((this.getBoardSize())); ;
@@ -425,7 +422,6 @@ namespace ChessB
             }
             else if (move.getTag() == "promoteToBishop")
             {
-                Console.WriteLine("promoteToBishop");
                 Ui.canvas.Children.Remove(move.getPiece().getImage());
                 int location = move.getPiece().getLocation();
                 int xLocation = (location) % ((this.getBoardSize())); ;
@@ -449,7 +445,6 @@ namespace ChessB
             }
             else if (move.getTag() == "promoteToQueen")
             {
-                Console.WriteLine("promoteToQueen");
                 Ui.canvas.Children.Remove(move.getPiece().getImage());
                 int location = move.getPiece().getLocation();
                 int xLocation = (location) % ((this.getBoardSize())); ;
@@ -475,7 +470,6 @@ namespace ChessB
             }
             else if (move.getTag() == "promoteToKnight")
             {
-                Console.WriteLine("promoteToKnight");
                 Ui.canvas.Children.Remove(move.getPiece().getImage());
                 int location = move.getPiece().getLocation();
                 int xLocation = (location) % ((this.getBoardSize())); ;
