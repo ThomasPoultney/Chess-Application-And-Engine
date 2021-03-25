@@ -219,6 +219,7 @@ namespace ChessB
         {
             setEnPassantLocation(-50);
             Ui.removeArrows();
+            Ui.removeMarkedTiles();
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();

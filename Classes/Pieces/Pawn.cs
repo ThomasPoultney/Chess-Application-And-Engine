@@ -186,44 +186,16 @@ namespace ChessB
                         {
                             validMoves.Add(moveOne);
                         }
+
+                        //check if we can move down two if piece hasnt moved yet and not on first or second rank
+
+                        if (canMoveTwice == true)
                         {
-
-                            //check if we can move down two if piece hasnt moved yet and not on first or second rank
-
-                            if (canMoveTwice == true)
+                            if (nextLocation > ((board.getBoardSize() * 2) - 1))
                             {
-                                if (nextLocation > ((board.getBoardSize() * 2) - 1))
+                                if (piece[nextLocation - (board.getBoardSize() * 2)] == null)
                                 {
-                                    if (piece[nextLocation - (board.getBoardSize() * 2)] == null)
-                                    {
-                                        Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() * 2), this);
-                                        if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
-                                        {
-                                            validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                            validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                            validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                            validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
-                                        }
-                                        else
-                                        {
-                                            validMoves.Add(move);
-                                        }
-
-                                    }
-                                }
-                            }
-
-                        }
-
-                        //check if we can take diagonally
-                        //if not on left file check left diagonal
-                        if (nextLocation % board.getBoardSize() != 0)
-                        {
-                            if (piece[nextLocation - (board.getBoardSize() + 1)] != null)
-                            {
-                                if (piece[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
-                                {
-                                    Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
+                                    Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() * 2), this);
                                     if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                     {
                                         validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
@@ -235,57 +207,84 @@ namespace ChessB
                                     {
                                         validMoves.Add(move);
                                     }
-                                }
-                            }
-                            else
-                            {
-                                if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() + 1))
-                                {
-                                    Move move = new Move(currentLocation, (nextLocation - (board.getBoardSize() + 1)), this, "enPassant");
-                                    validMoves.Add(move);
 
-                                }
-                            }
-                        }
-
-
-                        //if not on Right file check left diagonal
-                        if (nextLocation % board.getBoardSize() != (board.getBoardSize() - 1))
-                        {
-                            if (piece[nextLocation - (board.getBoardSize() - 1)] != null)
-                            {
-                                if (piece[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
-                                {
-                                    Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
-                                    if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
-                                    {
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
-                                    }
-                                    else
-                                    {
-                                        validMoves.Add(move);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() - 1))
-                                {
-                                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this, "enPassant");
-                                    validMoves.Add(move);
                                 }
                             }
                         }
 
                     }
+
+                    //check if we can take diagonally
+                    //if not on left file check left diagonal
+                    if (nextLocation % board.getBoardSize() != 0)
+                    {
+                        if (piece[nextLocation - (board.getBoardSize() + 1)] != null)
+                        {
+                            if (piece[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.getIsWhite())
+                            {
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
+                                if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
+                                {
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                }
+                                else
+                                {
+                                    validMoves.Add(move);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() + 1))
+                            {
+                                Move move = new Move(currentLocation, (nextLocation - (board.getBoardSize() + 1)), this, "enPassant");
+                                validMoves.Add(move);
+
+                            }
+                        }
+                    }
+
+
+                    //if not on Right file check left diagonal
+                    if (nextLocation % board.getBoardSize() != (board.getBoardSize() - 1))
+                    {
+                        if (piece[nextLocation - (board.getBoardSize() - 1)] != null)
+                        {
+                            if (piece[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.getIsWhite())
+                            {
+                                Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
+                                if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
+                                {
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                }
+                                else
+                                {
+                                    validMoves.Add(move);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() - 1))
+                            {
+                                Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this, "enPassant");
+                                validMoves.Add(move);
+                            }
+                        }
+                    }
+
                 }
-
-
-                return validMoves;
             }
+
+
+            return validMoves;
+        }
 
         //only returns the diagonal taking moves used for checkmate and check checking
         public override List<Move> generateAttackingMoves(Board board)

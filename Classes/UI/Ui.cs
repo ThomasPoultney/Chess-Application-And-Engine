@@ -54,6 +54,9 @@ namespace ChessB
         public static List<Line> arrows = new List<Line>();
         public static List<Polyline> polyArrows = new List<Polyline>();
 
+        public static List<Image> markedImages = new List<Image>();
+        public static List<int> markedImageLocations = new List<int>();
+
         public static string whiteUpgradeChoice;
         public static string blackUpgradeChoice;
 
@@ -190,6 +193,43 @@ namespace ChessB
             canvas.Children.Add(highlightImage);
         }
 
+        public static void addMarkedTile(int markedLocation)
+        {
+
+            if (!markedImageLocations.Contains(markedLocation))
+            {
+                int xLocation = (markedLocation) % ((Game.activeBoard.getBoardSize()));
+                int yLocation = (int)(markedLocation / Game.activeBoard.getBoardSize());
+
+                Image markedImage = new Image();
+                String markedImageURL = "C:/Users/tompo/source/repos/ChessB/Images/Red.PNG";
+                ImageSource markedImageSource = new BitmapImage(new Uri(markedImageURL));
+                markedImage.Source = markedImageSource;
+                markedImage.Width = squareSize;
+                markedImage.Height = squareSize;
+                markedImage.Opacity = 0.9;
+                markedImage.IsHitTestVisible = false;
+                Canvas.SetTop(markedImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize));
+                Canvas.SetLeft(markedImage, xLocation * squareSize);
+                Canvas.SetZIndex(markedImage, 500);
+
+                markedImages.Add(markedImage);
+                markedImageLocations.Add(markedLocation);
+                canvas.Children.Add(markedImage);
+            }
+        }
+
+        public static void removeMarkedTiles()
+        {
+            markedImageLocations.Clear();
+            foreach (Image image in markedImages)
+            {
+                canvas.Children.Remove(image);
+            }
+        }
+
+
+
         public static void removeHighlightTile()
         {
             foreach (Image image in hightlightImages)
@@ -274,6 +314,10 @@ namespace ChessB
             Point endPosition = new Point(Canvas.GetLeft(element), Canvas.GetTop(element));
             if (Ui.ArrowStartingPosition == endPosition)
             {
+                int xLocation = (int)Ui.ArrowStartingPosition.X / squareSize;
+                int yLocation = Game.activeBoard.getBoardSize() - 1 - (int)(Ui.ArrowStartingPosition.Y / squareSize);
+
+                addMarkedTile(yLocation * Game.activeBoard.getBoardSize() + xLocation);
                 return;
             }
             else
