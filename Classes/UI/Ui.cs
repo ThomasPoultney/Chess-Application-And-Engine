@@ -313,6 +313,20 @@ namespace ChessB
             numWhitePieceCaptured++;
         }
 
+        public static void addWhiteScore(int score)
+        {
+            whiteScore += score;
+            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+        }
+
+        public static void addBlackScore(int score)
+        {
+            blackScore += score;
+            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
+            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
+        }
+
         public static void applyMoveToGUI(Board board, Move move)
         {
 

@@ -418,7 +418,14 @@ namespace ChessB
                 Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
                 Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
                 Canvas.SetZIndex(promotedImage, 1100);
-
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    Ui.addWhiteScore(4);
+                }
+                else
+                {
+                    Ui.addBlackScore(4);
+                }
                 Ui.canvas.Children.Add(promotedImage);
             }
             else if (move.getTag() == "promoteToBishop")
@@ -443,6 +450,15 @@ namespace ChessB
                 Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
                 Canvas.SetZIndex(promotedImage, 1100);
                 Ui.canvas.Children.Add(promotedImage);
+
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    Ui.addWhiteScore(2);
+                }
+                else
+                {
+                    Ui.addBlackScore(2);
+                }
             }
             else if (move.getTag() == "promoteToQueen")
             {
@@ -467,7 +483,15 @@ namespace ChessB
                 Canvas.SetZIndex(promotedImage, 1100);
 
                 Ui.canvas.Children.Add(promotedImage);
-                this.printBoard();
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    Ui.addWhiteScore(7);
+                }
+                else
+                {
+                    Ui.addBlackScore(7);
+                }
+
             }
             else if (move.getTag() == "promoteToKnight")
             {
@@ -490,6 +514,15 @@ namespace ChessB
                 Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
                 Canvas.SetZIndex(promotedImage, 1100);
                 Ui.canvas.Children.Add(promotedImage);
+
+                if (move.getPiece().getIsWhite() == true)
+                {
+                    Ui.addWhiteScore(2);
+                }
+                else
+                {
+                    Ui.addBlackScore(2);
+                }
             }
 
 
