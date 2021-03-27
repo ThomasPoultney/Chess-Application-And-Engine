@@ -296,6 +296,7 @@ namespace ChessB
                 Grid.SetRow(imageTuple.Item1, 0);
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
+                image.IsHitTestVisible = false;
                 blackScore += imageTuple.Item2;
                 image.Width = 15;
                 image.Height = 15;
@@ -324,6 +325,7 @@ namespace ChessB
                 Grid.SetRow(imageTuple.Item1, 0);
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
+                image.IsHitTestVisible = false;
                 whiteScore += imageTuple.Item2;
                 image.Width = 15;
                 image.Height = 15;
