@@ -540,6 +540,7 @@ namespace ChessB
         private void setUpNextTurn()
         {
             Ui.removeCheckTile();
+
             //reset enpassant square
 
             //generate all current players moves

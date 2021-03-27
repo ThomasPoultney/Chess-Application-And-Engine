@@ -34,6 +34,10 @@ namespace ChessB
         public static int numBlackPieceCaptured = 0;
         public static int numWhitePieceCaptured = 0;
 
+        public static List<Tuple<Image, int>> blackCapturedImagesList = new List<Tuple<Image, int>>();
+        public static List<Tuple<Image, int>> whiteCapturedImageList = new List<Tuple<Image, int>>();
+
+
         public static Label blackScoreLabel = new Label();
         public static Label whiteScoreLabel = new Label();
 
@@ -275,42 +279,62 @@ namespace ChessB
             return value;
         }
 
+
+
         public static void addBlackCaptureImage(MoveableImage image, int pieceValue)
         {
-            Grid.SetRow(image, 0);
-            Grid.SetColumn(image, numBlackPieceCaptured);
-            image.setIsCapturedPiece(true);
-            image.Width = 15;
-            image.Height = 15;
-            blackScore += pieceValue;
-
-            if (whiteScore - blackScore > 0)
+            blackImageGrid.Children.Clear();
+            Grid.SetRow(blackScoreLabel, 0);
+            Grid.SetColumn(blackScoreLabel, 0);
+            blackImageGrid.Children.Add(blackScoreLabel);
+            blackScore = 0;
+            blackCapturedImagesList.Add(Tuple.Create<Image, int>(image, pieceValue));
+            blackCapturedImagesList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+            int i = 1;
+            foreach (Tuple<Image, int> imageTuple in blackCapturedImagesList)
             {
-                whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
-                blackScoreLabel.Content = "";
+                Grid.SetRow(imageTuple.Item1, 0);
+                Grid.SetColumn(imageTuple.Item1, i);
+                image.setIsCapturedPiece(true);
+                blackScore += imageTuple.Item2;
+                image.Width = 15;
+                image.Height = 15;
+
+                blackImageGrid.Children.Add(imageTuple.Item1);
+
+                i++;
             }
 
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
-            blackImageGrid.Children.Add(image);
-
-            numBlackPieceCaptured++;
         }
 
         public static void addWhiteCaptureImage(MoveableImage image, int pieceValue)
         {
-            Grid.SetRow(image, 0);
-            Grid.SetColumn(image, numWhitePieceCaptured);
-            image.setIsCapturedPiece(true);
-            whiteScore += pieceValue;
-            image.Width = 15;
-            image.Height = 15;
+            whiteImageGrid.Children.Clear();
+            Grid.SetRow(whiteScoreLabel, 0);
+            Grid.SetColumn(whiteScoreLabel, 0);
+            whiteImageGrid.Children.Add(whiteScoreLabel);
+            whiteScore = 0;
+            whiteCapturedImageList.Add(Tuple.Create<Image, int>(image, pieceValue));
+            whiteCapturedImageList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+            int i = 1;
+            foreach (Tuple<Image, int> imageTuple in whiteCapturedImageList)
+            {
+                Grid.SetRow(imageTuple.Item1, 0);
+                Grid.SetColumn(imageTuple.Item1, i);
+                image.setIsCapturedPiece(true);
+                whiteScore += imageTuple.Item2;
+                image.Width = 15;
+                image.Height = 15;
+
+                whiteImageGrid.Children.Add(imageTuple.Item1);
+
+                i++;
+            }
+
             blackScoreLabel.Content = (blackScore - whiteScore).ToString();
             whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
-
-            whiteImageGrid.Children.Add(image);
-
-            numWhitePieceCaptured++;
         }
 
         public static void addWhiteScore(int score)
