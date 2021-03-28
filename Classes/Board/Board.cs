@@ -217,6 +217,8 @@ namespace ChessB
 
         public bool makeMove(Move move)
         {
+            string chessNotation = "";
+
             setEnPassantLocation(-50);
             Ui.removeArrows();
             Ui.removeMarkedTiles();
@@ -246,17 +248,26 @@ namespace ChessB
             }
             else
             {
+                if (!(move.getPiece() is Pawn))
+                {
+                    chessNotation += move.getPiece().getLetterRepresentation();
 
+                }
                 int endLocation = move.getEndLocation();
                 int endXLocation = (endLocation) % ((this.getBoardSize())); ;
                 int endYLocation = boardSize - 1 - (int)(endLocation / this.getBoardSize());
                 Canvas.SetTop(move.getPiece().getImage(), endYLocation * Ui.squareSize);
+
+
+
+
                 Canvas.SetLeft(move.getPiece().getImage(), endXLocation * Ui.squareSize);
 
 
                 if (this.getPiece()[pieceEndLocation] != null)
                 {
                     Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
+                    chessNotation += "x";
 
                     if (this.getPiece()[pieceEndLocation].getIsWhite())
                     {
@@ -272,6 +283,8 @@ namespace ChessB
                     this.getPiece()[pieceEndLocation] = null;
 
                 }
+                chessNotation += GetColumnName(endXLocation).ToLower();
+                chessNotation += (boardSize - endYLocation).ToString();
 
                 if (piece is ChessB.Pawn)
                 {
@@ -352,6 +365,7 @@ namespace ChessB
             {
                 piece.setHasMoved(true);
             }
+
             this.setPieceAtLocation(pieceEndLocation, piece);
             this.setPieceAtLocation(pieceStartLocation, null);
 
@@ -375,6 +389,7 @@ namespace ChessB
                 {
                     this.blackCanCastle = false;
                 }
+                chessNotation = "O-O";
             }
 
             if (tag == "CastleLong")
@@ -396,6 +411,8 @@ namespace ChessB
                 {
                     this.blackCanCastle = false;
                 }
+
+                chessNotation = "O-O-O";
             }
 
             if (move.getTag() == "promoteToRook")
@@ -427,6 +444,7 @@ namespace ChessB
                     Ui.addBlackScore(4);
                 }
                 Ui.canvas.Children.Add(promotedImage);
+                chessNotation += "R";
             }
             else if (move.getTag() == "promoteToBishop")
             {
@@ -459,6 +477,8 @@ namespace ChessB
                 {
                     Ui.addBlackScore(2);
                 }
+
+                chessNotation += "B";
             }
             else if (move.getTag() == "promoteToQueen")
             {
@@ -492,6 +512,8 @@ namespace ChessB
                     Ui.addBlackScore(7);
                 }
 
+                chessNotation += "Q";
+
             }
             else if (move.getTag() == "promoteToKnight")
             {
@@ -523,6 +545,8 @@ namespace ChessB
                 {
                     Ui.addBlackScore(2);
                 }
+
+                chessNotation += "K";
             }
 
 
@@ -532,7 +556,14 @@ namespace ChessB
             this.moves.Add(move);
             Ui.drawHighlightTile(pieceStartLocation);
             Ui.drawHighlightTile(pieceEndLocation);
+            move.setChessNotation(chessNotation);
             this.setUpNextTurn();
+            if (move.getPiece().getIsWhite() == true)
+            {
+                Console.WriteLine(chessNotation);
+            }
+
+
             return true;
 
         }
@@ -857,6 +888,20 @@ namespace ChessB
 
             this.blackAttacking = generateBlackAttackingMoves(piece);
             this.whiteAttacking = generateWhiteAttackingMoves(piece);
+        }
+
+        private static string GetColumnName(int index)
+        {
+            const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+            var value = "";
+
+            if (index >= letters.Length)
+                value += letters[index / letters.Length - 1];
+
+            value += letters[index % letters.Length];
+
+            return value;
         }
     }
 }
