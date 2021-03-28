@@ -557,7 +557,20 @@ namespace ChessB
             Ui.drawHighlightTile(pieceStartLocation);
             Ui.drawHighlightTile(pieceEndLocation);
             move.setChessNotation(chessNotation);
-            this.setUpNextTurn();
+            string returnString = this.setUpNextTurn();
+            if (returnString == "check")
+            {
+                chessNotation += "+";
+            }
+            else if (returnString == "checkMate")
+            {
+                chessNotation += "#";
+            }
+            else if (returnString == "draw")
+            {
+                chessNotation += "=";
+            }
+
             if (move.getPiece().getIsWhite() == true)
             {
                 Console.WriteLine(chessNotation);
@@ -568,10 +581,10 @@ namespace ChessB
 
         }
 
-        private void setUpNextTurn()
+        private string setUpNextTurn()
         {
             Ui.removeCheckTile();
-
+            string returnString = "";
             //reset enpassant square
 
             //generate all current players moves
@@ -585,6 +598,7 @@ namespace ChessB
                 blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
                 if (blackAttacking.Contains(whiteKingLocation))
                 {
+                    returnString += "check";
                     Console.WriteLine("Check");
                     Ui.drawCheckTile(whiteKingLocation);
 
@@ -595,6 +609,7 @@ namespace ChessB
                 whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
                 if (whiteAttacking.Contains(blackKingLocation))
                 {
+                    returnString += "check";
                     Console.WriteLine("Check");
                     Ui.drawCheckTile(blackKingLocation);
                 }
@@ -627,10 +642,12 @@ namespace ChessB
                 {
                     if (blackAttacking.Contains(whiteKingLocation))
                     {
+                        returnString += "CheckMate";
                         Console.WriteLine("Black Wins");
                     }
                     else
                     {
+                        returnString += "staleMate";
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -638,20 +655,23 @@ namespace ChessB
                 {
                     if (whiteAttacking.Contains(blackKingLocation))
                     {
+                        returnString += "CheckMate";
                         Console.WriteLine("White Wins");
                     }
                     else
                     {
+                        returnString += "staleMate";
                         Console.WriteLine("Stalemate");
                     }
                 }
-                return;
+
             }
 
             if (this.getIsWhiteTurn() == false)
             {
                 makeRandomMove();
             }
+            return returnString;
         }
 
         public void makeRandomMove()
