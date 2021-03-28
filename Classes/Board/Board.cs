@@ -218,7 +218,6 @@ namespace ChessB
         public bool makeMove(Move move)
         {
             string chessNotation = "";
-
             setEnPassantLocation(-50);
             Ui.removeArrows();
             Ui.removeMarkedTiles();
@@ -283,15 +282,17 @@ namespace ChessB
                     this.getPiece()[pieceEndLocation] = null;
 
                 }
-                chessNotation += GetColumnName(endXLocation).ToLower();
-                chessNotation += (boardSize - endYLocation).ToString();
+
 
                 if (piece is ChessB.Pawn)
                 {
                     piece.setCanMoveTwice(false);
+
                     //set enpassant squares
                     if (tag == "enPassant")
                     {
+                        chessNotation += GetColumnName(pieceStartLocation % boardSize);
+                        chessNotation += "x";
                         Console.WriteLine("EnPassant");
                         if (pieceStartLocation < pieceEndLocation)
                         {
@@ -341,7 +342,10 @@ namespace ChessB
                     }
 
                 }
+                chessNotation += GetColumnName(endXLocation).ToLower();
+                chessNotation += (boardSize - endYLocation).ToString();
             }
+
 
             if (piece is ChessB.King)
             {
@@ -546,51 +550,37 @@ namespace ChessB
                     Ui.addBlackScore(2);
                 }
 
-                chessNotation += "K";
+                chessNotation += "N";
             }
 
 
 
             this.moveNumber++;
+            int moveCount = moveNumber;
+            Console.WriteLine(moveNumber);
             this.setIsWhiteTurn(!this.getIsWhiteTurn());
             this.moves.Add(move);
             Ui.drawHighlightTile(pieceStartLocation);
             Ui.drawHighlightTile(pieceEndLocation);
 
-            string returnString = this.setUpNextTurn();
-            if (returnString != "")
+            bool isEnPassant = false;
+            if (tag == "enPassant")
             {
-                Console.WriteLine("returnString is " + returnString);
-
-            }
-            if (returnString == "check")
-            {
-                chessNotation += "+";
-            }
-            else if (returnString == "checkmate")
-            {
-                chessNotation += "#";
-            }
-            else if (returnString == "stalemate")
-            {
-                chessNotation += "=";
+                isEnPassant = true;
             }
 
-            move.setChessNotation(chessNotation);
-            if (move.getPiece().getIsWhite() == true)
-            {
-                Console.WriteLine(chessNotation);
-            }
-
+            this.setUpNextTurn(move, chessNotation, isEnPassant);
 
             return true;
 
         }
 
-        private string setUpNextTurn()
+        private void setUpNextTurn(Move move, string chessNotation, bool isEnPassant)
         {
             Ui.removeCheckTile();
-            string returnString = "";
+            bool blackWins = false;
+            bool whiteWins = false;
+            bool draw = false;
             //reset enpassant square
 
             //generate all current players moves
@@ -604,8 +594,7 @@ namespace ChessB
                 blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
                 if (blackAttacking.Contains(whiteKingLocation))
                 {
-                    returnString = "check";
-                    Console.WriteLine("Check");
+                    chessNotation += "+";
                     Ui.drawCheckTile(whiteKingLocation);
 
                 }
@@ -615,8 +604,7 @@ namespace ChessB
                 whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
                 if (whiteAttacking.Contains(blackKingLocation))
                 {
-                    returnString = "check";
-                    Console.WriteLine("Check");
+                    chessNotation += "+";
                     Ui.drawCheckTile(blackKingLocation);
                 }
             }
@@ -648,12 +636,14 @@ namespace ChessB
                 {
                     if (blackAttacking.Contains(whiteKingLocation))
                     {
-                        returnString = "checkmate";
+                        chessNotation += "#";
+                        blackWins = true;
                         Console.WriteLine("Black Wins");
                     }
                     else
                     {
-                        returnString = "stalemate";
+                        chessNotation += "=";
+                        draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -661,23 +651,51 @@ namespace ChessB
                 {
                     if (whiteAttacking.Contains(blackKingLocation))
                     {
-                        returnString = "checkmate";
+                        chessNotation += "#";
+                        whiteWins = true;
                         Console.WriteLine("White Wins");
                     }
                     else
                     {
-                        returnString = "stalemate";
+                        chessNotation += "=";
+                        draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
-                return returnString;
+
+            }
+
+            if (isEnPassant)
+            {
+                chessNotation += " e.p.";
+            }
+
+            move.setChessNotation(chessNotation);
+            Ui.moveListBox.Items.Add(moveNumber + "\t" + chessNotation);
+
+            if (draw == true)
+            {
+                Ui.moveListBox.Items.Add("1/2 - 1/2");
+                return;
+            }
+            else if (whiteWins == true)
+            {
+                Ui.moveListBox.Items.Add("1 - 0");
+                return;
+            }
+            else if (blackWins == true)
+            {
+                Ui.moveListBox.Items.Add("0 - 1");
+                return;
+
             }
 
             if (this.getIsWhiteTurn() == false)
             {
                 makeRandomMove();
             }
-            return returnString;
+
+
         }
 
         public void makeRandomMove()

@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace ChessB
@@ -38,8 +39,10 @@ namespace ChessB
             Ui.blackImageGrid = this.blackCapturedGrid;
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
+            Ui.moveListBox = moveListBox;
             Window window = new Window();
         }
+
 
         protected override void OnMouseMove(MouseEventArgs e)
         {

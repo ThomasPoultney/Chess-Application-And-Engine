@@ -64,6 +64,8 @@ namespace ChessB
         public static string whiteUpgradeChoice;
         public static string blackUpgradeChoice;
 
+        public static ListBox moveListBox;
+
         public static void drawBoard(Board board, Canvas canvas)
         {
 
@@ -71,6 +73,7 @@ namespace ChessB
 
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
+
                 int xLocation = (i) % ((board.getBoardSize()));
                 int yLocation = (int)(i / board.getBoardSize());
 
@@ -79,15 +82,10 @@ namespace ChessB
                 string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/DarkBlueTile.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
-                Rectangle rectangle = new Rectangle();
-                rectangle.Width = Ui.squareSize;
-                rectangle.Height = Ui.squareSize;
+
                 SolidColorBrush blackBrush = new SolidColorBrush();
 
-                Canvas.SetZIndex(rectangle, 10000);
-                Canvas.SetTop(rectangle, yLocation * squareSize);
-                Canvas.SetLeft(rectangle, xLocation * squareSize);
-                Ui.canvas.Children.Add(rectangle);
+
                 Tile tile = new Tile();
                 ImageSource tileImage = new BitmapImage(new Uri(nextImageURL));
                 tile.Source = tileImage;
