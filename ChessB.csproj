@@ -164,5 +164,8 @@
   <ItemGroup>
     <Resource Include="Images\HighlightTile.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Readme.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
