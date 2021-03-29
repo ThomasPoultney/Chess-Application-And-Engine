@@ -662,10 +662,7 @@ namespace ChessB
 
             }
 
-            if (isEnPassant)
-            {
-                chessNotation += " e.p.";
-            }
+
 
             if (blackWins == true || whiteWins == true)
             {
@@ -678,6 +675,11 @@ namespace ChessB
             else if (check == true)
             {
                 chessNotation += "+";
+            }
+
+            if (isEnPassant)
+            {
+                chessNotation += " e.p.";
             }
 
             move.setChessNotation(chessNotation);
