@@ -643,6 +643,7 @@ namespace ChessB
                     else
                     {
                         staleMate = true;
+                        draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -656,6 +657,7 @@ namespace ChessB
                     else
                     {
                         staleMate = true;
+                        draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
