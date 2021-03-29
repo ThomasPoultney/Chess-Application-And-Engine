@@ -78,8 +78,8 @@ namespace ChessB
                 int yLocation = (int)(i / board.getBoardSize());
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
-                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/creamTile.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/DarkBlueTile.PNG";
+                string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/whiteTournament.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/greenTournament.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
@@ -372,7 +372,7 @@ namespace ChessB
                 Line line = new Line();
                 SolidColorBrush brush = new SolidColorBrush();
                 brush.Color = Colors.DarkGoldenrod;
-                line.StrokeThickness = 2;
+                line.StrokeThickness = 4;
                 line.Stroke = brush;
                 line.Opacity = 1;
                 line.IsHitTestVisible = false;
@@ -406,7 +406,7 @@ namespace ChessB
                 polygonPoints.Add(rightArrowPoint);
                 poly.IsHitTestVisible = false;
                 poly.Points = polygonPoints;
-                poly.StrokeThickness = 2;
+                poly.StrokeThickness = 4;
                 poly.Stroke = brush;
                 poly.Opacity = 1;
 

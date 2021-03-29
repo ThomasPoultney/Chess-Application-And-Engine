@@ -581,22 +581,23 @@ namespace ChessB
             bool blackWins = false;
             bool whiteWins = false;
             bool draw = false;
+            bool check = false;
+            bool staleMate = false;
             //reset enpassant square
-
             //generate all current players moves
             //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
             //if current player has no valid moves and we are in check then oppenent wins
             //if current player has valid moves and not in check it is stalemate
             List<Move> validMovesAfterCheck = new List<Move>();
 
+
             if (this.isWhiteTurn == true)
             {
                 blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
                 if (blackAttacking.Contains(whiteKingLocation))
                 {
-                    chessNotation += "+";
+                    check = true;
                     Ui.drawCheckTile(whiteKingLocation);
-
                 }
             }
             else
@@ -604,7 +605,7 @@ namespace ChessB
                 whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
                 if (whiteAttacking.Contains(blackKingLocation))
                 {
-                    chessNotation += "+";
+                    check = true;
                     Ui.drawCheckTile(blackKingLocation);
                 }
             }
@@ -636,14 +637,12 @@ namespace ChessB
                 {
                     if (blackAttacking.Contains(whiteKingLocation))
                     {
-                        chessNotation += "#";
                         blackWins = true;
                         Console.WriteLine("Black Wins");
                     }
                     else
                     {
-                        chessNotation += "=";
-                        draw = true;
+                        staleMate = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -651,14 +650,12 @@ namespace ChessB
                 {
                     if (whiteAttacking.Contains(blackKingLocation))
                     {
-                        chessNotation += "#";
                         whiteWins = true;
                         Console.WriteLine("White Wins");
                     }
                     else
                     {
-                        chessNotation += "=";
-                        draw = true;
+                        staleMate = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -668,6 +665,19 @@ namespace ChessB
             if (isEnPassant)
             {
                 chessNotation += " e.p.";
+            }
+
+            if (blackWins == true || whiteWins == true)
+            {
+                chessNotation += "#";
+            }
+            else if (staleMate == true)
+            {
+                chessNotation += "=";
+            }
+            else if (check == true)
+            {
+                chessNotation += "+";
             }
 
             move.setChessNotation(chessNotation);
