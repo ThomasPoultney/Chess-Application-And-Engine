@@ -48,9 +48,25 @@ namespace ChessB
         private bool blackInCheck = false;
         public static int boardSize = 8;
 
+
         public Board()
         {
             piece = new Piece[boardSize * boardSize];
+
+        }
+        //creates a new board with another boards values;
+        public Board(Board board)
+        {
+            //creates a copy of piece array so that we lose the reference to currents boards piece array
+            this.piece = (Piece[])board.getPiece().Clone();
+            this.isWhiteTurn = board.isWhiteTurn;
+            this.fiftyMoveRule = board.fiftyMoveRule;
+            this.blackKingLocation = board.blackKingLocation;
+            this.whiteKingLocation = board.whiteKingLocation;
+            this.moveNumber = board.moveNumber;
+            this.enPassantLocation = board.enPassantLocation;
+            this.blackAttacking = board.blackAttacking;
+            this.whiteAttacking = board.whiteAttacking;
 
         }
 
@@ -88,7 +104,7 @@ namespace ChessB
 
         public void printBoard()
         {
-            Console.WriteLine(this.getPiece().Length);
+
             for (int i = 0; i < (boardSize * boardSize); i++)
             {
                 if (this.getPiece()[i] == null)
@@ -588,10 +604,10 @@ namespace ChessB
 
         public Board makeMoveOnNewBoard(Move move)
         {
-            //resets check value
-            whiteInCheck = false;
-            blackInCheck = false;
-            Board boardAfterMove = this;
+            //creates a new board with duplicate values 
+            Board boardAfterMove = new Board(this);
+
+
             string chessNotation = "";
             //resets enpassantLocation
             boardAfterMove.setEnPassantLocation(-50);
@@ -955,13 +971,6 @@ namespace ChessB
                 return;
 
             }
-
-            if (this.getIsWhiteTurn() == false)
-            {
-                makeRandomMove();
-            }
-
-
         }
 
         public void makeRandomMove()

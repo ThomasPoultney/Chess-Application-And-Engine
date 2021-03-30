@@ -17,6 +17,7 @@ namespace ChessB
         public bool isCapturedPiece;
         private Point lineStartPoint;
         private Image tileSelected;
+        private static List<Board> boardStates = new List<Board>();
 
         public MoveableImage()
         {
@@ -118,6 +119,9 @@ namespace ChessB
                     }
                 }
 
+
+
+
                 Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(move);
                 if (boardAfterMove == null)
                 {
@@ -126,14 +130,19 @@ namespace ChessB
                 }
                 else
                 {
+
+                    boardStates.Add(boardAfterMove);
                     Game.activeBoard = boardAfterMove;
-                    boardAfterMove.printBoard();
+
                     Ui.removeHighlightTile();
                     Ui.drawBoardPieces(boardAfterMove, Ui.canvas);
                 }
 
-
-
+                Console.Clear();
+                foreach (Board board in boardStates)
+                {
+                    board.printBoard();
+                }
             }
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
