@@ -66,7 +66,7 @@ namespace ChessB
 
         public static ListBox moveListBox;
 
-        public static void drawBoard(Board board, Canvas canvas)
+        public static void drawBoardGrid(Board board, Canvas canvas)
         {
 
             Piece[] piece = board.getPiece();
@@ -96,6 +96,27 @@ namespace ChessB
                 Canvas.SetTop(tile, yLocation * squareSize);
                 Canvas.SetLeft(tile, xLocation * squareSize);
                 canvas.Children.Add(tile);
+            }
+        }
+
+
+        public static void drawBoardPieces(Board board, Canvas canvas)
+        {
+
+            for (int i = 0; i < canvas.Children.Count; i++)
+            {
+                if (!(canvas.Children[i] is Tile))
+                {
+                    canvas.Children.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            Piece[] piece = board.getPiece();
+            for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
+            {
+                int xLocation = (i) % ((board.getBoardSize()));
+                int yLocation = (int)(i / board.getBoardSize());
 
                 if (piece[i] != null)
                 {
@@ -115,8 +136,29 @@ namespace ChessB
                     piece[i].setImage(mpi);
                 }
             }
-        }
 
+            //draw highlights of last move
+            if (board.getMoves().Count > 0)
+            {
+                drawHighlightTile(board.getMoves().Last().getStartLocation());
+                drawHighlightTile(board.getMoves().Last().getEndLocation());
+            }
+
+            //draw check tile if we are in check
+            if (board.getIsWhiteInCheck() == true)
+            {
+                drawCheckTile(board.getWhiteKingLocation());
+            }
+            else if (board.getIsBlackInCheck() == true)
+            {
+                drawCheckTile(board.getBlackKingLocation());
+            }
+
+
+
+
+
+        }
 
 
         public static void drawValidMoves()

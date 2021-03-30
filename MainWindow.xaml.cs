@@ -32,7 +32,8 @@ namespace ChessB
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
 
             //drawBoard(board,grid);
-            Ui.drawBoard(board, this.boardCanvas);
+            Ui.drawBoardGrid(board, this.boardCanvas);
+            Ui.drawBoardPieces(board, this.boardCanvas);
             Ui.MainWindow = this;
             Ui.grid = this.UiGrid;
             Ui.whiteImageGrid = this.whiteCapturedGrid;

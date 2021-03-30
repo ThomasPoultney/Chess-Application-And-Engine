@@ -118,23 +118,26 @@ namespace ChessB
                     }
                 }
 
-
-                if (Game.activeBoard.makeMove(move) == false)
+                Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(move);
+                if (boardAfterMove == null)
                 {
                     resetImage();
+
                 }
-                setUpTurn();
+                else
+                {
+                    Game.activeBoard = boardAfterMove;
+                    boardAfterMove.printBoard();
+                    Ui.removeHighlightTile();
+                    Ui.drawBoardPieces(boardAfterMove, Ui.canvas);
+                }
+
 
 
             }
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();
-        }
-
-        private void setUpTurn()
-        {
-
         }
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
