@@ -2,3 +2,14 @@ C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.csprojAssemblyReference.ca
 C:\Users\tompo\source\repos\ChessB\obj\Release\App.g.cs
 C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB_MarkupCompile.cache
 C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB_MarkupCompile.lref
+C:\Users\tompo\source\repos\ChessB\bin\Release\ChessB.exe.config
+C:\Users\tompo\source\repos\ChessB\bin\Release\ChessB.exe
+C:\Users\tompo\source\repos\ChessB\bin\Release\ChessB.pdb
+C:\Users\tompo\source\repos\ChessB\obj\Release\MainWindow.g.cs
+C:\Users\tompo\source\repos\ChessB\obj\Release\MainWindow.baml
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.g.resources
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.Properties.Resources.resources
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.csproj.GenerateResource.cache
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.csproj.CoreCompileInputs.cache
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.exe
+C:\Users\tompo\source\repos\ChessB\obj\Release\ChessB.pdb

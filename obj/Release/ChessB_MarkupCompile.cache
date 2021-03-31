@@ -1,7 +1,7 @@
 ﻿ChessB
 
 
-winexe
+exe
 C#
 .cs
 C:\Users\tompo\source\repos\ChessB\obj\Release\
@@ -12,9 +12,9 @@ TRACE
 C:\Users\tompo\source\repos\ChessB\App.xaml
 11151548125
 
-151707061739
+201783938923
 13-1662647192
 MainWindow.xaml;
 
-True
+False
 

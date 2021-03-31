@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ChessB"
     x:Name="mainWindow" x:Class="ChessB.MainWindow"
         mc:Ignorable="d"
-        Title="Chess" Icon="bP.PNG"  Width="800" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="Chess" Icon="bP.PNG"  Width="1000" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
 
     <Grid x:Name="UiGrid" Margin="0">
         <Grid.RowDefinitions>
@@ -18,7 +18,7 @@
 
             <ColumnDefinition Width="15*"/>
             <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <Viewbox x:Name="boardVB" Grid.Column="0" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" >
 

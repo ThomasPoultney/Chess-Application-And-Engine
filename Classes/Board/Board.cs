@@ -53,6 +53,9 @@ namespace ChessB
 
         private bool whiteInCheck = false;
         private bool blackInCheck = false;
+        public bool whiteWins;
+        public bool blackWins;
+        public bool draw;
         public static int boardSize = 8;
 
 
@@ -945,9 +948,6 @@ namespace ChessB
         private void setUpNextTurn(Board board, Move move, string chessNotation, bool isEnPassant)
         {
 
-            bool blackWins = false;
-            bool whiteWins = false;
-            bool draw = false;
             bool check = false;
             bool staleMate = false;
             //reset enpassant square
@@ -988,13 +988,13 @@ namespace ChessB
                 {
                     if (board.blackAttacking.Contains(board.whiteKingLocation))
                     {
-                        blackWins = true;
+                        board.blackWins = true;
                         Console.WriteLine("Black Wins");
                     }
                     else
                     {
                         staleMate = true;
-                        draw = true;
+                        board.draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -1002,13 +1002,13 @@ namespace ChessB
                 {
                     if (board.whiteAttacking.Contains(board.blackKingLocation))
                     {
-                        whiteWins = true;
+                        board.whiteWins = true;
                         Console.WriteLine("White Wins");
                     }
                     else
                     {
                         staleMate = true;
-                        draw = true;
+                        board.draw = true;
                         Console.WriteLine("Stalemate");
                     }
                 }
@@ -1017,7 +1017,7 @@ namespace ChessB
 
 
 
-            if (blackWins == true || whiteWins == true)
+            if (board.blackWins == true || board.whiteWins == true)
             {
                 chessNotation += "#";
             }
@@ -1038,21 +1038,7 @@ namespace ChessB
 
             move.setChessNotation(chessNotation);
             board.moves.Add(move);
-            if (draw == true)
-            {
-                Ui.moveListBox.Items.Add("1/2 - 1/2");
-                return;
-            }
-            else if (whiteWins == true)
-            {
-                Ui.moveListBox.Items.Add("1 - 0");
-                return;
-            }
-            else if (blackWins == true)
-            {
-                Ui.moveListBox.Items.Add("0 - 1");
-                return;
-            }
+
         }
 
 

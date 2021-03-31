@@ -188,6 +188,20 @@ namespace ChessB
                 moveNumber++;
                 moveListBox.Items.Add(moveNumber + "\t" + move.getChessNotation());
             }
+
+            if (board.draw == true)
+            {
+                Ui.moveListBox.Items.Add("1/2 - 1/2");
+                return;
+            }
+            else if (board.whiteWins == true)
+            {
+                Ui.moveListBox.Items.Add("1 - 0");
+            }
+            else if (board.blackWins == true)
+            {
+                Ui.moveListBox.Items.Add("0 - 1");
+            }
         }
 
 
