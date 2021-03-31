@@ -147,14 +147,14 @@ namespace ChessB
             foreach (MoveableImage image in board.getBlackCapturedImages())
             {
 
-                Ui.addBlackCaptureImage(image, board.getBlackCaptureValues()[j]);
+                Ui.addWhiteCaptureImage(image, board.getBlackCaptureValues()[j]);
                 j++;
             }
 
             j = 0;
             foreach (MoveableImage image in board.getWhiteCapturedImages())
             {
-                Ui.addWhiteCaptureImage(image, board.getWhiteCaptureValues()[j]);
+                Ui.addBlackCaptureImage(image, board.getWhiteCaptureValues()[j]);
                 j++;
             }
 
@@ -175,6 +175,18 @@ namespace ChessB
             else if (board.getIsBlackInCheck() == true)
             {
                 drawCheckTile(board.getBlackKingLocation());
+            }
+
+
+
+            moveListBox.Items.Clear();
+
+
+            int moveNumber = 0;
+            foreach (Move move in board.getMoves())
+            {
+                moveNumber++;
+                moveListBox.Items.Add(moveNumber + "\t" + move.getChessNotation());
             }
         }
 

@@ -31,9 +31,7 @@ namespace ChessB
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
 
-            //drawBoard(board,grid);
-            Ui.drawBoardGrid(board, this.boardCanvas);
-            Ui.drawBoardPieces(board, this.boardCanvas);
+
             Ui.MainWindow = this;
             Ui.grid = this.UiGrid;
             Ui.whiteImageGrid = this.whiteCapturedGrid;
@@ -41,6 +39,10 @@ namespace ChessB
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
             Ui.moveListBox = moveListBox;
+
+            //drawBoard(board,grid);
+            Ui.drawBoardGrid(board, this.boardCanvas);
+            Ui.drawBoardPieces(board, this.boardCanvas);
             Window window = new Window();
         }
 

@@ -902,7 +902,7 @@ namespace ChessB
 
             boardAfterMove.moveNumber++;
             boardAfterMove.setIsWhiteTurn(!boardAfterMove.getIsWhiteTurn());
-            boardAfterMove.moves.Add(move);
+
 
             bool isEnPassant = false;
             if (tag == "enPassant")
@@ -958,8 +958,8 @@ namespace ChessB
             List<Move> validMovesAfterCheck = new List<Move>();
             if (this.isWhiteTurn == true)
             {
-                blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
-                if (blackAttacking.Contains(board.whiteKingLocation))
+                board.blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
+                if (board.blackAttacking.Contains(board.whiteKingLocation))
                 {
                     check = true;
                     board.whiteInCheck = true;
@@ -968,8 +968,8 @@ namespace ChessB
             }
             else
             {
-                whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
-                if (whiteAttacking.Contains(board.blackKingLocation))
+                board.whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
+                if (board.whiteAttacking.Contains(board.blackKingLocation))
                 {
                     board.blackInCheck = true;
                     check = true;
@@ -1035,9 +1035,9 @@ namespace ChessB
                 chessNotation += " e.p.";
             }
 
-            move.setChessNotation(chessNotation);
-            Ui.moveListBox.Items.Add(moveNumber + "\t" + chessNotation);
 
+            move.setChessNotation(chessNotation);
+            board.moves.Add(move);
             if (draw == true)
             {
                 Ui.moveListBox.Items.Add("1/2 - 1/2");

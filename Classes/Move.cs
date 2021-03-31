@@ -56,6 +56,11 @@ namespace ChessB
             this.chessNotation = chessNotation;
         }
 
+        public string getChessNotation()
+        {
+            return this.chessNotation;
+        }
+
         public int getEndLocation()
         {
             return this.endLocation;
