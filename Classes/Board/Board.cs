@@ -720,13 +720,13 @@ namespace ChessB
                             if (boardAfterMove.getIsWhiteTurn())
                             {
                                 blackCapturedImages.Add(capturedPawn.getImage());
-                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                                blackCapturedPieceValue.Add(capturedPawn.getStrength());
 
                             }
                             else
                             {
                                 whiteCapturedImages.Add(capturedPawn.getImage());
-                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                                whiteCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             //removes the piece under the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation - boardSize, null);
@@ -740,26 +740,16 @@ namespace ChessB
                             if (boardAfterMove.getIsWhiteTurn())
                             {
                                 blackCapturedImages.Add(capturedPawn.getImage());
-                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                                blackCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             else
                             {
                                 whiteCapturedImages.Add(capturedPawn.getImage());
-                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                                whiteCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             //removes the piece above the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation + boardSize, null);
 
-                            if (boardAfterMove.getIsWhiteTurn())
-                            {
-                                blackCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
-                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
-                            }
-                            else
-                            {
-                                whiteCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
-                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
-                            }
 
                         }
                     }
