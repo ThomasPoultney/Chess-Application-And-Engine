@@ -49,6 +49,7 @@ namespace ChessB
 
         private List<int> whiteCapturedPieceValue = new List<int>();
         private List<int> blackCapturedPieceValue = new List<int>();
+        private List<Move> validMoves = new List<Move>();
 
         private bool whiteInCheck = false;
         private bool blackInCheck = false;
@@ -79,6 +80,7 @@ namespace ChessB
             this.whiteCapturedPieceValue = board.whiteCapturedPieceValue;
             this.moves = board.moves;
 
+
         }
 
         private List<Move> Moves { get => moves; set => moves = value; }
@@ -101,6 +103,11 @@ namespace ChessB
         public List<int> getWhiteCaptureValues()
         {
             return this.whiteCapturedPieceValue;
+        }
+
+        public List<Move> getValidMoves()
+        {
+            return this.validMoves;
         }
 
 
@@ -908,41 +915,11 @@ namespace ChessB
             return boardAfterMove;
 
         }
-
-        private void setUpNextTurn(Board board, Move move, string chessNotation, bool isEnPassant)
+        private List<Move> generateValidMoves(Board board)
         {
 
-            bool blackWins = false;
-            bool whiteWins = false;
-            bool draw = false;
-            bool check = false;
-            bool staleMate = false;
-            //reset enpassant square
-            //generate all current players moves
-            //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
-            //if current player has no valid moves and we are in check then oppenent wins
-            //if current player has valid moves and not in check it is stalemate
             List<Move> validMovesAfterCheck = new List<Move>();
 
-            if (this.isWhiteTurn == true)
-            {
-                blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
-                if (blackAttacking.Contains(board.whiteKingLocation))
-                {
-                    check = true;
-                    board.whiteInCheck = true;
-
-                }
-            }
-            else
-            {
-                whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
-                if (whiteAttacking.Contains(board.blackKingLocation))
-                {
-                    board.blackInCheck = true;
-                    check = true;
-                }
-            }
             //genearates all valid moves for each piece
             foreach (Piece piece in board.getPiece())
             {
@@ -962,6 +939,46 @@ namespace ChessB
                 }
 
             }
+
+            return validMovesAfterCheck;
+        }
+        private void setUpNextTurn(Board board, Move move, string chessNotation, bool isEnPassant)
+        {
+
+            bool blackWins = false;
+            bool whiteWins = false;
+            bool draw = false;
+            bool check = false;
+            bool staleMate = false;
+            //reset enpassant square
+            //generate all current players moves
+            //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
+            //if current player has no valid moves and we are in check then oppenent wins
+            //if current player has valid moves and not in check it is stalemate
+            List<Move> validMovesAfterCheck = new List<Move>();
+            if (this.isWhiteTurn == true)
+            {
+                blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
+                if (blackAttacking.Contains(board.whiteKingLocation))
+                {
+                    check = true;
+                    board.whiteInCheck = true;
+
+                }
+            }
+            else
+            {
+                whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
+                if (whiteAttacking.Contains(board.blackKingLocation))
+                {
+                    board.blackInCheck = true;
+                    check = true;
+                }
+            }
+
+            //generate all valid moves
+            validMovesAfterCheck = generateValidMoves(board);
+            board.validMoves = validMovesAfterCheck;
 
             //removes moves that would leave king in check.
 
@@ -1037,6 +1054,8 @@ namespace ChessB
                 return;
             }
         }
+
+
 
         public void makeRandomMove()
         {
