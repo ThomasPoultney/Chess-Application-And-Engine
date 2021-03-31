@@ -44,6 +44,12 @@ namespace ChessB
         private List<int> whiteAttacking = new List<int>();
         private List<int> blackAttacking = new List<int>();
 
+        private List<MoveableImage> whiteCapturedImages = new List<MoveableImage>();
+        private List<MoveableImage> blackCapturedImages = new List<MoveableImage>();
+
+        private List<int> whiteCapturedPieceValue = new List<int>();
+        private List<int> blackCapturedPieceValue = new List<int>();
+
         private bool whiteInCheck = false;
         private bool blackInCheck = false;
         public static int boardSize = 8;
@@ -67,6 +73,11 @@ namespace ChessB
             this.enPassantLocation = board.enPassantLocation;
             this.blackAttacking = board.blackAttacking;
             this.whiteAttacking = board.whiteAttacking;
+            this.whiteCapturedImages = board.whiteCapturedImages;
+            this.blackCapturedImages = board.blackCapturedImages;
+            this.blackCapturedPieceValue = board.blackCapturedPieceValue;
+            this.whiteCapturedPieceValue = board.whiteCapturedPieceValue;
+            this.moves = board.moves;
 
         }
 
@@ -75,6 +86,27 @@ namespace ChessB
         public Piece[] getPiece()
         {
             return this.piece;
+        }
+
+        public List<MoveableImage> getWhiteCapturedImages()
+        {
+            return this.whiteCapturedImages;
+        }
+
+        public List<MoveableImage> getBlackCapturedImages()
+        {
+            return this.blackCapturedImages;
+        }
+
+        public List<int> getWhiteCaptureValues()
+        {
+            return this.whiteCapturedPieceValue;
+        }
+
+
+        public List<int> getBlackCaptureValues()
+        {
+            return this.blackCapturedPieceValue;
         }
 
         public int getWhiteKingLocation()
@@ -596,7 +628,7 @@ namespace ChessB
                 isEnPassant = true;
             }
 
-            this.setUpNextTurn(move, chessNotation, isEnPassant);
+            this.setUpNextTurn(this, move, chessNotation, isEnPassant);
 
             return true;
 
@@ -640,6 +672,7 @@ namespace ChessB
             }
             else
             {
+
                 //add initial of piece to notation if it is not a pawn
                 if (!(move.getPiece() is Pawn))
                 {
@@ -655,7 +688,19 @@ namespace ChessB
                 {
                     chessNotation += "x";
                     //removes captured piece from board+
+                    if (boardAfterMove.getIsWhiteTurn())
+                    {
+                        blackCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                        blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                    }
+                    else
+                    {
+                        whiteCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                        whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                    }
+
                     boardAfterMove.getPiece()[pieceEndLocation] = null;
+                    //
 
                 }
 
@@ -672,15 +717,50 @@ namespace ChessB
                         if (pieceStartLocation < pieceEndLocation)
                         {
                             Piece capturedPawn = getPiece()[endLocation - boardSize];
+                            if (boardAfterMove.getIsWhiteTurn())
+                            {
+                                blackCapturedImages.Add(capturedPawn.getImage());
+                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+
+                            }
+                            else
+                            {
+                                whiteCapturedImages.Add(capturedPawn.getImage());
+                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                            }
                             //removes the piece under the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation - boardSize, null);
+
+
 
                         }
                         else
                         {
                             Piece capturedPawn = getPiece()[endLocation + boardSize];
+                            if (boardAfterMove.getIsWhiteTurn())
+                            {
+                                blackCapturedImages.Add(capturedPawn.getImage());
+                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                            }
+                            else
+                            {
+                                whiteCapturedImages.Add(capturedPawn.getImage());
+                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                            }
                             //removes the piece above the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation + boardSize, null);
+
+                            if (boardAfterMove.getIsWhiteTurn())
+                            {
+                                blackCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                                blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                            }
+                            else
+                            {
+                                whiteCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                                whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                            }
+
                         }
                     }
                     else
@@ -833,15 +913,15 @@ namespace ChessB
                 isEnPassant = true;
             }
 
-            boardAfterMove.setUpNextTurn(move, chessNotation, isEnPassant);
+            boardAfterMove.setUpNextTurn(boardAfterMove, move, chessNotation, isEnPassant);
 
             return boardAfterMove;
 
         }
 
-        private void setUpNextTurn(Move move, string chessNotation, bool isEnPassant)
+        private void setUpNextTurn(Board board, Move move, string chessNotation, bool isEnPassant)
         {
-            Ui.removeCheckTile();
+
             bool blackWins = false;
             bool whiteWins = false;
             bool draw = false;
@@ -854,43 +934,39 @@ namespace ChessB
             //if current player has valid moves and not in check it is stalemate
             List<Move> validMovesAfterCheck = new List<Move>();
 
-
             if (this.isWhiteTurn == true)
             {
-                blackAttacking = this.generateBlackAttackingMoves(this.getPiece());
-                if (blackAttacking.Contains(whiteKingLocation))
+                blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
+                if (blackAttacking.Contains(board.whiteKingLocation))
                 {
                     check = true;
-                    whiteInCheck = true;
-                    Console.WriteLine("whiteCheck " + blackInCheck);
-                    Ui.drawCheckTile(whiteKingLocation);
+                    board.whiteInCheck = true;
+
                 }
             }
             else
             {
-                whiteAttacking = this.generateWhiteAttackingMoves(this.getPiece());
-                if (whiteAttacking.Contains(blackKingLocation))
+                whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
+                if (whiteAttacking.Contains(board.blackKingLocation))
                 {
-                    blackInCheck = true;
-                    Console.WriteLine("blackCheck " + blackInCheck);
+                    board.blackInCheck = true;
                     check = true;
-                    Ui.drawCheckTile(blackKingLocation);
                 }
             }
             //genearates all valid moves for each piece
-            foreach (Piece piece in this.getPiece())
+            foreach (Piece piece in board.getPiece())
             {
                 if (piece != null)
                 {
-                    if (piece.getIsWhite() == this.isWhiteTurn)
+                    if (piece.getIsWhite() == board.isWhiteTurn)
                     {
                         if (piece is ChessB.King)
                         {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece(), this.getBlackAttackingMoves(), this.getWhiteAttackingMoves())));
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(board, board.getPiece(), board.getBlackAttackingMoves(), board.getWhiteAttackingMoves())));
                         }
                         else
                         {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece())));
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(board, board.getPiece())));
                         }
                     }
                 }
@@ -901,9 +977,9 @@ namespace ChessB
 
             if (validMovesAfterCheck.Count == 0)
             {
-                if (this.isWhiteTurn == true)
+                if (board.isWhiteTurn == true)
                 {
-                    if (blackAttacking.Contains(whiteKingLocation))
+                    if (board.blackAttacking.Contains(board.whiteKingLocation))
                     {
                         blackWins = true;
                         Console.WriteLine("Black Wins");
@@ -917,7 +993,7 @@ namespace ChessB
                 }
                 else
                 {
-                    if (whiteAttacking.Contains(blackKingLocation))
+                    if (board.whiteAttacking.Contains(board.blackKingLocation))
                     {
                         whiteWins = true;
                         Console.WriteLine("White Wins");
@@ -969,7 +1045,6 @@ namespace ChessB
             {
                 Ui.moveListBox.Items.Add("0 - 1");
                 return;
-
             }
         }
 
@@ -998,8 +1073,8 @@ namespace ChessB
             var random = new Random();
             int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
             Game.validMoves = validMovesAfterCheck;
-            makeMoveOnNewBoard(validMovesAfterCheck[randomIndex]);
 
+            makeMoveOnNewBoard(validMovesAfterCheck[randomIndex]);
         }
 
         public List<int> generateWhiteAttackingMoves(Piece[] pieceArray)

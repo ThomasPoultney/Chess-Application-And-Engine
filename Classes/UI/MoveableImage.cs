@@ -126,22 +126,13 @@ namespace ChessB
                 if (boardAfterMove == null)
                 {
                     resetImage();
-
                 }
                 else
                 {
-
-                    boardStates.Add(boardAfterMove);
                     Game.activeBoard = boardAfterMove;
-
-                    Ui.removeHighlightTile();
+                    Console.WriteLine(Game.activeBoard.getBlackCapturedImages().Count);
+                    boardStates.Add(boardAfterMove);
                     Ui.drawBoardPieces(boardAfterMove, Ui.canvas);
-                }
-
-                Console.Clear();
-                foreach (Board board in boardStates)
-                {
-                    board.printBoard();
                 }
             }
             Ui.pieceSelected = null;

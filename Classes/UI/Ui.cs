@@ -135,11 +135,34 @@ namespace ChessB
                     mpi.name = piece[i].getImagePath();
                     piece[i].setImage(mpi);
                 }
+
+
+
+            }
+
+
+            blackCapturedImagesList.Clear();
+            whiteCapturedImageList.Clear();
+            int j = 0;
+            foreach (MoveableImage image in board.getBlackCapturedImages())
+            {
+
+                Ui.addBlackCaptureImage(image, board.getBlackCaptureValues()[j]);
+                j++;
+            }
+
+            j = 0;
+            foreach (MoveableImage image in board.getWhiteCapturedImages())
+            {
+                Ui.addWhiteCaptureImage(image, board.getWhiteCaptureValues()[j]);
+                j++;
             }
 
             //draw highlights of last move
+
             if (board.getMoves().Count > 0)
             {
+
                 drawHighlightTile(board.getMoves().Last().getStartLocation());
                 drawHighlightTile(board.getMoves().Last().getEndLocation());
             }
@@ -153,11 +176,6 @@ namespace ChessB
             {
                 drawCheckTile(board.getBlackKingLocation());
             }
-
-
-
-
-
         }
 
 
@@ -323,6 +341,7 @@ namespace ChessB
 
         public static void addBlackCaptureImage(MoveableImage image, int pieceValue)
         {
+
             blackImageGrid.Children.Clear();
             Grid.SetRow(blackScoreLabel, 0);
             Grid.SetColumn(blackScoreLabel, 0);
@@ -340,7 +359,6 @@ namespace ChessB
                 blackScore += imageTuple.Item2;
                 image.Width = 15;
                 image.Height = 15;
-
                 blackImageGrid.Children.Add(imageTuple.Item1);
 
                 i++;
