@@ -401,7 +401,6 @@ namespace ChessB
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
                 image.IsHitTestVisible = false;
-                blackScore += imageTuple.Item2;
                 image.Width = 15;
                 image.Height = 15;
                 blackImageGrid.Children.Add(imageTuple.Item1);
@@ -409,8 +408,6 @@ namespace ChessB
                 i++;
             }
 
-            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
-            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
         }
 
         public static void addWhiteCaptureImage(MoveableImage image, int pieceValue)
@@ -429,7 +426,6 @@ namespace ChessB
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
                 image.IsHitTestVisible = false;
-                whiteScore += imageTuple.Item2;
                 image.Width = 15;
                 image.Height = 15;
 
@@ -438,8 +434,6 @@ namespace ChessB
                 i++;
             }
 
-            blackScoreLabel.Content = (blackScore - whiteScore).ToString();
-            whiteScoreLabel.Content = (whiteScore - blackScore).ToString();
         }
 
         public static void addWhiteScore(int score)
