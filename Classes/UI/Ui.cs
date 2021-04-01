@@ -102,7 +102,7 @@ namespace ChessB
 
         public static void drawBoardPieces(Board board, Canvas canvas)
         {
-
+            //removes everything from board canvas except to tile images
             for (int i = 0; i < canvas.Children.Count; i++)
             {
                 if (!(canvas.Children[i] is Tile))
@@ -112,6 +112,7 @@ namespace ChessB
                 }
             }
 
+            //draw board pieces to board
             Piece[] piece = board.getPiece();
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
@@ -144,6 +145,7 @@ namespace ChessB
             blackCapturedImagesList.Clear();
             whiteCapturedImageList.Clear();
             int j = 0;
+            //adds all captured pieces to the UI
             foreach (MoveableImage image in board.getBlackCapturedImages())
             {
 
@@ -177,6 +179,7 @@ namespace ChessB
                 drawCheckTile(board.getBlackKingLocation());
             }
 
+            //genereate board relevant values for strenght labels
             (int, int) strengths = board.generateBoardStrengths();
 
             if (strengths.Item1 - strengths.Item2 > 0)
@@ -188,7 +191,7 @@ namespace ChessB
                 Ui.blackScoreLabel.Content = "";
             }
 
-
+            //Updates score lables
             if (strengths.Item2 - strengths.Item1 > 0)
             {
                 Ui.whiteScoreLabel.Content = "+" + (strengths.Item2 - strengths.Item1).ToString();
@@ -201,6 +204,7 @@ namespace ChessB
             moveListBox.Items.Clear();
 
 
+            //Adds move notations to the move list
             int moveNumber = 0;
             foreach (Move move in board.getMoves())
             {
@@ -208,6 +212,8 @@ namespace ChessB
                 moveListBox.Items.Add(moveNumber + "\t" + move.getChessNotation());
             }
 
+
+            //adds end of game to move list UI;
             if (board.draw == true)
             {
                 Ui.moveListBox.Items.Add("1/2 - 1/2");
@@ -386,7 +392,6 @@ namespace ChessB
 
         public static void addBlackCaptureImage(MoveableImage image, int pieceValue)
         {
-
             blackImageGrid.Children.Clear();
             Grid.SetRow(blackScoreLabel, 0);
             Grid.SetColumn(blackScoreLabel, 0);
