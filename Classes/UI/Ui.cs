@@ -177,7 +177,26 @@ namespace ChessB
                 drawCheckTile(board.getBlackKingLocation());
             }
 
+            (int, int) strengths = board.generateBoardStrengths();
 
+            if (strengths.Item1 - strengths.Item2 > 0)
+            {
+                Ui.blackScoreLabel.Content = "+" + (strengths.Item1 - strengths.Item2).ToString();
+            }
+            else
+            {
+                Ui.blackScoreLabel.Content = "";
+            }
+
+
+            if (strengths.Item2 - strengths.Item1 > 0)
+            {
+                Ui.whiteScoreLabel.Content = "+" + (strengths.Item2 - strengths.Item1).ToString();
+            }
+            else
+            {
+                Ui.whiteScoreLabel.Content = "";
+            }
 
             moveListBox.Items.Clear();
 

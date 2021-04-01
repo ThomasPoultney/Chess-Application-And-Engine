@@ -144,6 +144,27 @@ namespace ChessB
             return this.enPassantLocation;
         }
 
+        public (int, int) generateBoardStrengths()
+        {
+            (int blackBoardStrength, int whiteBoardStrength) boardStrengths = (0, 0);
+            foreach (Piece piece in this.piece)
+            {
+                if (piece != null)
+                {
+                    if (piece.getIsWhite() == true)
+                    {
+                        boardStrengths.whiteBoardStrength += piece.getStrength();
+
+                    }
+                    else
+                    {
+                        boardStrengths.blackBoardStrength += piece.getStrength();
+                    }
+                }
+            }
+
+            return boardStrengths;
+        }
         public void printBoard()
         {
 
