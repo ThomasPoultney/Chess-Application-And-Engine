@@ -100,7 +100,7 @@ namespace ChessB
         }
 
 
-        public static void drawBoardPieces(Board board, Canvas canvas)
+        public static void drawUi(Board board, Canvas canvas)
         {
             //removes everything from board canvas except to tile images
             for (int i = 0; i < canvas.Children.Count; i++)

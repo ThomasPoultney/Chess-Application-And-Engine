@@ -42,7 +42,7 @@ namespace ChessB
 
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, this.boardCanvas);
-            Ui.drawBoardPieces(board, this.boardCanvas);
+            Ui.drawUi(board, this.boardCanvas);
             Window window = new Window();
         }
 

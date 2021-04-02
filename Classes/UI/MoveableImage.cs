@@ -132,7 +132,7 @@ namespace ChessB
                     Game.activeBoard = boardAfterMove;
                     Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
                     boardStates.Add(boardAfterMove);
-                    Ui.drawBoardPieces(boardAfterMove, Ui.canvas);
+                    Ui.drawUi(boardAfterMove, Ui.canvas);
                 }
             }
             Ui.pieceSelected = null;
