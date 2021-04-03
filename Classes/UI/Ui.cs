@@ -299,9 +299,10 @@ namespace ChessB
             highlightImage.Width = squareSize;
             highlightImage.Height = squareSize;
             highlightImage.Opacity = 0.75;
+            highlightImage.IsHitTestVisible = false;
             Canvas.SetTop(highlightImage, ((Game.activeBoard.getBoardSize() - 1 - yLocation) * squareSize));
             Canvas.SetLeft(highlightImage, xLocation * squareSize);
-            Canvas.SetZIndex(highlightImage, 500);
+            Canvas.SetZIndex(highlightImage, 100);
             hightlightImages.Add(highlightImage);
             canvas.Children.Add(highlightImage);
         }
