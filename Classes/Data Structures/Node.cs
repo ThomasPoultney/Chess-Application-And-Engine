@@ -10,6 +10,16 @@ namespace ChessB
     {
         private Board board;
         private Node parent;
-        private List<Node> children = new List<Node>();
+        //Number of Children
+        private int degree;
+        private List<Node> children;
+
+        public Node(Board board, Node parent)
+        {
+            this.board = board;
+            this.parent = parent;
+            this.children = new List<Node>();
+            this.degree = 0;
+        }
     }
 }

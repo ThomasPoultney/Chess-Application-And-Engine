@@ -20,6 +20,7 @@ namespace ChessB
     {
         Point startingPosition = new Point(0, 0);
         Board board;
+        MoveTree tree;
         public MainWindow()
         {
 

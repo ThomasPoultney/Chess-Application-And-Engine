@@ -9,5 +9,11 @@ namespace ChessB
     class MoveTree
     {
         private Node rootNode;
+        private int numNodes;
+
+        public MoveTree(Node rootNode)
+        {
+            this.rootNode = rootNode;
+        }
     }
 }
