@@ -15,16 +15,10 @@ namespace ChessB
         /* Forsyth–Edwards Notation(FEN) describing the current state of the board. 
         By default the starting position of the board */
         private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-
         private bool isWhiteTurn = true;
 
         private int blackKingLocation;
         private int whiteKingLocation;
-
-        private bool blackCanCastle = true;
-        private bool whiteCanCastle = true;
-
-        private static int numPositions;
 
         /*This is the number of halfmoves since the last capture or pawn advance. 
         The field is used in the fifty-move rule.*/
@@ -127,7 +121,10 @@ namespace ChessB
             return this.validMoves;
         }
 
-
+        public void setValidMoves(List<Move> validMoves)
+        {
+            this.validMoves = validMoves;
+        }
         public List<int> getBlackCaptureValues()
         {
             return this.blackCapturedPieceValue;
@@ -201,32 +198,27 @@ namespace ChessB
         }
 
 
-        public List<Board> moveGenerationTest(int depth, List<Board> boardStates)
+        public int moveGenerationTest(int depth)
         {
-            if (boardStates == null)
-            {
-                boardStates = new List<Board>();
-            }
+
             if (depth == 0)
             {
-                return boardStates;
+                return 1;
             }
 
 
-            List<Move> validMoves = generateValidMoves(this);
-
-            foreach (Move move in validMoves)
+            int numPositions = 0;
+            foreach (Move move in this.validMoves)
             {
-                numPositions++;
+
                 Board board = makeMoveOnNewBoard(move);
-                boardStates.Add(board);
-                board.moveGenerationTest(depth - 1, boardStates);
+                numPositions += board.moveGenerationTest(depth - 1);
                 move.getPiece().setLocation(move.getStartLocation());
 
             }
 
-            numPositions = 0;
-            return boardStates;
+
+            return numPositions;
         }
 
 
@@ -421,7 +413,10 @@ namespace ChessB
 
                 if (piece is ChessB.Pawn)
                 {
-                    boardAfterMove.pawnsThatHaveMoved.Add(piece);
+                    if (!boardAfterMove.pawnsThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.pawnsThatHaveMoved.Add(piece);
+                    }
 
                     //set enpassant squares
                     if (tag == "enPassant")
@@ -492,14 +487,20 @@ namespace ChessB
                 if (piece.getIsWhite() == true)
                 {
                     boardAfterMove.whiteKingLocation = pieceEndLocation;
-                    boardAfterMove.kingThatHaveMoved.Add(piece);
-                    boardAfterMove.whiteCanCastle = false;
+                    if (!boardAfterMove.kingThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.kingThatHaveMoved.Add(piece);
+                    }
+
                 }
                 else
                 {
                     boardAfterMove.blackKingLocation = pieceEndLocation;
-                    boardAfterMove.kingThatHaveMoved.Add(piece);
-                    boardAfterMove.blackCanCastle = false;
+                    if (!boardAfterMove.kingThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.kingThatHaveMoved.Add(piece);
+                    }
+
                 }
             }
 
@@ -525,7 +526,11 @@ namespace ChessB
                 //moves king
                 boardAfterMove.setPieceAtLocation(kinglocation + 3, null);
                 //add kings that have moved to board
-                boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                if (!boardAfterMove.kingThatHaveMoved.Contains(move.getPiece()))
+                {
+                    boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                }
+
                 chessNotation = "O-O";
             }
             else if (tag == "CastleLong")
@@ -539,8 +544,10 @@ namespace ChessB
                 //remove castle
                 boardAfterMove.setPieceAtLocation(kinglocation - 4, null);
 
-
-                boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                if (!boardAfterMove.kingThatHaveMoved.Contains(move.getPiece()))
+                {
+                    boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                }
 
                 chessNotation = "O-O-O";
             }
@@ -607,7 +614,7 @@ namespace ChessB
             return boardAfterMove;
 
         }
-        private List<Move> generateValidMoves(Board board)
+        public List<Move> generateValidMoves(Board board)
         {
 
             List<Move> validMovesAfterCheck = new List<Move>();
