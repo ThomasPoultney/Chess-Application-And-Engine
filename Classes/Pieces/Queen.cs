@@ -24,9 +24,9 @@ namespace ChessB
             }
         }
 
-        public override List<Move> generateValidMoves(Board board, Piece[] piece)
+        public override List<Move> generateValidMoves(Board board, Piece[] piece, int location)
         {
-            int currentLocation = this.location;
+            int currentLocation = location;
             List<Move> validMoves = new List<Move>();
             int nextLocation = currentLocation;
 

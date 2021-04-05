@@ -65,7 +65,7 @@ namespace ChessB
             return this.imagePath;
         }
 
-        public virtual List<Move> generateValidMoves(Board board, Piece[] piece)
+        public virtual List<Move> generateValidMoves(Board board, Piece[] piece, int location)
         {
             return new List<Move>();
         }
@@ -75,7 +75,7 @@ namespace ChessB
             return this.letterRepresentation;
         }
 
-        public virtual List<Move> generateValidMoves(Board board, Piece[] piece, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
+        public virtual List<Move> generateValidMoves(Board board, Piece[] piece, int location, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
         {
             return new List<Move>();
         }
@@ -86,7 +86,7 @@ namespace ChessB
 
         }
 
-        public virtual List<Move> generateAttackingMoves(Board board)
+        public virtual List<Move> generateAttackingMoves(Board board, int location)
         {
             return new List<Move>();
         }

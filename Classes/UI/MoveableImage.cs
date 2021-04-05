@@ -69,13 +69,13 @@ namespace ChessB
                     Piece[] pieceArray = activeBoard.getPiece();
                     if (Ui.pieceSelected.GetType() == typeof(King))
                     {
-                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray,
+                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, Ui.pieceSelected.getLocation(),
                                                                                 activeBoard.generateBlackAttackingMoves(pieceArray),
                                                                                 activeBoard.generateWhiteAttackingMoves(pieceArray)));
                     }
                     else
                     {
-                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray));
+                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, Ui.pieceSelected.getLocation()));
                     }
 
                     Ui.drawValidMoves();
@@ -130,7 +130,7 @@ namespace ChessB
                 else
                 {
                     Game.activeBoard = boardAfterMove;
-                    Console.WriteLine(boardAfterMove.moveGenerationTest(3, null).Count());
+                    Console.WriteLine(boardAfterMove.moveGenerationTest(2, null).Count());
                     Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
                     boardStates.Add(boardAfterMove);
                     Ui.drawUi(boardAfterMove, Ui.canvas);

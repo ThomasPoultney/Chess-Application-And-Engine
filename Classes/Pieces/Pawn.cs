@@ -41,9 +41,9 @@ namespace ChessB
             this.canMoveTwice = canMoveTwice;
         }
 
-        public override List<Move> generateValidMoves(Board board, Piece[] piece)
+        public override List<Move> generateValidMoves(Board board, Piece[] piece, int location)
         {
-            int currentLocation = this.location;
+            int currentLocation = location;
             List<Move> validMoves = new List<Move>();
             int nextLocation = this.location;
             //valid moves for pawns moving up board
@@ -287,9 +287,9 @@ namespace ChessB
         }
 
         //only returns the diagonal taking moves used for checkmate and check checking
-        public override List<Move> generateAttackingMoves(Board board)
+        public override List<Move> generateAttackingMoves(Board board, int location)
         {
-            int currentLocation = this.location;
+            int currentLocation = location;
             List<Move> validMoves = new List<Move>();
 
             if (movingUp == true)

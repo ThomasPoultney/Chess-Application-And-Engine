@@ -221,7 +221,6 @@ namespace ChessB
                 Board board = makeMoveOnNewBoard(move);
                 boardStates.Add(board);
                 board.moveGenerationTest(depth - 1, boardStates);
-
                 move.getPiece().setLocation(move.getStartLocation());
 
             }
@@ -299,15 +298,15 @@ namespace ChessB
                 if (validMove.getTag() == "CastleShort")
                 {
                     Piece rook = validMove.getSecondaryPiece();
-                    boardStateAfterMove[rook.getLocation()] = null;
-                    boardStateAfterMove[validMove.getPiece().getLocation() - 1] = rook;
+                    boardStateAfterMove[pieceStartLocation + 3] = null;
+                    boardStateAfterMove[pieceStartLocation - 1] = rook;
                 }
 
                 if (validMove.getTag() == "CastleLong")
                 {
                     Piece rook = validMove.getSecondaryPiece();
-                    boardStateAfterMove[rook.getLocation()] = null;
-                    boardStateAfterMove[validMove.getPiece().getLocation() + 1] = rook;
+                    boardStateAfterMove[pieceStartLocation - 4] = null;
+                    boardStateAfterMove[pieceStartLocation + 1] = rook;
                 }
 
                 int bKingLocation = this.blackKingLocation;
@@ -348,365 +347,7 @@ namespace ChessB
             return finalvalidMoves;
         }
 
-        public bool makeMoveOnThisBoard(Move move)
-        {
-            string chessNotation = "";
-            setEnPassantLocation(-50);
-            Ui.removeArrows();
-            Ui.removeMarkedTiles();
-            int pieceEndLocation = move.getEndLocation();
-            int pieceStartLocation = move.getStartLocation();
-            Piece piece = move.getPiece();
-            String tag = move.getTag();
-            Piece secondaryPiece = null;
-            Ui.removeHighlightTile();
 
-            bool moveIsValid = false;
-            foreach (Move validmove in Game.validMoves)
-            {
-                if (validmove.getStartLocation() == move.getStartLocation() & validmove.getEndLocation() == move.getEndLocation() & validmove.getPiece() == move.getPiece())
-                {
-                    moveIsValid = true;
-                    tag = validmove.getTag();
-                    //Console.WriteLine(tag);
-                    secondaryPiece = validmove.getSecondaryPiece();
-                }
-            }
-
-            if (moveIsValid == false)
-            {
-                Console.WriteLine("Invalid Move");
-                return false;
-            }
-            else
-            {
-                if (!(move.getPiece() is Pawn))
-                {
-                    chessNotation += move.getPiece().getLetterRepresentation();
-
-                }
-                int endLocation = move.getEndLocation();
-                int endXLocation = (endLocation) % ((this.getBoardSize())); ;
-                int endYLocation = boardSize - 1 - (int)(endLocation / this.getBoardSize());
-                Canvas.SetTop(move.getPiece().getImage(), endYLocation * Ui.squareSize);
-
-
-
-
-                Canvas.SetLeft(move.getPiece().getImage(), endXLocation * Ui.squareSize);
-
-
-                if (this.getPiece()[pieceEndLocation] != null)
-                {
-                    Ui.canvas.Children.Remove(Game.activeBoard.getPiece()[pieceEndLocation].getImage());
-                    chessNotation += "x";
-
-                    if (this.getPiece()[pieceEndLocation].getIsWhite())
-                    {
-                        MoveableImage image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
-                        Ui.addBlackCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
-                    }
-                    else
-                    {
-                        MoveableImage image = Game.activeBoard.getPiece()[pieceEndLocation].getImage();
-                        Ui.addWhiteCaptureImage(image, this.getPiece()[pieceEndLocation].getStrength());
-                    }
-
-                    this.getPiece()[pieceEndLocation] = null;
-
-                }
-
-
-                if (piece is ChessB.Pawn)
-                {
-                    piece.setCanMoveTwice(false);
-
-                    //set enpassant squares
-                    if (tag == "enPassant")
-                    {
-                        chessNotation += GetColumnName(pieceStartLocation % boardSize);
-                        chessNotation += "x";
-                        Console.WriteLine("EnPassant");
-                        if (pieceStartLocation < pieceEndLocation)
-                        {
-                            Piece capturedPawn = getPiece()[endLocation - boardSize];
-                            Ui.canvas.Children.Remove(capturedPawn.getImage());
-                            if (capturedPawn.getIsWhite() == true)
-                            {
-                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
-
-                            }
-                            else
-                            {
-                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
-
-                            }
-
-                            setPieceAtLocation(endLocation - boardSize, null);
-
-                        }
-                        else
-                        {
-                            Piece capturedPawn = getPiece()[endLocation + boardSize];
-                            Ui.canvas.Children.Remove(capturedPawn.getImage());
-                            if (capturedPawn.getIsWhite() == true)
-                            {
-                                Ui.addBlackCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
-                            }
-                            else
-                            {
-                                Ui.addWhiteCaptureImage(capturedPawn.getImage(), capturedPawn.getStrength());
-                            }
-
-                            setPieceAtLocation(endLocation + boardSize, null);
-                        }
-                    }
-                    else
-                    {
-                        if (move.getStartLocation() - move.getEndLocation() == -(this.getBoardSize() * 2))
-                        {
-                            setEnPassantLocation(move.getStartLocation() + this.getBoardSize());
-                        }
-
-                        if (move.getStartLocation() - move.getEndLocation() == (this.getBoardSize() * 2))
-                        {
-                            setEnPassantLocation(move.getStartLocation() - this.getBoardSize());
-                        }
-                    }
-
-                }
-                chessNotation += GetColumnName(endXLocation).ToLower();
-                chessNotation += (boardSize - endYLocation).ToString();
-            }
-
-
-            if (piece is ChessB.King)
-            {
-                if (piece.getIsWhite() == true)
-                {
-                    this.whiteKingLocation = pieceEndLocation;
-                    piece.setHasMoved(true);
-                    this.whiteCanCastle = false;
-                }
-                else
-                {
-                    this.blackKingLocation = pieceEndLocation;
-                    piece.setHasMoved(true);
-                    this.blackCanCastle = false;
-                }
-            }
-
-
-
-            if (piece is ChessB.Rook)
-            {
-                piece.setHasMoved(true);
-            }
-
-            this.setPieceAtLocation(pieceEndLocation, piece);
-            this.setPieceAtLocation(pieceStartLocation, null);
-
-
-
-            if (tag == "CastleShort")
-            {
-                Piece rook = move.getSecondaryPiece();
-                int location = move.getPiece().getLocation() - 1;
-                int xLocationForRook = (location) % ((this.getBoardSize())); ;
-                int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
-                Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
-                Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
-                this.setPieceAtLocation(secondaryPiece.getLocation(), null);
-                this.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    this.whiteCanCastle = false;
-                }
-                else
-                {
-                    this.blackCanCastle = false;
-                }
-                chessNotation = "O-O";
-            }
-
-            if (tag == "CastleLong")
-            {
-                Piece rook = move.getSecondaryPiece();
-                int location = move.getPiece().getLocation() + 1;
-                int xLocationForRook = (location) % ((this.getBoardSize())); ;
-                int yLocationForRook = boardSize - 1 - (int)(location / this.getBoardSize()); ;
-                Canvas.SetTop(secondaryPiece.getImage(), yLocationForRook * Ui.squareSize);
-                Canvas.SetLeft(secondaryPiece.getImage(), xLocationForRook * Ui.squareSize);
-                this.setPieceAtLocation(secondaryPiece.getLocation(), null);
-                this.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
-
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    this.whiteCanCastle = false;
-                }
-                else
-                {
-                    this.blackCanCastle = false;
-                }
-
-                chessNotation = "O-O-O";
-            }
-
-            if (move.getTag() == "promoteToRook")
-            {
-                Ui.canvas.Children.Remove(move.getPiece().getImage());
-                int location = move.getPiece().getLocation();
-                int xLocation = (location) % ((this.getBoardSize())); ;
-                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                Rook promotedPiece = new Rook(move.getPiece().getIsWhite(), move.getEndLocation());
-                MoveableImage promotedImage = new MoveableImage();
-                promotedPiece.setImage(promotedImage);
-                String promotedImageURL = promotedPiece.getImagePath();
-
-                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                promotedImage.Source = promotedPieceSource;
-                promotedImage.Width = Ui.squareSize;
-                promotedImage.Height = Ui.squareSize;
-                setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                Canvas.SetZIndex(promotedImage, 1100);
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    Ui.addWhiteScore(4);
-                }
-                else
-                {
-                    Ui.addBlackScore(4);
-                }
-                Ui.canvas.Children.Add(promotedImage);
-                chessNotation += "R";
-            }
-            else if (move.getTag() == "promoteToBishop")
-            {
-                Ui.canvas.Children.Remove(move.getPiece().getImage());
-                int location = move.getPiece().getLocation();
-                int xLocation = (location) % ((this.getBoardSize())); ;
-                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                Bishop promotedPiece = new Bishop(move.getPiece().getIsWhite(), move.getEndLocation());
-
-                MoveableImage promotedImage = new MoveableImage();
-                promotedPiece.setImage(promotedImage);
-                String promotedImageURL = promotedPiece.getImagePath();
-
-                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                promotedImage.Source = promotedPieceSource;
-                promotedImage.Width = Ui.squareSize;
-                promotedImage.Height = Ui.squareSize;
-                setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                Canvas.SetZIndex(promotedImage, 1100);
-                Ui.canvas.Children.Add(promotedImage);
-
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    Ui.addWhiteScore(2);
-                }
-                else
-                {
-                    Ui.addBlackScore(2);
-                }
-
-                chessNotation += "B";
-            }
-            else if (move.getTag() == "promoteToQueen")
-            {
-                Ui.canvas.Children.Remove(move.getPiece().getImage());
-                int location = move.getPiece().getLocation();
-                int xLocation = (location) % ((this.getBoardSize())); ;
-                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                Queen promotedPiece = new Queen(move.getPiece().getIsWhite(), move.getEndLocation());
-                MoveableImage promotedImage = new MoveableImage();
-                promotedPiece.setImage(promotedImage);
-                String promotedImageURL = promotedPiece.getImagePath();
-
-
-                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                promotedImage.Source = promotedPieceSource;
-                promotedImage.Width = Ui.squareSize;
-                promotedImage.Height = Ui.squareSize;
-                setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                Canvas.SetZIndex(promotedImage, 1100);
-
-                Ui.canvas.Children.Add(promotedImage);
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    Ui.addWhiteScore(7);
-                }
-                else
-                {
-                    Ui.addBlackScore(7);
-                }
-
-                chessNotation += "Q";
-
-            }
-            else if (move.getTag() == "promoteToKnight")
-            {
-                Ui.canvas.Children.Remove(move.getPiece().getImage());
-                int location = move.getPiece().getLocation();
-                int xLocation = (location) % ((this.getBoardSize())); ;
-                int yLocation = boardSize - 1 - (int)(location / this.getBoardSize());
-                Knight promotedPiece = new Knight(move.getPiece().getIsWhite(), move.getEndLocation());
-                MoveableImage promotedImage = new MoveableImage();
-                promotedPiece.setImage(promotedImage);
-                String promotedImageURL = promotedPiece.getImagePath();
-
-                ImageSource promotedPieceSource = new BitmapImage(new Uri(promotedImageURL));
-                promotedImage.Source = promotedPieceSource;
-                promotedImage.Width = Ui.squareSize;
-                promotedImage.Height = Ui.squareSize;
-                setPieceAtLocation(move.getEndLocation(), promotedPiece);
-
-                Canvas.SetTop(promotedImage, yLocation * Ui.squareSize);
-                Canvas.SetLeft(promotedImage, xLocation * Ui.squareSize);
-                Canvas.SetZIndex(promotedImage, 1100);
-                Ui.canvas.Children.Add(promotedImage);
-
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    Ui.addWhiteScore(2);
-                }
-                else
-                {
-                    Ui.addBlackScore(2);
-                }
-
-                chessNotation += "N";
-            }
-
-
-
-            this.moveNumber++;
-            int moveCount = moveNumber;
-            Console.WriteLine(moveNumber);
-            this.setIsWhiteTurn(!this.getIsWhiteTurn());
-            this.moves.Add(move);
-            Ui.drawHighlightTile(pieceStartLocation);
-            Ui.drawHighlightTile(pieceEndLocation);
-
-            bool isEnPassant = false;
-            if (tag == "enPassant")
-            {
-                isEnPassant = true;
-            }
-
-            this.setUpNextTurn(this, move, chessNotation, isEnPassant);
-
-            return true;
-
-        }
 
         public Board makeMoveOnNewBoard(Move move)
         {
@@ -876,55 +517,40 @@ namespace ChessB
             //if the move is castleing
             if (tag == "CastleShort")
             {
-                Piece rook = move.getSecondaryPiece();
-                int location = move.getPiece().getLocation() - 1;
 
+                int kinglocation = move.getStartLocation();
+                Piece rook = boardAfterMove.getPiece()[kinglocation + 3];
                 //moves castle
-                boardAfterMove.setPieceAtLocation(secondaryPiece.getLocation(), null);
+                boardAfterMove.setPieceAtLocation(kinglocation + 1, rook);
                 //moves king
-                boardAfterMove.setPieceAtLocation(move.getPiece().getLocation() - 1, secondaryPiece);
-
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    //remove right for white to castle
-                    boardAfterMove.whiteCanCastle = false;
-                }
-                else
-                {
-                    //remove right for white to castle
-                    boardAfterMove.blackCanCastle = false;
-                }
+                boardAfterMove.setPieceAtLocation(kinglocation + 3, null);
+                //add kings that have moved to board
+                boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
                 chessNotation = "O-O";
             }
             else if (tag == "CastleLong")
             {
-                Piece rook = move.getSecondaryPiece();
-                int location = move.getPiece().getLocation() + 1;
-                //moves castle
-                boardAfterMove.setPieceAtLocation(secondaryPiece.getLocation(), null);
-                //moves the king
-                boardAfterMove.setPieceAtLocation(move.getPiece().getLocation() + 1, secondaryPiece);
 
-                if (move.getPiece().getIsWhite() == true)
-                {
-                    //remove right for white to castle
-                    boardAfterMove.whiteCanCastle = false;
-                }
-                else
-                {
-                    //remove right for black to castle
-                    boardAfterMove.blackCanCastle = false;
-                }
+
+                int kinglocation = move.getStartLocation();
+                Piece rook = boardAfterMove.getPiece()[kinglocation - 4];
+                //add castle
+                boardAfterMove.setPieceAtLocation(kinglocation - 1, rook);
+                //remove castle
+                boardAfterMove.setPieceAtLocation(kinglocation - 4, null);
+
+
+                boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
 
                 chessNotation = "O-O-O";
             }
             else if (move.getTag() == "promoteToRook")
             {
-                int location = move.getPiece().getLocation();
+                int location = move.getStartLocation();
                 //creates a new rook to replace pawn
                 Rook promotedPiece = new Rook(move.getPiece().getIsWhite(), move.getEndLocation());
                 //stops this piece from being used in castleing
-                promotedPiece.setHasMoved(true);
+                rooksThatHaveMoved.Add(promotedPiece);
                 //replaces promoting pawn with rook
                 boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
                 //adds promotion tag to end of notation
@@ -933,7 +559,7 @@ namespace ChessB
             else if (move.getTag() == "promoteToBishop")
             {
 
-                int location = move.getPiece().getLocation();
+                int location = move.getStartLocation();
                 //creates a new bishop to replace pawn
                 Bishop promotedPiece = new Bishop(move.getPiece().getIsWhite(), move.getEndLocation());
                 //replaces promoting pawn with bishop
@@ -944,7 +570,7 @@ namespace ChessB
             else if (move.getTag() == "promoteToQueen")
             {
 
-                int location = move.getPiece().getLocation();
+                int location = move.getStartLocation();
                 //creates a new Queen to replace pawn
                 Queen promotedPiece = new Queen(move.getPiece().getIsWhite(), move.getEndLocation());
                 //replaces promoting pawn with Queen
@@ -955,7 +581,7 @@ namespace ChessB
             }
             else if (move.getTag() == "promoteToKnight")
             {
-                int location = move.getPiece().getLocation();
+                int location = move.getStartLocation();
                 //creates a new Knight to replace pawn
                 Knight promotedPiece = new Knight(move.getPiece().getIsWhite(), move.getEndLocation());
                 //replaces promoting pawn with Knight
@@ -987,19 +613,19 @@ namespace ChessB
             List<Move> validMovesAfterCheck = new List<Move>();
 
             //genearates all valid moves for each piece
-            foreach (Piece piece in board.getPiece())
+            for (int i = 0; i < boardSize * boardSize; i++)
             {
-                if (piece != null)
+                if (piece[i] != null)
                 {
-                    if (piece.getIsWhite() == board.isWhiteTurn)
+                    if (piece[i].getIsWhite() == board.isWhiteTurn)
                     {
-                        if (piece is ChessB.King)
+                        if (piece[i] is ChessB.King)
                         {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(board, board.getPiece(), board.getBlackAttackingMoves(), board.getWhiteAttackingMoves())));
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece[i].generateValidMoves(board, board.getPiece(), i, board.getBlackAttackingMoves(), board.getWhiteAttackingMoves())));
                         }
                         else
                         {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(board, board.getPiece())));
+                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece[i].generateValidMoves(board, board.getPiece(), i)));
                         }
                     }
                 }
@@ -1106,64 +732,37 @@ namespace ChessB
 
 
 
-        public void makeRandomMove()
-        {
-            whiteAttacking = generateWhiteAttackingMoves(this.getPiece());
-            blackAttacking = generateBlackAttackingMoves(this.getPiece());
-            List<Move> validMovesAfterCheck = new List<Move>();
-            foreach (Piece piece in this.getPiece())
-            {
-                if (piece != null)
-                {
-                    if (piece.getIsWhite() == this.isWhiteTurn)
-                    {
-                        if (piece is ChessB.King)
-                        {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece(), this.getBlackAttackingMoves(), this.getWhiteAttackingMoves())));
-                        }
-                        else
-                        {
-                            validMovesAfterCheck.AddRange(removeMovesThatPutInCheck(piece.generateValidMoves(this, this.getPiece())));
-                        }
-                    }
-                }
-            }
-            var random = new Random();
-            int randomIndex = random.Next(validMovesAfterCheck.Count - 1);
-            Game.validMoves = validMovesAfterCheck;
 
-            makeMoveOnNewBoard(validMovesAfterCheck[randomIndex]);
-        }
 
         public List<int> generateWhiteAttackingMoves(Piece[] pieceArray)
         {
             List<Move> whiteAttackingMoves = new List<Move>();
 
-            foreach (Piece piece in pieceArray)
+            for (int i = 0; i < boardSize * boardSize; i++)
             {
-                if (piece != null)
+                if (piece[i] != null)
                 {
 
-                    if (piece.GetType() != typeof(Pawn) && piece.GetType() != typeof(King))
+                    if (piece[i].GetType() != typeof(Pawn) && piece[i].GetType() != typeof(King))
                     {
-                        if (piece.getIsWhite() == true)
+                        if (piece[i].getIsWhite() == true)
                         {
-                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray));
+                            whiteAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i));
                         }
 
                     }
-                    else if (piece.GetType() == typeof(Pawn))
+                    else if (piece[i].GetType() == typeof(Pawn))
                     {
-                        if (piece.getIsWhite() == true)
+                        if (piece[i].getIsWhite() == true)
                         {
-                            whiteAttackingMoves.AddRange(piece.generateAttackingMoves(this));
+                            whiteAttackingMoves.AddRange(piece[i].generateAttackingMoves(this, i));
                         }
                     }
                     else if (piece.GetType() == typeof(King))
                     {
-                        if (piece.getIsWhite() == true)
+                        if (piece[i].getIsWhite() == true)
                         {
-                            whiteAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
+                            whiteAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
                         }
                     }
 
@@ -1185,32 +784,32 @@ namespace ChessB
         {
             List<Move> blackAttackingMoves = new List<Move>();
 
-            foreach (Piece piece in pieceArray)
+            for (int i = 0; i < boardSize * boardSize; i++)
             {
-                if (piece != null)
+                if (piece[i] != null)
                 {
 
-                    if (piece.GetType() != typeof(Pawn) && piece.GetType() != typeof(King))
+                    if (piece[i].GetType() != typeof(Pawn) && piece[i].GetType() != typeof(King))
                     {
-                        if (piece.getIsWhite() == false)
+                        if (piece[i].getIsWhite() == false)
                         {
-                            blackAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray));
+                            blackAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i));
                         }
 
                     }
-                    else if (piece.GetType() == typeof(Pawn))
+                    else if (piece[i].GetType() == typeof(Pawn))
                     {
-                        if (piece.getIsWhite() == false)
+                        if (piece[i].getIsWhite() == false)
                         {
-                            blackAttackingMoves.AddRange(piece.generateAttackingMoves(this));
+                            blackAttackingMoves.AddRange(piece[i].generateAttackingMoves(this, i));
                         }
 
                     }
-                    else if (piece.GetType() == typeof(King))
+                    else if (piece[i].GetType() == typeof(King))
                     {
-                        if (piece.getIsWhite() == false)
+                        if (piece[i].getIsWhite() == false)
                         {
-                            blackAttackingMoves.AddRange(piece.generateValidMoves(this, pieceArray, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
+                            blackAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
 
                         }
                     }
