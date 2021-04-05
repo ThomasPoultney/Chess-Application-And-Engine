@@ -69,7 +69,7 @@ namespace ChessB
 
                         //check if we can move forward two if piece hasnt moved yet and not on second from last rank and can moveforward
 
-                        if (canMoveTwice == true)
+                        if (!board.pawnsThatHaveMoved.Contains(this))
                         {
                             if (nextLocation + board.getBoardSize() <= (board.getBoardSize() * (board.getBoardSize() - 2)))
                             {
@@ -189,7 +189,7 @@ namespace ChessB
 
                         //check if we can move down two if piece hasnt moved yet and not on first or second rank
 
-                        if (canMoveTwice == true)
+                        if (!board.pawnsThatHaveMoved.Contains(this))
                         {
                             if (nextLocation > ((board.getBoardSize() * 2) - 1))
                             {

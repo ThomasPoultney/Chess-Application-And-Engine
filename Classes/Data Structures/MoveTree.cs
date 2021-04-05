@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessB
 {
-    class MoveTree
+    public class MoveTree
     {
         private Node rootNode;
         private int numNodes;
@@ -14,6 +14,17 @@ namespace ChessB
         public MoveTree(Node rootNode)
         {
             this.rootNode = rootNode;
+            this.numNodes = 1;
+        }
+
+        public int getNumNodes()
+        {
+            return this.numNodes;
+        }
+
+        public void incrementNumNodes()
+        {
+            this.numNodes++;
         }
     }
 }

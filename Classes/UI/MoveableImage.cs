@@ -130,6 +130,7 @@ namespace ChessB
                 else
                 {
                     Game.activeBoard = boardAfterMove;
+                    Console.WriteLine(boardAfterMove.moveGenerationTest(3, null).Count());
                     Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
                     boardStates.Add(boardAfterMove);
                     Ui.drawUi(boardAfterMove, Ui.canvas);

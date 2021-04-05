@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessB
 {
-    class Node
+    public class Node
     {
         private Board board;
         private Node parent;
@@ -20,6 +20,25 @@ namespace ChessB
             this.parent = parent;
             this.children = new List<Node>();
             this.degree = 0;
+        }
+
+        public List<Node> getChilden()
+        {
+            return this.children;
+        }
+
+        public Board getBoard()
+        {
+            return this.board;
+        }
+        public void addChild(Node node)
+        {
+            this.children.Add(node);
+        }
+
+        public void removeChild(Node node)
+        {
+            this.children.Remove(node);
         }
     }
 }

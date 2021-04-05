@@ -24,6 +24,8 @@ namespace ChessB
         private bool blackCanCastle = true;
         private bool whiteCanCastle = true;
 
+        private static int numPositions;
+
         /*This is the number of halfmoves since the last capture or pawn advance. 
         The field is used in the fifty-move rule.*/
         private int fiftyMoveRule = 50;
@@ -58,6 +60,11 @@ namespace ChessB
         public bool draw;
         public static int boardSize = 8;
 
+        public List<Piece> pawnsThatHaveMoved = new List<Piece>();
+        public List<Piece> rooksThatHaveMoved = new List<Piece>();
+        public List<Piece> kingThatHaveMoved = new List<Piece>();
+
+
 
         public Board()
         {
@@ -75,13 +82,20 @@ namespace ChessB
             this.whiteKingLocation = board.whiteKingLocation;
             this.moveNumber = board.moveNumber;
             this.enPassantLocation = board.enPassantLocation;
+
             this.blackAttacking = board.blackAttacking;
             this.whiteAttacking = board.whiteAttacking;
-            this.whiteCapturedImages = board.whiteCapturedImages;
-            this.blackCapturedImages = board.blackCapturedImages;
-            this.blackCapturedPieceValue = board.blackCapturedPieceValue;
-            this.whiteCapturedPieceValue = board.whiteCapturedPieceValue;
-            this.moves = board.moves;
+
+            this.whiteCapturedImages = board.whiteCapturedImages.ToList();
+            this.blackCapturedImages = board.blackCapturedImages.ToList();
+            this.blackCapturedPieceValue = board.blackCapturedPieceValue.ToList();
+            this.whiteCapturedPieceValue = board.whiteCapturedPieceValue.ToList();
+
+            this.pawnsThatHaveMoved = board.pawnsThatHaveMoved.ToList();
+            this.rooksThatHaveMoved = board.rooksThatHaveMoved.ToList();
+            this.kingThatHaveMoved = board.kingThatHaveMoved.ToList();
+
+            this.moves = board.moves.ToList();
 
 
         }
@@ -186,6 +200,35 @@ namespace ChessB
             }
         }
 
+
+        public List<Board> moveGenerationTest(int depth, List<Board> boardStates)
+        {
+            if (boardStates == null)
+            {
+                boardStates = new List<Board>();
+            }
+            if (depth == 0)
+            {
+                return boardStates;
+            }
+
+
+            List<Move> validMoves = generateValidMoves(this);
+
+            foreach (Move move in validMoves)
+            {
+                numPositions++;
+                Board board = makeMoveOnNewBoard(move);
+                boardStates.Add(board);
+                board.moveGenerationTest(depth - 1, boardStates);
+
+                move.getPiece().setLocation(move.getStartLocation());
+
+            }
+
+            numPositions = 0;
+            return boardStates;
+        }
 
 
 
@@ -670,7 +713,6 @@ namespace ChessB
             //creates a new board with duplicate values 
             Board boardAfterMove = new Board(this);
 
-
             string chessNotation = "";
             //resets enpassantLocation
             boardAfterMove.setEnPassantLocation(-50);
@@ -684,7 +726,7 @@ namespace ChessB
             bool moveIsValid = false;
 
             //check if the move is valid
-            foreach (Move validmove in Game.validMoves)
+            foreach (Move validmove in generateValidMoves(this))
             {
                 if (validmove.getStartLocation() == move.getStartLocation() & validmove.getEndLocation() == move.getEndLocation() & validmove.getPiece() == move.getPiece())
                 {
@@ -721,13 +763,13 @@ namespace ChessB
                     //removes captured piece from board+
                     if (boardAfterMove.getIsWhiteTurn())
                     {
-                        blackCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
-                        blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                        boardAfterMove.blackCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                        boardAfterMove.blackCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
                     }
                     else
                     {
-                        whiteCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
-                        whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
+                        boardAfterMove.whiteCapturedImages.Add(boardAfterMove.getPiece()[pieceEndLocation].getImage());
+                        boardAfterMove.whiteCapturedPieceValue.Add(boardAfterMove.getPiece()[pieceEndLocation].getStrength());
                     }
 
                     boardAfterMove.getPiece()[pieceEndLocation] = null;
@@ -738,7 +780,7 @@ namespace ChessB
 
                 if (piece is ChessB.Pawn)
                 {
-                    piece.setCanMoveTwice(false);
+                    boardAfterMove.pawnsThatHaveMoved.Add(piece);
 
                     //set enpassant squares
                     if (tag == "enPassant")
@@ -750,14 +792,14 @@ namespace ChessB
                             Piece capturedPawn = getPiece()[endLocation - boardSize];
                             if (boardAfterMove.getIsWhiteTurn())
                             {
-                                blackCapturedImages.Add(capturedPawn.getImage());
-                                blackCapturedPieceValue.Add(capturedPawn.getStrength());
+                                boardAfterMove.blackCapturedImages.Add(capturedPawn.getImage());
+                                boardAfterMove.blackCapturedPieceValue.Add(capturedPawn.getStrength());
 
                             }
                             else
                             {
-                                whiteCapturedImages.Add(capturedPawn.getImage());
-                                whiteCapturedPieceValue.Add(capturedPawn.getStrength());
+                                boardAfterMove.whiteCapturedImages.Add(capturedPawn.getImage());
+                                boardAfterMove.whiteCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             //removes the piece under the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation - boardSize, null);
@@ -770,13 +812,13 @@ namespace ChessB
                             Piece capturedPawn = getPiece()[endLocation + boardSize];
                             if (boardAfterMove.getIsWhiteTurn())
                             {
-                                blackCapturedImages.Add(capturedPawn.getImage());
-                                blackCapturedPieceValue.Add(capturedPawn.getStrength());
+                                boardAfterMove.blackCapturedImages.Add(capturedPawn.getImage());
+                                boardAfterMove.blackCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             else
                             {
-                                whiteCapturedImages.Add(capturedPawn.getImage());
-                                whiteCapturedPieceValue.Add(capturedPawn.getStrength());
+                                boardAfterMove.whiteCapturedImages.Add(capturedPawn.getImage());
+                                boardAfterMove.whiteCapturedPieceValue.Add(capturedPawn.getStrength());
                             }
                             //removes the piece above the enpassant
                             boardAfterMove.setPieceAtLocation(endLocation + boardSize, null);
@@ -809,13 +851,13 @@ namespace ChessB
                 if (piece.getIsWhite() == true)
                 {
                     boardAfterMove.whiteKingLocation = pieceEndLocation;
-                    piece.setHasMoved(true);
+                    boardAfterMove.kingThatHaveMoved.Add(piece);
                     boardAfterMove.whiteCanCastle = false;
                 }
                 else
                 {
                     boardAfterMove.blackKingLocation = pieceEndLocation;
-                    piece.setHasMoved(true);
+                    boardAfterMove.kingThatHaveMoved.Add(piece);
                     boardAfterMove.blackCanCastle = false;
                 }
             }
@@ -824,7 +866,7 @@ namespace ChessB
 
             if (piece is ChessB.Rook)
             {
-                piece.setHasMoved(true);
+                boardAfterMove.rooksThatHaveMoved.Add(piece);
             }
 
             boardAfterMove.setPieceAtLocation(pieceEndLocation, piece);

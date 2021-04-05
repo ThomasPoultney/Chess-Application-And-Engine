@@ -192,7 +192,7 @@ namespace ChessB
              * the rook involved has never moved, the squares between the king and the rook involved are unoccupied, 
              * the king is not in check, and the king does not cross over or end on a square attacked by an enemy piece.
             */
-            if (hasMoved == false)
+            if (!(board.kingThatHaveMoved.Contains(this)))
             {
                 List<int> tilesAttacked;
 
@@ -223,7 +223,7 @@ namespace ChessB
                     }
 
                     //if the rook short hasnt moved
-                    if (piece[rookLongLocation] is Rook && piece[rookLongLocation].getHasMoved() == false)
+                    if (piece[rookLongLocation] is Rook && !(board.kingThatHaveMoved.Contains(piece[rookLongLocation])))
                     {
                         bool inBetweenAttacked = false;
                         bool squaresBetweenNotEmpty = false;
@@ -253,7 +253,7 @@ namespace ChessB
 
                     }
 
-                    if (piece[rookShortLocation] is Rook && piece[rookShortLocation].getHasMoved() == false)
+                    if (piece[rookShortLocation] is Rook && !(board.kingThatHaveMoved.Contains(piece[rookShortLocation])))
                     {
                         bool inBetweenAttacked = false;
                         bool squaresBetweenNotEmpty = false;

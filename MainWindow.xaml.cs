@@ -20,7 +20,6 @@ namespace ChessB
     {
         Point startingPosition = new Point(0, 0);
         Board board;
-        MoveTree tree;
         public MainWindow()
         {
 
@@ -29,6 +28,8 @@ namespace ChessB
             board = new Board();
             board.generateBoardFromFEN();
             Game.activeBoard = board;
+
+
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
 
