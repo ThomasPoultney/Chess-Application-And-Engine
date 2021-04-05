@@ -14,7 +14,9 @@ namespace ChessB
     {
         /* Forsyth–Edwards Notation(FEN) describing the current state of the board. 
         By default the starting position of the board */
-        private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        // private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        private String fenString = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
+
         private bool isWhiteTurn = true;
 
         private int blackKingLocation;
@@ -846,7 +848,7 @@ namespace ChessB
 
             foreach (char symbol in charFenArray)
             {
-                int location = currentRank * boardSize + currentFile;
+                int location = (currentRank * boardSize) + currentFile;
                 if (symbol == '/')
                 {
                     currentFile = 0;
@@ -912,7 +914,6 @@ namespace ChessB
                 {
                     King king = new King(false, location);
                     piece[location] = king;
-                    this.blackKingLocation = location;
                     currentFile++;
                 }
                 else if (symbol == 'P')
@@ -930,7 +931,10 @@ namespace ChessB
                 }
                 else if (char.IsNumber(symbol))
                 {
-                    currentFile += (int)symbol;
+
+
+                    currentFile += symbol - '0';
+                    Console.WriteLine(currentFile);
                 }
                 else if (symbol == 'w')
                 {
