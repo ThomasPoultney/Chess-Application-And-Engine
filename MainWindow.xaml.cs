@@ -27,10 +27,11 @@ namespace ChessB
 
             board = new Board();
             board.generateBoardFromFEN();
+            board.printBoard();
 
             board.setValidMoves(board.generateValidMoves(board));
             Game.activeBoard = board;
-
+            Console.WriteLine(board.moveGenerationTest(3));
 
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());

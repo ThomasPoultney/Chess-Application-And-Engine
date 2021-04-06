@@ -15,7 +15,8 @@ namespace ChessB
         /* Forsyth–Edwards Notation(FEN) describing the current state of the board. 
         By default the starting position of the board */
         // private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        private String fenString = "rnbq1k1r/pp1Pbppp/2p5/8/2B5/8/PPP1NnPP/RNBQK2R w KQ - 1 8";
+        private String fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+
 
         private bool isWhiteTurn = true;
 
@@ -39,8 +40,8 @@ namespace ChessB
         public List<Move> moves = new List<Move>();
 
         //stores all tiles being attacked by a player, used for checking for checkmate. 
-        private List<int> whiteAttacking = new List<int>();
-        private List<int> blackAttacking = new List<int>();
+        public List<int> whiteAttacking = new List<int>();
+        public List<int> blackAttacking = new List<int>();
 
         private List<MoveableImage> whiteCapturedImages = new List<MoveableImage>();
         private List<MoveableImage> blackCapturedImages = new List<MoveableImage>();
@@ -282,6 +283,7 @@ namespace ChessB
 
             foreach (Move validMove in validMoves)
             {
+                Board boardAfterMove = new Board();
                 Piece[] boardStateAfterMove = this.getPiece().ToArray();
                 int pieceEndLocation = validMove.getEndLocation();
                 int pieceStartLocation = validMove.getStartLocation();
@@ -292,15 +294,55 @@ namespace ChessB
                 if (validMove.getTag() == "CastleShort")
                 {
                     Piece rook = validMove.getSecondaryPiece();
+
+
                     boardStateAfterMove[pieceStartLocation + 3] = null;
-                    boardStateAfterMove[pieceStartLocation - 1] = rook;
+                    boardStateAfterMove[pieceStartLocation + 1] = rook;
                 }
 
                 if (validMove.getTag() == "CastleLong")
                 {
                     Piece rook = validMove.getSecondaryPiece();
                     boardStateAfterMove[pieceStartLocation - 4] = null;
-                    boardStateAfterMove[pieceStartLocation + 1] = rook;
+                    boardStateAfterMove[pieceStartLocation - 1] = rook;
+                }
+
+                if (validMove.getTag() == "enPassant")
+                {
+                    if (pieceStartLocation < pieceEndLocation)
+                    {
+                        Piece capturedPawn = getPiece()[pieceEndLocation - boardSize];
+
+                        //removes the piece under the enpassant
+                        boardStateAfterMove[pieceEndLocation - boardSize] = null;
+                    }
+                    else
+                    {
+                        //removes the piece above the enpassant
+                        boardStateAfterMove[pieceEndLocation + boardSize] = null;
+
+
+                    }
+                }
+
+                else if (validMove.getTag() == "promoteToRook")
+                {
+                    boardStateAfterMove[pieceEndLocation] = new Rook(piece.getIsWhite(), pieceEndLocation);
+                }
+                else if (validMove.getTag() == "promoteToBishop")
+                {
+                    boardStateAfterMove[pieceEndLocation] = new Bishop(piece.getIsWhite(), pieceEndLocation);
+
+                }
+                else if (validMove.getTag() == "promoteToQueen")
+                {
+                    boardStateAfterMove[pieceEndLocation] = new Queen(piece.getIsWhite(), pieceEndLocation);
+
+                }
+                else if (validMove.getTag() == "promoteToKnight")
+                {
+                    boardStateAfterMove[pieceEndLocation] = new Knight(piece.getIsWhite(), pieceEndLocation);
+
                 }
 
                 int bKingLocation = this.blackKingLocation;
@@ -317,12 +359,12 @@ namespace ChessB
                         bKingLocation = pieceEndLocation;
                     }
                 }
-
+                boardAfterMove.setPiece(boardStateAfterMove);
                 List<int> attackingMoves;
 
                 if (piece.getIsWhite() == true)
                 {
-                    attackingMoves = generateBlackAttackingMoves(boardStateAfterMove);
+                    attackingMoves = boardAfterMove.generateBlackAttackingMoves(boardStateAfterMove);
                     if (!attackingMoves.Contains(wKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
@@ -330,7 +372,7 @@ namespace ChessB
                 }
                 else
                 {
-                    attackingMoves = generateWhiteAttackingMoves(boardStateAfterMove);
+                    attackingMoves = boardAfterMove.generateWhiteAttackingMoves(boardStateAfterMove);
                     if (!attackingMoves.Contains(bKingLocation))
                     {
                         finalvalidMoves.Add(validMove);
@@ -907,6 +949,10 @@ namespace ChessB
                 {
                     King king = new King(true, location);
                     piece[location] = king;
+                    if (location != 4)
+                    {
+                        this.kingThatHaveMoved.Add(king);
+                    }
                     this.whiteKingLocation = location;
                     currentFile++;
                 }
@@ -914,18 +960,31 @@ namespace ChessB
                 {
                     King king = new King(false, location);
                     piece[location] = king;
+                    if (location != 60)
+                    {
+                        this.kingThatHaveMoved.Add(king);
+                    }
+                    this.blackKingLocation = location;
                     currentFile++;
                 }
                 else if (symbol == 'P')
                 {
                     Pawn pawn = new Pawn(true, location);
                     piece[location] = pawn;
+                    if (location >= boardSize * 2)
+                    {
+                        this.pawnsThatHaveMoved.Add(pawn);
+                    }
                     currentFile++;
                 }
                 else if (symbol == 'p')
                 {
                     Pawn pawn = new Pawn(false, location);
                     pawn.setMovingUp(false);
+                    if (location < (boardSize * (boardSize - 2)))
+                    {
+                        this.pawnsThatHaveMoved.Add(pawn);
+                    }
                     piece[location] = pawn;
                     currentFile++;
                 }
