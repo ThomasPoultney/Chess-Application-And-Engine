@@ -31,8 +31,13 @@ namespace ChessB
 
             board.setValidMoves(board.generateValidMoves(board));
             Game.activeBoard = board;
-            Console.WriteLine(board.moveGenerationTest(3));
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            // the code that you want to measure comes here
 
+            Console.WriteLine(board.moveGenerationTest(2));
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Console.WriteLine(elapsedMs);
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
 

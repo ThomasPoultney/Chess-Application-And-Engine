@@ -14,8 +14,9 @@ namespace ChessB
     {
         /* Forsyth–Edwards Notation(FEN) describing the current state of the board. 
         By default the starting position of the board */
-        // private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-        private String fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
+
+        private String fenString = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        //private String fenString = "r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ";
 
 
         private bool isWhiteTurn = true;
@@ -82,6 +83,9 @@ namespace ChessB
             this.blackCapturedImages = board.blackCapturedImages.ToList();
             this.blackCapturedPieceValue = board.blackCapturedPieceValue.ToList();
             this.whiteCapturedPieceValue = board.whiteCapturedPieceValue.ToList();
+
+            this.blackAttacking = board.blackAttacking.ToList();
+            this.whiteAttacking = board.whiteAttacking.ToList();
 
             this.pawnsThatHaveMoved = board.pawnsThatHaveMoved.ToList();
             this.rooksThatHaveMoved = board.rooksThatHaveMoved.ToList();
@@ -292,15 +296,13 @@ namespace ChessB
                     boardStateAfterMove[pieceStartLocation + 3] = null;
                     boardStateAfterMove[pieceStartLocation + 1] = rook;
                 }
-
-                if (validMove.getTag() == "CastleLong")
+                else if (validMove.getTag() == "CastleLong")
                 {
                     Piece rook = validMove.getSecondaryPiece();
                     boardStateAfterMove[pieceStartLocation - 4] = null;
                     boardStateAfterMove[pieceStartLocation - 1] = rook;
                 }
-
-                if (validMove.getTag() == "enPassant")
+                else if (validMove.getTag() == "enPassant")
                 {
                     if (pieceStartLocation < pieceEndLocation)
                     {
@@ -1032,7 +1034,7 @@ namespace ChessB
                             whiteAttackingMoves.AddRange(piece[i].generateAttackingMoves(this, i));
                         }
                     }
-                    else if (piece.GetType() == typeof(King))
+                    else if (piece[i].GetType() == typeof(King))
                     {
                         if (piece[i].getIsWhite() == true)
                         {
