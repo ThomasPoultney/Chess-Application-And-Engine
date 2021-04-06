@@ -74,14 +74,9 @@ namespace ChessB
             //creates a copy of piece array so that we lose the reference to currents boards piece array
             this.piece = (Piece[])board.getPiece().Clone();
             this.isWhiteTurn = board.isWhiteTurn;
-            this.fiftyMoveRule = board.fiftyMoveRule;
             this.blackKingLocation = board.blackKingLocation;
             this.whiteKingLocation = board.whiteKingLocation;
-            this.moveNumber = board.moveNumber;
             this.enPassantLocation = board.enPassantLocation;
-
-            this.blackAttacking = board.blackAttacking;
-            this.whiteAttacking = board.whiteAttacking;
 
             this.whiteCapturedImages = board.whiteCapturedImages.ToList();
             this.blackCapturedImages = board.blackCapturedImages.ToList();
@@ -93,8 +88,6 @@ namespace ChessB
             this.kingThatHaveMoved = board.kingThatHaveMoved.ToList();
 
             this.moves = board.moves.ToList();
-
-
         }
 
         private List<Move> Moves { get => moves; set => moves = value; }
@@ -214,7 +207,7 @@ namespace ChessB
             foreach (Move move in this.validMoves)
             {
 
-                Board board = makeMoveOnNewBoard(move);
+                Board board = makeMoveOnNewBoardLightWeight(move);
                 numPositions += board.moveGenerationTest(depth - 1);
                 move.getPiece().setLocation(move.getStartLocation());
 
@@ -383,7 +376,237 @@ namespace ChessB
             return finalvalidMoves;
         }
 
+        public Board makeMoveOnNewBoardLightWeight(Move move)
+        {
+            //creates a new board with duplicate values 
+            Board boardAfterMove = new Board(this);
+            //resets enpassantLocation
+            boardAfterMove.setEnPassantLocation(-50);
 
+            int pieceEndLocation = move.getEndLocation();
+            int pieceStartLocation = move.getStartLocation();
+            Piece piece = move.getPiece();
+            String tag = move.getTag();
+            bool moveIsValid = false;
+
+            if (true)
+            {
+
+                int endLocation = move.getEndLocation();
+                if (piece is ChessB.Pawn)
+                {
+                    if (!boardAfterMove.pawnsThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.pawnsThatHaveMoved.Add(piece);
+                    }
+
+                    //set enpassant squares
+                    if (tag == "enPassant")
+                    {
+                        if (pieceStartLocation < pieceEndLocation)
+                        {
+                            //removes the piece below the enpassant
+                            boardAfterMove.setPieceAtLocation(endLocation - boardSize, null);
+                        }
+                        else
+                        {
+                            //removes the piece above the enpassant
+                            boardAfterMove.setPieceAtLocation(endLocation + boardSize, null);
+                        }
+                    }
+                    else
+                    {
+                        //sets the enpassant square
+                        if (move.getStartLocation() - move.getEndLocation() == -(this.getBoardSize() * 2))
+                        {
+                            boardAfterMove.setEnPassantLocation(move.getStartLocation() + this.getBoardSize());
+                        }
+
+                        if (move.getStartLocation() - move.getEndLocation() == (this.getBoardSize() * 2))
+                        {
+                            boardAfterMove.setEnPassantLocation(move.getStartLocation() - this.getBoardSize());
+                        }
+                    }
+
+                }
+            }
+
+
+            if (piece is ChessB.King)
+            {
+                if (piece.getIsWhite() == true)
+                {
+                    boardAfterMove.whiteKingLocation = pieceEndLocation;
+                    if (!boardAfterMove.kingThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.kingThatHaveMoved.Add(piece);
+                    }
+
+                }
+                else
+                {
+                    boardAfterMove.blackKingLocation = pieceEndLocation;
+                    if (!boardAfterMove.kingThatHaveMoved.Contains(piece))
+                    {
+                        boardAfterMove.kingThatHaveMoved.Add(piece);
+                    }
+
+                }
+            }
+
+
+
+            if (piece is ChessB.Rook)
+            {
+                if (!boardAfterMove.rooksThatHaveMoved.Contains(piece))
+                {
+                    boardAfterMove.rooksThatHaveMoved.Add(piece);
+                }
+            }
+
+            boardAfterMove.setPieceAtLocation(pieceEndLocation, piece);
+            boardAfterMove.setPieceAtLocation(pieceStartLocation, null);
+
+
+            //if the move is castleing
+            if (tag == "CastleShort")
+            {
+
+                int kinglocation = move.getStartLocation();
+                Piece rook = boardAfterMove.getPiece()[kinglocation + 3];
+                //moves castle
+                boardAfterMove.setPieceAtLocation(kinglocation + 1, rook);
+                //moves king
+                boardAfterMove.setPieceAtLocation(kinglocation + 3, null);
+                //add kings that have moved to board
+                if (!boardAfterMove.kingThatHaveMoved.Contains(move.getPiece()))
+                {
+                    boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                }
+            }
+            else if (tag == "CastleLong")
+            {
+
+
+                int kinglocation = move.getStartLocation();
+                Piece rook = boardAfterMove.getPiece()[kinglocation - 4];
+                //add castle
+                boardAfterMove.setPieceAtLocation(kinglocation - 1, rook);
+                //remove castle
+                boardAfterMove.setPieceAtLocation(kinglocation - 4, null);
+
+                if (!boardAfterMove.kingThatHaveMoved.Contains(move.getPiece()))
+                {
+                    boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
+                }
+            }
+            else if (move.getTag() == "promoteToRook")
+            {
+                int location = move.getStartLocation();
+                //creates a new rook to replace pawn
+                Rook promotedPiece = new Rook(move.getPiece().getIsWhite(), move.getEndLocation());
+                //stops this piece from being used in castleing
+                rooksThatHaveMoved.Add(promotedPiece);
+                //replaces promoting pawn with rook
+                boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+            }
+            else if (move.getTag() == "promoteToBishop")
+            {
+                int location = move.getStartLocation();
+                //creates a new bishop to replace pawn
+                Bishop promotedPiece = new Bishop(move.getPiece().getIsWhite(), move.getEndLocation());
+                //replaces promoting pawn with bishop
+                boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+            }
+            else if (move.getTag() == "promoteToQueen")
+            {
+                int location = move.getStartLocation();
+                //creates a new Queen to replace pawn
+                Queen promotedPiece = new Queen(move.getPiece().getIsWhite(), move.getEndLocation());
+                //replaces promoting pawn with Queen
+                boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
+
+            }
+            else if (move.getTag() == "promoteToKnight")
+            {
+                int location = move.getStartLocation();
+                //creates a new Knight to replace pawn
+                Knight promotedPiece = new Knight(move.getPiece().getIsWhite(), move.getEndLocation());
+                //replaces promoting pawn with Knight
+                boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
+            }
+
+            boardAfterMove.setIsWhiteTurn(!boardAfterMove.getIsWhiteTurn());
+            boardAfterMove.setUpNextTurnLightWeight(boardAfterMove, move);
+
+            return boardAfterMove;
+
+        }
+
+        private void setUpNextTurnLightWeight(Board board, Move move)
+        {
+
+            //reset enpassant square
+            //generate all current players moves
+            //generate all opponenets attacking moves, check if we are in check// if in check play check sounds
+            //if current player has no valid moves and we are in check then oppenent wins
+            //if current player has valid moves and not in check it is stalemate
+            List<Move> validMovesAfterCheck = new List<Move>();
+            if (this.isWhiteTurn == true)
+            {
+                board.blackAttacking = board.generateBlackAttackingMoves(board.getPiece());
+                if (board.blackAttacking.Contains(board.whiteKingLocation))
+                {
+                    board.whiteInCheck = true;
+                }
+            }
+            else
+            {
+                board.whiteAttacking = board.generateWhiteAttackingMoves(board.getPiece());
+                if (board.whiteAttacking.Contains(board.blackKingLocation))
+                {
+                    board.blackInCheck = true;
+                }
+            }
+
+            //generate all valid moves
+            //removes moves that would leave king in check.
+            validMovesAfterCheck = generateValidMoves(board);
+            board.validMoves = validMovesAfterCheck;
+
+            //checks if game is over
+            if (validMovesAfterCheck.Count == 0)
+            {
+                if (board.isWhiteTurn == true)
+                {
+                    if (board.blackAttacking.Contains(board.whiteKingLocation))
+                    {
+                        board.blackWins = true;
+                    }
+                    else
+                    {
+                        board.draw = true;
+                    }
+                }
+                else
+                {
+                    if (board.whiteAttacking.Contains(board.blackKingLocation))
+                    {
+                        board.whiteWins = true;
+                    }
+                    else
+                    {
+                        board.draw = true;
+                    }
+                }
+
+            }
+
+            board.moves.Add(move);
+
+        }
 
         public Board makeMoveOnNewBoard(Move move)
         {
@@ -403,7 +626,7 @@ namespace ChessB
             bool moveIsValid = false;
 
             //check if the move is valid
-            foreach (Move validmove in generateValidMoves(this))
+            foreach (Move validmove in getValidMoves())
             {
                 if (validmove.getStartLocation() == move.getStartLocation() & validmove.getEndLocation() == move.getEndLocation() & validmove.getPiece() == move.getPiece())
                 {
