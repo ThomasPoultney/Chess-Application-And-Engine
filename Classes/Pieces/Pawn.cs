@@ -57,10 +57,10 @@ namespace ChessB
                         Move moveOneForward = new Move(nextLocation, nextLocation + board.getBoardSize(), this);
                         if (moveOneForward.getEndLocation() >= (board.getBoardSize() * (board.getBoardSize() - 1)) || moveOneForward.getEndLocation() < board.getBoardSize())
                         {
-                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToRook"));
-                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToQueen"));
-                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToKnight"));
-                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), "promoteToBishop"));
+                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), MoveTag.promoteToRook));
+                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), MoveTag.promoteToQueen));
+                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), MoveTag.promoteToKnight));
+                            validMoves.Add(new Move(moveOneForward.getStartLocation(), moveOneForward.getEndLocation(), moveOneForward.getPiece(), MoveTag.promoteToBishop));
                         }
                         else
                         {
@@ -78,10 +78,10 @@ namespace ChessB
                                     Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() * 2), this);
                                     if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                     {
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                     }
                                     else
                                     {
@@ -105,10 +105,10 @@ namespace ChessB
                                 Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() - 1), this);
                                 if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                 {
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                 }
                                 else
                                 {
@@ -121,7 +121,7 @@ namespace ChessB
                         {
                             if (board.getEnPassantLocation() == nextLocation + (board.getBoardSize() - 1))
                             {
-                                Move move = new Move(currentLocation, currentLocation + (board.getBoardSize() - 1), this, "enPassant");
+                                Move move = new Move(currentLocation, currentLocation + (board.getBoardSize() - 1), this, MoveTag.enPassant);
                                 validMoves.Add(move);
                             }
                         }
@@ -138,10 +138,10 @@ namespace ChessB
                                 Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() + 1), this);
                                 if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                 {
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                 }
                                 else
                                 {
@@ -154,7 +154,7 @@ namespace ChessB
                         {
                             if (board.getEnPassantLocation() == nextLocation + (board.getBoardSize() + 1))
                             {
-                                Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this, "enPassant");
+                                Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this, MoveTag.enPassant);
                                 validMoves.Add(move);
                             }
                         }
@@ -177,10 +177,10 @@ namespace ChessB
 
                         if (moveOne.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || moveOne.getEndLocation() < board.getBoardSize())
                         {
-                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), "promoteToRook"));
-                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), "promoteToQueen"));
-                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), "promoteToKnight"));
-                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), "promoteToBishop"));
+                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), MoveTag.promoteToRook));
+                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), MoveTag.promoteToQueen));
+                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), MoveTag.promoteToKnight));
+                            validMoves.Add(new Move(moveOne.getStartLocation(), moveOne.getEndLocation(), moveOne.getPiece(), MoveTag.promoteToBishop));
                         }
                         else
                         {
@@ -198,10 +198,10 @@ namespace ChessB
                                     Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() * 2), this);
                                     if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                     {
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                        validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                     }
                                     else
                                     {
@@ -225,10 +225,10 @@ namespace ChessB
                                 Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() + 1), this);
                                 if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                 {
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                 }
                                 else
                                 {
@@ -240,7 +240,7 @@ namespace ChessB
                         {
                             if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() + 1))
                             {
-                                Move move = new Move(currentLocation, (nextLocation - (board.getBoardSize() + 1)), this, "enPassant");
+                                Move move = new Move(currentLocation, (nextLocation - (board.getBoardSize() + 1)), this, MoveTag.enPassant);
                                 validMoves.Add(move);
 
                             }
@@ -258,10 +258,10 @@ namespace ChessB
                                 Move move = new Move(nextLocation, nextLocation - (board.getBoardSize() - 1), this);
                                 if (move.getEndLocation() >= board.getBoardSize() * (board.getBoardSize() - 1) || move.getEndLocation() < board.getBoardSize())
                                 {
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToRook"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToQueen"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToKnight"));
-                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), "promoteToBishop"));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToRook));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToQueen));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToKnight));
+                                    validMoves.Add(new Move(move.getStartLocation(), move.getEndLocation(), move.getPiece(), MoveTag.promoteToBishop));
                                 }
                                 else
                                 {
@@ -273,7 +273,7 @@ namespace ChessB
                         {
                             if (board.getEnPassantLocation() == nextLocation - (board.getBoardSize() - 1))
                             {
-                                Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this, "enPassant");
+                                Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this, MoveTag.enPassant);
                                 validMoves.Add(move);
                             }
                         }

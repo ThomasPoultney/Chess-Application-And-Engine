@@ -61,8 +61,8 @@ namespace ChessB
         public static List<Image> markedImages = new List<Image>();
         public static List<int> markedImageLocations = new List<int>();
 
-        public static string whiteUpgradeChoice;
-        public static string blackUpgradeChoice;
+        public static MoveTag whiteUpgradeChoice;
+        public static MoveTag blackUpgradeChoice;
 
         public static ListBox moveListBox;
         public static Image hoveredTileImage;

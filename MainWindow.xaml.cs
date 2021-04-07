@@ -95,22 +95,22 @@ namespace ChessB
 
         private void BRRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.blackUpgradeChoice = "promoteToRook";
+            Ui.blackUpgradeChoice = MoveTag.promoteToRook;
         }
 
         private void BQRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.blackUpgradeChoice = "promoteToQueen";
+            Ui.blackUpgradeChoice = MoveTag.promoteToQueen;
         }
 
         private void BNRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.blackUpgradeChoice = "promoteToKnight";
+            Ui.blackUpgradeChoice = MoveTag.promoteToKnight;
         }
 
         private void BBRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.blackUpgradeChoice = "promoteToBishop";
+            Ui.blackUpgradeChoice = MoveTag.promoteToBishop;
         }
 
         /*-------------------------------------------------
@@ -119,22 +119,22 @@ namespace ChessB
 
         private void WRRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.whiteUpgradeChoice = "promoteToRook";
+            Ui.whiteUpgradeChoice = MoveTag.promoteToRook;
         }
 
         private void WQRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.whiteUpgradeChoice = "promoteToQueen";
+            Ui.whiteUpgradeChoice = MoveTag.promoteToQueen;
         }
 
         private void WNRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.whiteUpgradeChoice = "promoteToKnight";
+            Ui.whiteUpgradeChoice = MoveTag.promoteToKnight;
         }
 
         private void WBRB_Checked(object sender, RoutedEventArgs e)
         {
-            Ui.whiteUpgradeChoice = "promoteToBishop";
+            Ui.whiteUpgradeChoice = MoveTag.promoteToBishop;
         }
 
     }

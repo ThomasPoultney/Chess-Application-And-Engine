@@ -6,17 +6,28 @@ using System.Threading.Tasks;
 
 namespace ChessB
 {
+    public enum MoveTag
+    {
+        none,
+        enPassant,
+        promoteToRook,
+        promoteToQueen,
+        promoteToKnight,
+        promoteToBishop,
+        castleShort,
+        castleLong,
+    }
     public struct Move
     {
         private readonly int startLocation;
         private readonly int endLocation;
         private Piece piece;
-        private string tag;
+        private MoveTag tag;
         //if another piece is involved e.g. castleing
         private Piece secondaryPiece;
         private string chessNotation;
 
-        public Move(int startLocation, int endLocation, Piece piece, string tag = "None", Piece secondaryPiece = null)
+        public Move(int startLocation, int endLocation, Piece piece, MoveTag tag = MoveTag.none, Piece secondaryPiece = null)
         {
             this.startLocation = startLocation;
             this.endLocation = endLocation;
@@ -26,7 +37,7 @@ namespace ChessB
             this.chessNotation = "";
         }
 
-        public Move(int startLocation, int endLocation, Piece piece, string tag = "None")
+        public Move(int startLocation, int endLocation, Piece piece, MoveTag tag = MoveTag.none)
         {
             this.startLocation = startLocation;
             this.endLocation = endLocation;
@@ -41,7 +52,7 @@ namespace ChessB
             this.startLocation = startLocation;
             this.endLocation = endLocation;
             this.piece = piece;
-            this.tag = "None";
+            this.tag = MoveTag.none;
             this.secondaryPiece = null;
             this.chessNotation = "";
         }
@@ -71,12 +82,12 @@ namespace ChessB
             return this.piece;
         }
 
-        public string getTag()
+        public MoveTag getTag()
         {
             return this.tag;
         }
 
-        public void setTag(String tag)
+        public void setTag(MoveTag tag)
         {
             this.tag = tag;
         }

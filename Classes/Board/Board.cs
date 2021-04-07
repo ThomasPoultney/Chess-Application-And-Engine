@@ -288,7 +288,7 @@ namespace ChessB
 
                 boardStateAfterMove[pieceEndLocation] = piece;
                 boardStateAfterMove[pieceStartLocation] = null;
-                if (validMove.getTag() == "CastleShort")
+                if (validMove.getTag() == MoveTag.castleShort)
                 {
                     Piece rook = validMove.getSecondaryPiece();
 
@@ -296,13 +296,13 @@ namespace ChessB
                     boardStateAfterMove[pieceStartLocation + 3] = null;
                     boardStateAfterMove[pieceStartLocation + 1] = rook;
                 }
-                else if (validMove.getTag() == "CastleLong")
+                else if (validMove.getTag() == MoveTag.castleLong)
                 {
                     Piece rook = validMove.getSecondaryPiece();
                     boardStateAfterMove[pieceStartLocation - 4] = null;
                     boardStateAfterMove[pieceStartLocation - 1] = rook;
                 }
-                else if (validMove.getTag() == "enPassant")
+                else if (validMove.getTag() == MoveTag.enPassant)
                 {
                     if (pieceStartLocation < pieceEndLocation)
                     {
@@ -320,21 +320,21 @@ namespace ChessB
                     }
                 }
 
-                else if (validMove.getTag() == "promoteToRook")
+                else if (validMove.getTag() == MoveTag.promoteToRook)
                 {
                     boardStateAfterMove[pieceEndLocation] = new Rook(piece.getIsWhite(), pieceEndLocation);
                 }
-                else if (validMove.getTag() == "promoteToBishop")
+                else if (validMove.getTag() == MoveTag.promoteToBishop)
                 {
                     boardStateAfterMove[pieceEndLocation] = new Bishop(piece.getIsWhite(), pieceEndLocation);
 
                 }
-                else if (validMove.getTag() == "promoteToQueen")
+                else if (validMove.getTag() == MoveTag.promoteToQueen)
                 {
                     boardStateAfterMove[pieceEndLocation] = new Queen(piece.getIsWhite(), pieceEndLocation);
 
                 }
-                else if (validMove.getTag() == "promoteToKnight")
+                else if (validMove.getTag() == MoveTag.promoteToKnight)
                 {
                     boardStateAfterMove[pieceEndLocation] = new Knight(piece.getIsWhite(), pieceEndLocation);
 
@@ -388,7 +388,7 @@ namespace ChessB
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();
-            String tag = move.getTag();
+            MoveTag tag = move.getTag();
             bool moveIsValid = false;
 
             if (true)
@@ -403,7 +403,7 @@ namespace ChessB
                     }
 
                     //set enpassant squares
-                    if (tag == "enPassant")
+                    if (tag == MoveTag.enPassant)
                     {
                         if (pieceStartLocation < pieceEndLocation)
                         {
@@ -471,7 +471,7 @@ namespace ChessB
 
 
             //if the move is castleing
-            if (tag == "CastleShort")
+            if (tag == MoveTag.castleShort)
             {
 
                 int kinglocation = move.getStartLocation();
@@ -486,7 +486,7 @@ namespace ChessB
                     boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
                 }
             }
-            else if (tag == "CastleLong")
+            else if (tag == MoveTag.castleLong)
             {
 
 
@@ -502,7 +502,7 @@ namespace ChessB
                     boardAfterMove.kingThatHaveMoved.Add(move.getPiece());
                 }
             }
-            else if (move.getTag() == "promoteToRook")
+            else if (move.getTag() == MoveTag.promoteToRook)
             {
                 int location = move.getStartLocation();
                 //creates a new rook to replace pawn
@@ -513,7 +513,7 @@ namespace ChessB
                 boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
 
             }
-            else if (move.getTag() == "promoteToBishop")
+            else if (move.getTag() == MoveTag.promoteToBishop)
             {
                 int location = move.getStartLocation();
                 //creates a new bishop to replace pawn
@@ -522,7 +522,7 @@ namespace ChessB
                 boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
 
             }
-            else if (move.getTag() == "promoteToQueen")
+            else if (move.getTag() == MoveTag.promoteToQueen)
             {
                 int location = move.getStartLocation();
                 //creates a new Queen to replace pawn
@@ -531,7 +531,7 @@ namespace ChessB
                 boardAfterMove.setPieceAtLocation(move.getEndLocation(), promotedPiece);
 
             }
-            else if (move.getTag() == "promoteToKnight")
+            else if (move.getTag() == MoveTag.promoteToKnight)
             {
                 int location = move.getStartLocation();
                 //creates a new Knight to replace pawn
@@ -622,7 +622,7 @@ namespace ChessB
             int pieceEndLocation = move.getEndLocation();
             int pieceStartLocation = move.getStartLocation();
             Piece piece = move.getPiece();
-            String tag = move.getTag();
+            MoveTag tag = move.getTag();
             Piece secondaryPiece = null;
 
             bool moveIsValid = false;
@@ -688,7 +688,7 @@ namespace ChessB
                     }
 
                     //set enpassant squares
-                    if (tag == "enPassant")
+                    if (tag == MoveTag.enPassant)
                     {
                         chessNotation += GetColumnName(pieceStartLocation % boardSize);
                         chessNotation += "x";
@@ -785,7 +785,7 @@ namespace ChessB
 
 
             //if the move is castleing
-            if (tag == "CastleShort")
+            if (tag == MoveTag.castleShort)
             {
 
                 int kinglocation = move.getStartLocation();
@@ -802,7 +802,7 @@ namespace ChessB
 
                 chessNotation = "O-O";
             }
-            else if (tag == "CastleLong")
+            else if (tag == MoveTag.castleLong)
             {
 
 
@@ -820,7 +820,7 @@ namespace ChessB
 
                 chessNotation = "O-O-O";
             }
-            else if (move.getTag() == "promoteToRook")
+            else if (move.getTag() == MoveTag.promoteToRook)
             {
                 int location = move.getStartLocation();
                 //creates a new rook to replace pawn
@@ -832,7 +832,7 @@ namespace ChessB
                 //adds promotion tag to end of notation
                 chessNotation += "R";
             }
-            else if (move.getTag() == "promoteToBishop")
+            else if (move.getTag() == MoveTag.promoteToBishop)
             {
 
                 int location = move.getStartLocation();
@@ -843,7 +843,7 @@ namespace ChessB
                 //adds promotion tag to end of notation
                 chessNotation += "B";
             }
-            else if (move.getTag() == "promoteToQueen")
+            else if (move.getTag() == MoveTag.promoteToQueen)
             {
 
                 int location = move.getStartLocation();
@@ -855,7 +855,7 @@ namespace ChessB
                 chessNotation += "Q";
 
             }
-            else if (move.getTag() == "promoteToKnight")
+            else if (move.getTag() == MoveTag.promoteToKnight)
             {
                 int location = move.getStartLocation();
                 //creates a new Knight to replace pawn
@@ -873,7 +873,7 @@ namespace ChessB
 
 
             bool isEnPassant = false;
-            if (tag == "enPassant")
+            if (tag == MoveTag.enPassant)
             {
                 isEnPassant = true;
             }

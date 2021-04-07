@@ -246,7 +246,7 @@ namespace ChessB
 
                         if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
                         {
-                            Move move = new Move(currentLocation, currentLocation - 2, this, "CastleLong", piece[rookLongLocation]);
+                            Move move = new Move(currentLocation, currentLocation - 2, this, MoveTag.castleLong, piece[rookLongLocation]);
                             validMoves.Add(move);
                         }
 
@@ -272,7 +272,7 @@ namespace ChessB
 
                         if (inBetweenAttacked == false && squaresBetweenNotEmpty == false)
                         {
-                            Move move = new Move(currentLocation, currentLocation + 2, this, "CastleShort", piece[rookShortLocation]);
+                            Move move = new Move(currentLocation, currentLocation + 2, this, MoveTag.castleShort, piece[rookShortLocation]);
                             validMoves.Add(move);
                         }
                     }
