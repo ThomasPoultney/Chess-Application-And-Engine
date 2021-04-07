@@ -236,7 +236,7 @@ namespace ChessB
                 Ui.canvas.Children.Add(hoveredTileImage);
             }
 
-            Canvas.SetZIndex(hoveredTileImage, 10000);
+            Canvas.SetZIndex(hoveredTileImage, 1499);
             double topPosition = Math.Round(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
             double leftPosition = Math.Round(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
             Canvas.SetTop(hoveredTileImage, topPosition);
@@ -424,8 +424,8 @@ namespace ChessB
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
                 image.IsHitTestVisible = false;
-                image.Width = 15;
-                image.Height = 15;
+                image.Width = 12;
+                image.Height = 12;
                 blackImageGrid.Children.Add(imageTuple.Item1);
 
                 i++;
@@ -435,6 +435,7 @@ namespace ChessB
 
         public static void addWhiteCaptureImage(MoveableImage image, int pieceValue)
         {
+
             whiteImageGrid.Children.Clear();
             Grid.SetRow(whiteScoreLabel, 0);
             Grid.SetColumn(whiteScoreLabel, 0);
@@ -449,8 +450,8 @@ namespace ChessB
                 Grid.SetColumn(imageTuple.Item1, i);
                 image.setIsCapturedPiece(true);
                 image.IsHitTestVisible = false;
-                image.Width = 15;
-                image.Height = 15;
+                image.Width = 12;
+                image.Height = 12;
 
                 whiteImageGrid.Children.Add(imageTuple.Item1);
 

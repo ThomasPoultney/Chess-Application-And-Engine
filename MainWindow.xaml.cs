@@ -71,20 +71,42 @@ namespace ChessB
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-
             Image imageSelected = Ui.imageSelected;
 
             if (imageSelected != null)
             {
-
                 Point point2 = e.GetPosition(imageSelected);
+
                 Canvas.SetTop(imageSelected, (int)(Canvas.GetTop(imageSelected) + point2.Y - MoveableImage.point.Y));
                 Canvas.SetLeft(imageSelected, (int)(Canvas.GetLeft(imageSelected) + point2.X - MoveableImage.point.X));
                 Ui.drawHoveredTileImage();
 
             }
-
         }
+
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
+        {
+            Ui.removeHoveredTileImage();
+            if (Ui.imageSelected != null)
+            {
+                resetImage();
+            }
+        }
+
+        public void resetImage()
+        {
+            if (Ui.imageSelected != null)
+            {
+                Ui.removeValidMovesImages();
+                Canvas.SetTop(Ui.imageSelected, Ui.resetPositionY);
+                Canvas.SetLeft(Ui.imageSelected, Ui.resetPositionX);
+
+                Ui.pieceSelected = null;
+                Ui.imageSelected = null;
+
+            }
+        }
+
 
         private void rectangleMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
         {
