@@ -90,7 +90,7 @@ namespace ChessB
 
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-
+            Ui.removeHoveredTileImage();
             if (Ui.imageSelected != null)
             {
                 double topPosition = Math.Round(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
@@ -143,6 +143,7 @@ namespace ChessB
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
+            Ui.removeHoveredTileImage();
             if (Ui.imageSelected != null)
             {
 

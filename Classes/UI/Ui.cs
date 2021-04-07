@@ -65,7 +65,7 @@ namespace ChessB
         public static string blackUpgradeChoice;
 
         public static ListBox moveListBox;
-
+        public static Image hoveredTileImage;
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
 
@@ -229,7 +229,24 @@ namespace ChessB
             }
         }
 
+        public static void drawHoveredTileImage()
+        {
+            if (!Ui.canvas.Children.Contains(hoveredTileImage))
+            {
+                Ui.canvas.Children.Add(hoveredTileImage);
+            }
 
+            Canvas.SetZIndex(hoveredTileImage, 10000);
+            double topPosition = Math.Round(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
+            double leftPosition = Math.Round(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
+            Canvas.SetTop(hoveredTileImage, topPosition);
+            Canvas.SetLeft(hoveredTileImage, leftPosition);
+        }
+
+        public static void removeHoveredTileImage()
+        {
+            canvas.Children.Remove(hoveredTileImage);
+        }
         public static void drawValidMoves()
         {
             validMoveImages = new List<Image>();

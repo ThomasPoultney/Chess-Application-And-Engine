@@ -20,6 +20,7 @@ namespace ChessB
     {
         Point startingPosition = new Point(0, 0);
         Board board;
+        Image hoveredTileImage = new Image();
         public MainWindow()
         {
 
@@ -32,8 +33,6 @@ namespace ChessB
             board.setValidMoves(board.generateValidMoves(board));
             Game.activeBoard = board;
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            // the code that you want to measure comes here
-
             Console.WriteLine(board.moveGenerationTest(2));
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
@@ -53,7 +52,20 @@ namespace ChessB
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, this.boardCanvas);
             Ui.drawUi(board, this.boardCanvas);
+
+            //initialise hoveredTileImage
+            hoveredTileImage.Width = Ui.squareSize;
+            hoveredTileImage.Height = Ui.squareSize;
+            String hoveredTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/hoveredTileImage.PNG";
+            ImageSource hoveredTileImageSource = new BitmapImage(new Uri(hoveredTileImageURL));
+            hoveredTileImage.Source = hoveredTileImageSource;
+            hoveredTileImage.IsHitTestVisible = false;
+            Ui.hoveredTileImage = hoveredTileImage;
+
             Window window = new Window();
+
+
+
         }
 
 
@@ -64,9 +76,12 @@ namespace ChessB
 
             if (imageSelected != null)
             {
+
                 Point point2 = e.GetPosition(imageSelected);
                 Canvas.SetTop(imageSelected, (int)(Canvas.GetTop(imageSelected) + point2.Y - MoveableImage.point.Y));
                 Canvas.SetLeft(imageSelected, (int)(Canvas.GetLeft(imageSelected) + point2.X - MoveableImage.point.X));
+                Ui.drawHoveredTileImage();
+
             }
 
         }
