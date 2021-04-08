@@ -197,6 +197,8 @@ namespace ChessB
         private static void upgradeCancelButton_Clicked(object sender, RoutedEventArgs e)
         {
             Ui.removeUpgradeButtons();
+            Ui.upgradeChoiceRequired = false;
+            Ui.imageSelected = null;
             Ui.drawUi(Game.activeBoard, Ui.canvas);
             resetImage();
 

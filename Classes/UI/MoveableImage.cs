@@ -169,7 +169,7 @@ namespace ChessB
                                 Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
                                 Ui.canvas.Children.Add(Ui.knightUpgradeButton);
 
-                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition - 4 * Ui.squareSize);
+                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition - (3 * Ui.squareSize) - Ui.squareSize / 3);
                                 Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
                                 Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
                                 Ui.canvas.Children.Add(Ui.upgradeCancelButton);
