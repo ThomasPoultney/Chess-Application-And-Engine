@@ -79,52 +79,8 @@
             <ListBox x:Name="moveListBox" Height="142" Width="216" FontSize="11" FontFamily="Calibri" Background="#00E8E3E3"/>
         </Viewbox>
 
-        <Viewbox x:Name="BlackPromotionVB" Grid.Column="2" Grid.Row="2" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5*"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
 
-                <Image Grid.Column="0" Grid.Row="0" Source="Images/wQ.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="1" Grid.Row="0" Source="Images/wR.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="2" Grid.Row="0" Source="Images/wN.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="3" Grid.Row="0" Source="Images/wB.PNG" Stretch="Fill" Width="15" Height="15" />
-                <RadioButton x:Name="wQRB" Grid.Column="0" Grid.Row="1" Margin="0"  VerticalAlignment="Top" IsChecked="True" Checked="WQRB_Checked"/>
-                <RadioButton x:Name="wRRB" Grid.Column="1" Grid.Row="1" Margin="0" Checked="WRRB_Checked"/>
-                <RadioButton x:Name="wNRB" Grid.Column="2" Grid.Row="1" Margin="0" Checked="WNRB_Checked"/>
-                <RadioButton x:Name="wBRB" Grid.Column="3" Grid.Row="1" Margin="0" Checked="WBRB_Checked"/>
-            </Grid>
-        </Viewbox>
-        <Viewbox x:Name="whitePromotionVB" Grid.Column="2" Grid.Row="0" Margin="0" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" Source="bQ.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="1" Grid.Row="0" Source="bR.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="2" Grid.Row="0" Source="Images/bN.PNG" Stretch="Fill" Width="15" Height="15" />
-                <Image Grid.Column="3" Grid.Row="0" Source="Images/bB.PNG" Stretch="Fill" Width="15" Height="15" />
-                <RadioButton x:Name="bQRB" Grid.Column="0" Grid.Row="1" Margin="0" IsChecked="True" Checked="BQRB_Checked"/>
-                <RadioButton x:Name="bRRB" Grid.Column="1" Grid.Row="1" Margin="0" Checked =" BRRB_Checked"/>
-                <RadioButton x:Name="bNRB" Grid.Column="2" Grid.Row="1" Margin="0" Checked =" BNRB_Checked"/>
-                <RadioButton x:Name="bBRB" Grid.Column="3" Grid.Row="1" Margin="0" Checked =" BBRB_Checked"/>
-            </Grid>
-        </Viewbox>
+
 
     </Grid>
-
 </Window>

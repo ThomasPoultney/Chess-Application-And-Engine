@@ -28,15 +28,15 @@ namespace ChessB
 
             board = new Board();
             board.generateBoardFromFEN();
-            board.printBoard();
 
             board.setValidMoves(board.generateValidMoves(board));
             Game.activeBoard = board;
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
             Console.WriteLine(board.moveGenerationTest(2));
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
-            Console.WriteLine(elapsedMs);
+            Console.WriteLine(elapsedMs + " ms spent generating moves.");
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
 
@@ -52,6 +52,7 @@ namespace ChessB
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, this.boardCanvas);
             Ui.drawUi(board, this.boardCanvas);
+            Ui.initializeUpgradeButtons();
 
             //initialise hoveredTileImage
             hoveredTileImage.Width = Ui.squareSize;
@@ -61,11 +62,6 @@ namespace ChessB
             hoveredTileImage.Source = hoveredTileImageSource;
             hoveredTileImage.IsHitTestVisible = false;
             Ui.hoveredTileImage = hoveredTileImage;
-
-            Window window = new Window();
-
-
-
         }
 
 
@@ -87,6 +83,7 @@ namespace ChessB
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {
             Ui.removeHoveredTileImage();
+
             if (Ui.imageSelected != null)
             {
                 resetImage();
@@ -107,57 +104,11 @@ namespace ChessB
             }
         }
 
-
-        private void rectangleMouseDown(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-        }
         /*-------------------------------------------------
         ---------------Black Radio Buttons-----------------
         -------------------------------------------------*/
 
-        private void BRRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.blackUpgradeChoice = MoveTag.promoteToRook;
-        }
 
-        private void BQRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.blackUpgradeChoice = MoveTag.promoteToQueen;
-        }
-
-        private void BNRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.blackUpgradeChoice = MoveTag.promoteToKnight;
-        }
-
-        private void BBRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.blackUpgradeChoice = MoveTag.promoteToBishop;
-        }
-
-        /*-------------------------------------------------
-        ---------------White Radio Buttons-----------------
-        -------------------------------------------------*/
-
-        private void WRRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.whiteUpgradeChoice = MoveTag.promoteToRook;
-        }
-
-        private void WQRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.whiteUpgradeChoice = MoveTag.promoteToQueen;
-        }
-
-        private void WNRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.whiteUpgradeChoice = MoveTag.promoteToKnight;
-        }
-
-        private void WBRB_Checked(object sender, RoutedEventArgs e)
-        {
-            Ui.whiteUpgradeChoice = MoveTag.promoteToBishop;
-        }
 
     }
 }

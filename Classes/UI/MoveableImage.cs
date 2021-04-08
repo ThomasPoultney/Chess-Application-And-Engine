@@ -15,8 +15,6 @@ namespace ChessB
         public String name;
         static int pieceStartLocation;
         public bool isCapturedPiece;
-        private Point lineStartPoint;
-        private Image tileSelected;
         private static List<Board> boardStates = new List<Board>();
 
         public MoveableImage()
@@ -103,43 +101,102 @@ namespace ChessB
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
                 Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
                 int boardSize = Game.activeBoard.getBoardSize();
-
-                if (Ui.pieceSelected is ChessB.Pawn)
-                {
-                    if (pieceEndLocation < boardSize || pieceEndLocation >= boardSize * (boardSize - 1))
-                    {
-                        if (move.getPiece().getIsWhite() == true)
-                        {
-                            move.setTag(Ui.whiteUpgradeChoice);
-                        }
-                        else
-                        {
-                            move.setTag(Ui.blackUpgradeChoice);
-                        }
-                    }
-                }
-
-
-
-
                 Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(move);
+
                 if (boardAfterMove == null)
                 {
                     resetImage();
                 }
                 else
                 {
-                    Game.activeBoard = boardAfterMove;
-                    //Console.WriteLine(boardAfterMove.moveGenerationTest(3));
-                    Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
-                    boardStates.Add(boardAfterMove);
-                    Ui.drawUi(boardAfterMove, Ui.canvas);
+
+                    if (Ui.pieceSelected is ChessB.Pawn)
+                    {
+                        if (pieceEndLocation < boardSize || pieceEndLocation >= boardSize * (boardSize - 1))
+                        {
+                            if (move.getPiece().getIsWhite() == true)
+                            {
+                                Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
+                                Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.queenUpgradeButton);
+
+
+                                Canvas.SetTop(Ui.rookUpgradeButton, topPosition + Ui.squareSize);
+                                Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.rookUpgradeButton);
+
+                                Canvas.SetTop(Ui.bishopUpgradeButton, topPosition + 2 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
+
+                                Canvas.SetTop(Ui.knightUpgradeButton, topPosition + 3 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.knightUpgradeButton);
+
+                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition + 4 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
+                                Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
+                                Ui.canvas.Children.Add(Ui.upgradeCancelButton);
+                                Ui.upgradeChoiceRequired = true;
+
+                            }
+                            else
+                            {
+
+
+                                Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
+                                Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.queenUpgradeButton);
+
+
+                                Canvas.SetTop(Ui.rookUpgradeButton, topPosition - Ui.squareSize);
+                                Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.rookUpgradeButton);
+
+                                Canvas.SetTop(Ui.bishopUpgradeButton, topPosition - 2 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
+
+                                Canvas.SetTop(Ui.knightUpgradeButton, topPosition - 3 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
+                                Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
+                                Ui.canvas.Children.Add(Ui.knightUpgradeButton);
+
+                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition - 4 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
+                                Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
+                                Ui.canvas.Children.Add(Ui.upgradeCancelButton);
+                                Ui.upgradeChoiceRequired = true;
+
+                            }
+                        }
+                    }
+                    Ui.upgradeMove = move;
+
+                    if (Ui.upgradeChoiceRequired == false)
+                    {
+                        Game.activeBoard = boardAfterMove;
+                        //Console.WriteLine(boardAfterMove.moveGenerationTest(3));
+                        Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
+                        boardStates.Add(boardAfterMove);
+                        Ui.drawUi(boardAfterMove, Ui.canvas);
+                    }
                 }
             }
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();
         }
+
+
+
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e)
         {

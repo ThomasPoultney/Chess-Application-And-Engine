@@ -61,11 +61,21 @@ namespace ChessB
         public static List<Image> markedImages = new List<Image>();
         public static List<int> markedImageLocations = new List<int>();
 
-        public static MoveTag whiteUpgradeChoice;
-        public static MoveTag blackUpgradeChoice;
+        public static MoveTag upgradeChoice = MoveTag.none;
 
         public static ListBox moveListBox;
         public static Image hoveredTileImage;
+
+        public static Button queenUpgradeButton;
+        public static Button rookUpgradeButton;
+        public static Button bishopUpgradeButton;
+        public static Button knightUpgradeButton;
+        public static Button upgradeCancelButton;
+
+        public static bool upgradeChoiceRequired;
+
+        public static Move upgradeMove;
+
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
 
@@ -99,13 +109,132 @@ namespace ChessB
             }
         }
 
+        public static void initializeUpgradeButtons()
+        {
+            queenUpgradeButton = new Button();
+            queenUpgradeButton.Width = Ui.squareSize;
+            queenUpgradeButton.Height = Ui.squareSize;
+            queenUpgradeButton.Content = "Q";
+            queenUpgradeButton.Click += queenUpgradeButtonClicked;
+
+
+            rookUpgradeButton = new Button();
+            rookUpgradeButton.Width = Ui.squareSize;
+            rookUpgradeButton.Height = Ui.squareSize;
+            rookUpgradeButton.Content = "R";
+            rookUpgradeButton.Click += rookUpgradeButtonClicked;
+
+
+            bishopUpgradeButton = new Button();
+            bishopUpgradeButton.Width = Ui.squareSize;
+            bishopUpgradeButton.Height = Ui.squareSize;
+            bishopUpgradeButton.Content = "B";
+            bishopUpgradeButton.Click += bishopUpgradeButtonClicked;
+
+
+            knightUpgradeButton = new Button();
+            knightUpgradeButton.Width = Ui.squareSize;
+            knightUpgradeButton.Height = Ui.squareSize;
+            knightUpgradeButton.Content = "N";
+            knightUpgradeButton.Click += knightUpgradeButtonClicked;
+
+            upgradeCancelButton = new Button();
+            upgradeCancelButton.Width = Ui.squareSize;
+            upgradeCancelButton.Height = Ui.squareSize / 3;
+            upgradeCancelButton.Content = "X";
+            upgradeCancelButton.Click += upgradeCancelButton_Clicked;
+
+        }
+
+        private static void rookUpgradeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            upgradeChoice = MoveTag.promoteToRook;
+            upgradeMove.setTag(Ui.upgradeChoice);
+
+            Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(upgradeMove);
+            Game.activeBoard = boardAfterMove;
+            Ui.drawUi(Game.activeBoard, canvas);
+            Ui.upgradeChoiceRequired = false;
+            Ui.removeUpgradeButtons();
+        }
+
+        private static void queenUpgradeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Ui.upgradeChoice = MoveTag.promoteToQueen;
+            upgradeMove.setTag(Ui.upgradeChoice);
+
+            Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(upgradeMove);
+            Game.activeBoard = boardAfterMove;
+            Ui.drawUi(Game.activeBoard, canvas);
+            Ui.upgradeChoiceRequired = false;
+            Ui.removeUpgradeButtons();
+        }
+
+        private static void knightUpgradeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Ui.upgradeChoice = MoveTag.promoteToKnight;
+            upgradeMove.setTag(Ui.upgradeChoice);
+
+            Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(upgradeMove);
+            Game.activeBoard = boardAfterMove;
+            Ui.drawUi(Game.activeBoard, canvas);
+            Ui.upgradeChoiceRequired = false;
+            Ui.removeUpgradeButtons();
+        }
+
+        private static void bishopUpgradeButtonClicked(object sender, RoutedEventArgs e)
+        {
+            Ui.upgradeChoice = MoveTag.promoteToBishop;
+            upgradeMove.setTag(Ui.upgradeChoice);
+
+            Board boardAfterMove = Game.activeBoard.makeMoveOnNewBoard(upgradeMove);
+            Game.activeBoard = boardAfterMove;
+            Ui.drawUi(Game.activeBoard, canvas);
+            Ui.upgradeChoiceRequired = false;
+            Ui.removeUpgradeButtons();
+        }
+
+        private static void upgradeCancelButton_Clicked(object sender, RoutedEventArgs e)
+        {
+            Ui.removeUpgradeButtons();
+            Ui.drawUi(Game.activeBoard, Ui.canvas);
+            resetImage();
+
+        }
+
+
+
+        public static void resetImage()
+        {
+            if (Ui.imageSelected != null)
+            {
+                Ui.removeValidMovesImages();
+                Canvas.SetTop(Ui.imageSelected, Ui.resetPositionY);
+                Canvas.SetLeft(Ui.imageSelected, Ui.resetPositionX);
+
+                Ui.pieceSelected = null;
+                Ui.imageSelected = null;
+
+            }
+        }
+
+        public static void removeUpgradeButtons()
+        {
+            Ui.canvas.Children.Remove(queenUpgradeButton);
+            Ui.canvas.Children.Remove(rookUpgradeButton);
+            Ui.canvas.Children.Remove(knightUpgradeButton);
+            Ui.canvas.Children.Remove(bishopUpgradeButton);
+            Ui.canvas.Children.Remove(upgradeCancelButton);
+
+        }
+
 
         public static void drawUi(Board board, Canvas canvas)
         {
             //removes everything from board canvas except to tile images
             for (int i = 0; i < canvas.Children.Count; i++)
             {
-                if (!(canvas.Children[i] is Tile))
+                if (!(canvas.Children[i] is Tile || canvas.Children[i] is Button))
                 {
                     canvas.Children.RemoveAt(i);
                     i--;
@@ -227,6 +356,8 @@ namespace ChessB
             {
                 Ui.moveListBox.Items.Add("0 - 1");
             }
+
+            //removeUpgradeButtons();
         }
 
         public static void drawHoveredTileImage()
