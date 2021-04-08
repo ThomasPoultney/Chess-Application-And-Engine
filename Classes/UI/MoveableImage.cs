@@ -41,7 +41,7 @@ namespace ChessB
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
-                if (Ui.imageSelected == null && this.getIsCapturedPiece() == false && Ui.upgradeChoiceRequired == false)
+                if (Ui.imageSelected == null && Ui.upgradeChoiceRequired == false)
                 {
 
                     Ui.imageSelected = this;
@@ -65,17 +65,28 @@ namespace ChessB
                     Board activeBoard = Game.activeBoard;
                     Piece pieceSelected = Ui.pieceSelected;
                     Piece[] pieceArray = activeBoard.getPiece();
+
+                    int pieceLocation = -5;
+
+                    for (int i = 0; i < activeBoard.getBoardSize() * activeBoard.getBoardSize(); i++)
+                    {
+                        if (pieceArray[i] == pieceSelected)
+                        {
+                            pieceLocation = i;
+                            break;
+                        }
+                    }
+
                     if (Ui.pieceSelected.GetType() == typeof(King))
                     {
-                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, Ui.pieceSelected.getLocation(),
+                        Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation,
                                                                                 activeBoard.generateBlackAttackingMoves(pieceArray),
                                                                                 activeBoard.generateWhiteAttackingMoves(pieceArray)));
                     }
                     else
                     {
-                        Game.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, Ui.pieceSelected.getLocation()));
+                        Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation));
                     }
-
                     Ui.drawValidMoves();
 
                 }
@@ -143,6 +154,8 @@ namespace ChessB
                                 Ui.canvas.Children.Add(Ui.upgradeCancelButton);
                                 Ui.upgradeChoiceRequired = true;
 
+                                Ui.setUpgradeButtonWhite();
+
                             }
                             else
                             {
@@ -174,7 +187,7 @@ namespace ChessB
                                 Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
                                 Ui.canvas.Children.Add(Ui.upgradeCancelButton);
                                 Ui.upgradeChoiceRequired = true;
-
+                                Ui.setUpgradeButtonBlack();
                             }
                         }
                     }

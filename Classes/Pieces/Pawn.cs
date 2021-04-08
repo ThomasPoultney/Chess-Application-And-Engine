@@ -45,7 +45,7 @@ namespace ChessB
         {
             int currentLocation = location;
             List<Move> validMoves = new List<Move>();
-            int nextLocation = this.location;
+            int nextLocation = location;
             //valid moves for pawns moving up board
             if (movingUp == true)
             {

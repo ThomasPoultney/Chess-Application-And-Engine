@@ -72,9 +72,23 @@ namespace ChessB
         public static Button knightUpgradeButton;
         public static Button upgradeCancelButton;
 
+        public static Image blackQueenImage;
+        public static Image whiteQueenImage;
+
+        public static Image blackBishopImage;
+        public static Image whiteBishopImage;
+
+        public static Image blackRookImage;
+        public static Image whiteRookImage;
+
+        public static Image blackKnightImage;
+        public static Image whiteKnightImage;
+
         public static bool upgradeChoiceRequired;
 
         public static Move upgradeMove;
+
+        public static List<Move> validMoves;
 
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
@@ -114,9 +128,7 @@ namespace ChessB
             queenUpgradeButton = new Button();
             queenUpgradeButton.Width = Ui.squareSize;
             queenUpgradeButton.Height = Ui.squareSize;
-            queenUpgradeButton.Content = "Q";
             queenUpgradeButton.Click += queenUpgradeButtonClicked;
-
 
             rookUpgradeButton = new Button();
             rookUpgradeButton.Width = Ui.squareSize;
@@ -144,6 +156,63 @@ namespace ChessB
             upgradeCancelButton.Content = "X";
             upgradeCancelButton.Click += upgradeCancelButton_Clicked;
 
+            blackQueenImage = new Image();
+            string blackQueenUrl = "C:/Users/tompo/source/repos/ChessB/Images/bQ.PNG";
+            ImageSource blackQueenImageSource = new BitmapImage(new Uri(blackQueenUrl));
+            blackQueenImage.Source = blackQueenImageSource;
+
+            whiteQueenImage = new Image();
+            string whiteQueenUrl = "C:/Users/tompo/source/repos/ChessB/Images/wQ.PNG";
+            ImageSource whiteQueenImageSource = new BitmapImage(new Uri(whiteQueenUrl));
+            whiteQueenImage.Source = whiteQueenImageSource;
+
+            blackBishopImage = new Image();
+            string blackBishopUrl = "C:/Users/tompo/source/repos/ChessB/Images/bB.PNG";
+            ImageSource blackBishopImageSource = new BitmapImage(new Uri(blackBishopUrl));
+            blackBishopImage.Source = blackBishopImageSource;
+
+            whiteBishopImage = new Image();
+            string whiteBishopUrl = "C:/Users/tompo/source/repos/ChessB/Images/wB.PNG";
+            ImageSource whiteBishopImageSource = new BitmapImage(new Uri(whiteBishopUrl));
+            whiteBishopImage.Source = whiteBishopImageSource;
+
+            blackRookImage = new Image();
+            string blackRookUrl = "C:/Users/tompo/source/repos/ChessB/Images/bR.PNG";
+            ImageSource blackRookImageSource = new BitmapImage(new Uri(blackRookUrl));
+            blackRookImage.Source = blackRookImageSource;
+
+            whiteRookImage = new Image();
+            string whiteRookUrl = "C:/Users/tompo/source/repos/ChessB/Images/wR.PNG";
+            ImageSource whiteRookImageSource = new BitmapImage(new Uri(whiteRookUrl));
+            whiteRookImage.Source = whiteRookImageSource;
+
+            blackKnightImage = new Image();
+            string blackKnightUrl = "C:/Users/tompo/source/repos/ChessB/Images/bN.PNG";
+            ImageSource blackKnightImageSource = new BitmapImage(new Uri(blackKnightUrl));
+            blackKnightImage.Source = blackKnightImageSource;
+
+            whiteKnightImage = new Image();
+            string whiteKnightUrl = "C:/Users/tompo/source/repos/ChessB/Images/wN.PNG";
+            ImageSource whiteKnightImageSource = new BitmapImage(new Uri(whiteKnightUrl));
+            whiteKnightImage.Source = whiteKnightImageSource;
+
+
+        }
+
+        public static void setUpgradeButtonWhite()
+        {
+            queenUpgradeButton.Content = whiteQueenImage;
+            knightUpgradeButton.Content = whiteKnightImage;
+            bishopUpgradeButton.Content = whiteBishopImage;
+            rookUpgradeButton.Content = whiteRookImage;
+        }
+
+        public static void setUpgradeButtonBlack()
+        {
+            queenUpgradeButton.Content = blackQueenImage;
+            knightUpgradeButton.Content = blackKnightImage;
+            bishopUpgradeButton.Content = blackBishopImage;
+            rookUpgradeButton.Content = blackRookImage;
         }
 
         private static void rookUpgradeButtonClicked(object sender, RoutedEventArgs e)
@@ -383,7 +452,9 @@ namespace ChessB
         public static void drawValidMoves()
         {
             validMoveImages = new List<Image>();
-            foreach (Move validMove in Game.validMoves)
+
+
+            foreach (Move validMove in Ui.validMoves)
             {
                 int xLocation = (validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize()));
                 int yLocation = (int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize());
