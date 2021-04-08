@@ -121,18 +121,18 @@ namespace ChessB
 
                 if (xLocation % board.getBoardSize() == 0)
                 {
-
                     TextBlock fileLabel = new TextBlock();
                     fileLabel.Width = squareSize;
                     fileLabel.Height = squareSize;
                     fileLabel.FontSize = 24;
-
                     fileLabel.TextAlignment = TextAlignment.Center;
                     fileLabel.Text = (yLocation + 1).ToString();
-                    Canvas.SetBottom(fileLabel, squareSize * yLocation);
+                    fileLabel.IsHitTestVisible = false;
+
+                    Canvas.SetBottom(fileLabel, squareSize * yLocation - 10);
                     Canvas.SetLeft(fileLabel, -squareSize);
                     Canvas.SetZIndex(fileLabel, 1000000);
-                    fileLabel.IsHitTestVisible = false;
+
                     canvas.Children.Add(fileLabel);
                 }
 
