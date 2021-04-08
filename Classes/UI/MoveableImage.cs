@@ -41,7 +41,7 @@ namespace ChessB
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
-                if (Ui.imageSelected == null && this.getIsCapturedPiece() == false)
+                if (Ui.imageSelected == null && this.getIsCapturedPiece() == false && Ui.upgradeChoiceRequired == false)
                 {
 
                     Ui.imageSelected = this;
