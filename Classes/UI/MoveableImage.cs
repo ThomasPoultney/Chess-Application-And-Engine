@@ -153,7 +153,6 @@ namespace ChessB
                                 Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
                                 Ui.canvas.Children.Add(Ui.upgradeCancelButton);
                                 Ui.upgradeChoiceRequired = true;
-
                                 Ui.setUpgradeButtonWhite();
 
                             }

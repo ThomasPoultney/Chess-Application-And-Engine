@@ -98,8 +98,43 @@ namespace ChessB
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
 
+
                 int xLocation = (i) % ((board.getBoardSize()));
                 int yLocation = (int)(i / board.getBoardSize());
+
+                if (yLocation % board.getBoardSize() == 0)
+                {
+
+                    TextBlock fileLabel = new TextBlock();
+                    fileLabel.Width = squareSize;
+                    fileLabel.Height = squareSize;
+                    fileLabel.FontSize = 24;
+
+                    fileLabel.TextAlignment = TextAlignment.Center;
+                    fileLabel.Text = GetColumnName(xLocation);
+                    Canvas.SetBottom(fileLabel, -squareSize);
+                    Canvas.SetLeft(fileLabel, squareSize * xLocation);
+                    Canvas.SetZIndex(fileLabel, 1000000);
+                    fileLabel.IsHitTestVisible = false;
+                    canvas.Children.Add(fileLabel);
+                }
+
+                if (xLocation % board.getBoardSize() == 0)
+                {
+
+                    TextBlock fileLabel = new TextBlock();
+                    fileLabel.Width = squareSize;
+                    fileLabel.Height = squareSize;
+                    fileLabel.FontSize = 24;
+
+                    fileLabel.TextAlignment = TextAlignment.Center;
+                    fileLabel.Text = (yLocation + 1).ToString();
+                    Canvas.SetBottom(fileLabel, squareSize * yLocation);
+                    Canvas.SetLeft(fileLabel, -squareSize);
+                    Canvas.SetZIndex(fileLabel, 1000000);
+                    fileLabel.IsHitTestVisible = false;
+                    canvas.Children.Add(fileLabel);
+                }
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
                 string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/whiteTournament.PNG";
@@ -305,7 +340,7 @@ namespace ChessB
             //removes everything from board canvas except to tile images
             for (int i = 0; i < canvas.Children.Count; i++)
             {
-                if (!(canvas.Children[i] is Tile || canvas.Children[i] is Button))
+                if (!(canvas.Children[i] is Tile || canvas.Children[i] is Button || canvas.Children[i] is TextBlock))
                 {
                     canvas.Children.RemoveAt(i);
                     i--;

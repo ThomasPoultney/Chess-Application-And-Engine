@@ -39,8 +39,10 @@ namespace ChessB
             Console.WriteLine(elapsedMs + " ms spent generating moves.");
             Ui.canvas = this.boardCanvas;
             Ui.squareSize = (int)(this.boardCanvas.Width / board.getBoardSize());
-
-
+            Thickness boardThickness = new Thickness();
+            boardThickness.Left = Ui.squareSize;
+            boardThickness.Bottom = Ui.squareSize;
+            this.boardVB.Margin = boardThickness;
             Ui.MainWindow = this;
             Ui.grid = this.UiGrid;
             Ui.whiteImageGrid = this.whiteCapturedGrid;
