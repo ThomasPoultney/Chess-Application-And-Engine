@@ -1038,7 +1038,7 @@ namespace ChessB
                     {
                         if (piece[i].getIsWhite() == true)
                         {
-                            whiteAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
+                            whiteAttackingMoves.AddRange(piece[i].generateAttackingMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
                         }
                     }
 
@@ -1085,7 +1085,7 @@ namespace ChessB
                     {
                         if (piece[i].getIsWhite() == false)
                         {
-                            blackAttackingMoves.AddRange(piece[i].generateValidMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
+                            blackAttackingMoves.AddRange(piece[i].generateAttackingMoves(this, pieceArray, i, this.getBlackAttackingMoves(), this.getWhiteAttackingMoves()));
 
                         }
                     }

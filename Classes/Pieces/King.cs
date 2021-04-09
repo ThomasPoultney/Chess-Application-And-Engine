@@ -35,7 +35,157 @@ namespace ChessB
         {
             this.hasMoved = hasMoved;
         }
+        public override List<Move> generateAttackingMoves(Board board, Piece[] piece, int location, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
+        {
+            int currentLocation = location;
+            List<Move> validMoves = new List<Move>();
+            int nextLocation = currentLocation;
 
+
+            //NW Direction
+            //while not on left file or top rank
+            if (nextLocation % board.getBoardSize() != 0 & nextLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
+            {
+
+                if (piece[nextLocation + (board.getBoardSize() - 1)] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
+
+                }
+                else if (piece[nextLocation + (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
+
+                }
+            }
+
+            //NE Direction
+            //while not on Right file or top rank
+            if (nextLocation % board.getBoardSize() != (board.getBoardSize() - 1) & nextLocation < (board.getBoardSize() * (board.getBoardSize() - 1)))
+            {
+
+                if (piece[nextLocation + (board.getBoardSize() + 1)] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
+
+                }
+                else if (piece[nextLocation + (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation + (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
+                }
+            }
+
+            //SW Direction
+            //while not on Right file or bottom rank
+            if (nextLocation % board.getBoardSize() != board.getBoardSize() - 1 & nextLocation > (board.getBoardSize() - 1))
+            {
+
+                if (piece[nextLocation - (board.getBoardSize() - 1)] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
+
+
+                }
+
+                else if (piece[nextLocation - (board.getBoardSize() - 1)].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() - 1), this);
+                    validMoves.Add(move);
+
+                }
+            }
+
+            //SE Direction
+            //while not on left file or bottom rank
+
+            if (nextLocation % board.getBoardSize() != 0 & nextLocation > board.getBoardSize() - 1)
+            {
+
+                if (piece[nextLocation - (board.getBoardSize() + 1)] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
+                }
+
+                else if (piece[nextLocation - (board.getBoardSize() + 1)].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation - (board.getBoardSize() + 1), this);
+                    validMoves.Add(move);
+                }
+            }
+            nextLocation = currentLocation;
+            //left direction
+            if (nextLocation % board.getBoardSize() != 0)
+            {
+                if (piece[nextLocation - 1] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation - 1, this);
+                    validMoves.Add(move);
+                }
+                else if (piece[nextLocation - 1].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation - 1, this);
+                    validMoves.Add(move);
+                }
+            }
+            nextLocation = currentLocation;
+            //right direction
+            if (nextLocation % board.getBoardSize() != board.getBoardSize() - 1)
+            {
+
+                if (piece[nextLocation + 1] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation + 1, this);
+                    validMoves.Add(move);
+
+                }
+                else if (piece[nextLocation + 1].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation + 1, this);
+                    validMoves.Add(move);
+                }
+            }
+
+
+            //up direction
+            if (nextLocation < board.getBoardSize() * (board.getBoardSize() - 1))
+            {
+                if (piece[nextLocation + board.getBoardSize()] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation + board.getBoardSize(), this);
+                    validMoves.Add(move);
+
+                }
+                else if (piece[nextLocation + 8].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation + board.getBoardSize(), this);
+                    validMoves.Add(move);
+                }
+            }
+
+            //down direction
+            if (nextLocation > board.getBoardSize() - 1)
+            {
+                if (piece[nextLocation - board.getBoardSize()] == null)
+                {
+                    Move move = new Move(currentLocation, nextLocation - board.getBoardSize(), this);
+                    validMoves.Add(move);
+                }
+                else if (piece[nextLocation - board.getBoardSize()].getIsWhite() != this.isWhite)
+                {
+                    Move move = new Move(currentLocation, nextLocation - board.getBoardSize(), this);
+                    validMoves.Add(move);
+                }
+
+            }
+
+            return validMoves;
+        }
         public override List<Move> generateValidMoves(Board board, Piece[] piece, int location, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
         {
             int currentLocation = location;
@@ -185,7 +335,6 @@ namespace ChessB
 
             }
 
-
             /*Castling consists of moving the king two squares towards a rook on the player's first rank, 
              * then moving the rook to the square that the king crossed.
              * Castling may be done only if the king has never moved, 
@@ -211,23 +360,23 @@ namespace ChessB
                     int rookShortLocation = 0;
                     int rookLongLocation = 0;
                     //find rook locations
-                    if (this.location == 4)
+                    if (location == 4)
                     {
                         rookLongLocation = 0;
                         rookShortLocation = board.getBoardSize() - 1;
                     }
-                    else if (this.location == ((board.getBoardSize() * (board.getBoardSize() - 1)) + 4))
+                    else if (location == ((board.getBoardSize() * (board.getBoardSize() - 1)) + 4))
                     {
                         rookLongLocation = (board.getBoardSize() * (board.getBoardSize() - 1));
                         rookShortLocation = (board.getBoardSize() * board.getBoardSize()) - 1;
                     }
 
                     //if the rook short hasnt moved
-                    if (piece[rookLongLocation] is Rook && !(board.kingThatHaveMoved.Contains(piece[rookLongLocation])))
+                    if (piece[rookLongLocation] is Rook && !(board.rooksThatHaveMoved.Contains(piece[rookLongLocation])))
                     {
                         bool inBetweenAttacked = false;
                         bool squaresBetweenNotEmpty = false;
-                        for (int i = rookLongLocation + 1; i < this.location; i++)
+                        for (int i = rookLongLocation + 1; i < location; i++)
                         {
                             if (i != rookLongLocation + 1)
                             {
@@ -253,7 +402,7 @@ namespace ChessB
 
                     }
 
-                    if (piece[rookShortLocation] is Rook && !(board.kingThatHaveMoved.Contains(piece[rookShortLocation])))
+                    if (piece[rookShortLocation] is Rook && !board.rooksThatHaveMoved.Contains(piece[rookShortLocation]))
                     {
                         bool inBetweenAttacked = false;
                         bool squaresBetweenNotEmpty = false;

@@ -112,7 +112,7 @@ namespace ChessB
 
                     fileLabel.TextAlignment = TextAlignment.Center;
                     fileLabel.Text = GetColumnName(xLocation);
-                    Canvas.SetBottom(fileLabel, -squareSize);
+                    Canvas.SetBottom(fileLabel, -squareSize - 10);
                     Canvas.SetLeft(fileLabel, squareSize * xLocation);
                     Canvas.SetZIndex(fileLabel, 1000000);
                     fileLabel.IsHitTestVisible = false;

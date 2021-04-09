@@ -80,6 +80,10 @@ namespace ChessB
             return new List<Move>();
         }
 
+        public virtual List<Move> generateAttackingMoves(Board board, Piece[] piece, int location, List<int> blackAttackingMoves, List<int> whiteAttackingMoves)
+        {
+            return new List<Move>();
+        }
 
         public virtual void setCanMoveTwice(bool canMoveTwice)
         {

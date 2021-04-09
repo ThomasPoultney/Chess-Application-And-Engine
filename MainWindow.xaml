@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ChessB"
     x:Name="mainWindow" x:Class="ChessB.MainWindow"
         mc:Ignorable="d"
-        Title="Chess" Icon="bP.PNG"  Width="1000" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow">
+        Title="Chess" Icon="bP.PNG"  Width="1000" Height="800" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
 
     <Grid x:Name="UiGrid" Margin="0">
         <Grid.RowDefinitions>

@@ -75,8 +75,8 @@ namespace ChessB
             {
                 Point point2 = e.GetPosition(imageSelected);
 
-                Canvas.SetTop(imageSelected, (int)(Canvas.GetTop(imageSelected) + point2.Y - MoveableImage.point.Y));
-                Canvas.SetLeft(imageSelected, (int)(Canvas.GetLeft(imageSelected) + point2.X - MoveableImage.point.X));
+                Canvas.SetTop(imageSelected, (int)((Canvas.GetTop(imageSelected)) + point2.Y - MoveableImage.point.Y));
+                Canvas.SetLeft(imageSelected, (int)((Canvas.GetLeft(imageSelected)) + point2.X - MoveableImage.point.X));
                 Ui.drawHoveredTileImage();
 
             }
