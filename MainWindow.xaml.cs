@@ -63,11 +63,9 @@ namespace ChessB
 
 
             //drawBoard(board,grid);
-            Ui.drawBoardGrid(board, this.boardCanvas);
-            Ui.drawUi(board, this.boardCanvas);
+            Ui.drawBoardGrid(board, Ui.canvas);
+            Ui.drawUi(board, Ui.canvas);
             Ui.initializeUpgradeButtons();
-            Ui.switchPerspective();
-
             //initialise hoveredTileImage
             hoveredTileImage.Width = Ui.squareSize;
             hoveredTileImage.Height = Ui.squareSize;

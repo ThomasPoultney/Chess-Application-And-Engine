@@ -143,72 +143,117 @@ namespace ChessB
 
                     if (Ui.pieceSelected is ChessB.Pawn)
                     {
-                        if (pieceEndLocation < boardSize || pieceEndLocation >= boardSize * (boardSize - 1))
+
+                        if (endYlocation == Board.boardSize - 1)
                         {
-                            if (move.getPiece().getIsWhite() == true)
+                            Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
+                            Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
+                            Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.queenUpgradeButton);
+
+                            Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.rookUpgradeButton);
+
+                            Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
+
+                            Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.knightUpgradeButton);
+
+
+                            Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
+                            Ui.canvas.Children.Add(Ui.upgradeCancelButton);
+
+                            if (Ui.whtiePerspective)
                             {
-                                Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
-                                Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.queenUpgradeButton);
-
-
                                 Canvas.SetTop(Ui.rookUpgradeButton, topPosition + Ui.squareSize);
                                 Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.rookUpgradeButton);
 
                                 Canvas.SetTop(Ui.bishopUpgradeButton, topPosition + 2 * Ui.squareSize);
                                 Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
 
                                 Canvas.SetTop(Ui.knightUpgradeButton, topPosition + 3 * Ui.squareSize);
                                 Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.knightUpgradeButton);
 
-                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition + 4 * Ui.squareSize);
+                                Canvas.SetTop(Ui.upgradeCancelButton, (topPosition + 4 * Ui.squareSize));
                                 Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
-                                Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
-                                Ui.canvas.Children.Add(Ui.upgradeCancelButton);
-                                Ui.upgradeChoiceRequired = true;
-                                Ui.setUpgradeButtonWhite();
-
                             }
                             else
                             {
-
-
-                                Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
-                                Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.queenUpgradeButton);
-
-
                                 Canvas.SetTop(Ui.rookUpgradeButton, topPosition - Ui.squareSize);
                                 Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.rookUpgradeButton);
 
                                 Canvas.SetTop(Ui.bishopUpgradeButton, topPosition - 2 * Ui.squareSize);
                                 Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
 
                                 Canvas.SetTop(Ui.knightUpgradeButton, topPosition - 3 * Ui.squareSize);
                                 Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
-                                Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
-                                Ui.canvas.Children.Add(Ui.knightUpgradeButton);
 
-                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition - (3 * Ui.squareSize) - Ui.squareSize / 3);
+                                Canvas.SetTop(Ui.upgradeCancelButton, (topPosition - 3 * Ui.squareSize) - Ui.squareSize / 3);
                                 Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
-                                Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
-                                Ui.canvas.Children.Add(Ui.upgradeCancelButton);
-                                Ui.upgradeChoiceRequired = true;
-                                Ui.setUpgradeButtonBlack();
                             }
+                            Ui.upgradeChoiceRequired = true;
+                            Ui.setUpgradeButtonWhite();
+
                         }
+                        else if (endYlocation == 0)
+                        {
+
+
+                            Canvas.SetTop(Ui.queenUpgradeButton, topPosition);
+                            Canvas.SetLeft(Ui.queenUpgradeButton, leftPosition);
+                            Canvas.SetZIndex(Ui.queenUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.queenUpgradeButton);
+
+
+
+                            Canvas.SetZIndex(Ui.rookUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.rookUpgradeButton);
+
+
+                            Canvas.SetZIndex(Ui.bishopUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.bishopUpgradeButton);
+
+
+                            Canvas.SetZIndex(Ui.knightUpgradeButton, 150000);
+                            Ui.canvas.Children.Add(Ui.knightUpgradeButton);
+
+
+                            Canvas.SetZIndex(Ui.upgradeCancelButton, 150000);
+                            Ui.canvas.Children.Add(Ui.upgradeCancelButton);
+
+                            if (Ui.whtiePerspective)
+                            {
+                                Canvas.SetTop(Ui.rookUpgradeButton, topPosition - Ui.squareSize);
+                                Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.bishopUpgradeButton, topPosition - 2 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.knightUpgradeButton, topPosition - 3 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.upgradeCancelButton, (topPosition - 3 * Ui.squareSize) - Ui.squareSize / 3);
+                                Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
+                            }
+                            else
+                            {
+                                Canvas.SetTop(Ui.rookUpgradeButton, topPosition + Ui.squareSize);
+                                Canvas.SetLeft(Ui.rookUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.bishopUpgradeButton, topPosition + 2 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.bishopUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.knightUpgradeButton, topPosition + 3 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.knightUpgradeButton, leftPosition);
+
+                                Canvas.SetTop(Ui.upgradeCancelButton, topPosition + 4 * Ui.squareSize);
+                                Canvas.SetLeft(Ui.upgradeCancelButton, leftPosition);
+                            }
+                            Ui.upgradeChoiceRequired = true;
+                            Ui.setUpgradeButtonBlack();
+                        }
+
                     }
                     Ui.upgradeMove = move;
 

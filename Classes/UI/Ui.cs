@@ -182,7 +182,7 @@ namespace ChessB
 
         public static void switchPerspective()
         {
-            Ui.canvas.Children.Clear();
+            canvas.Children.Clear();
             Ui.whtiePerspective = !Ui.whtiePerspective;
             Ui.drawBoardGrid(Game.activeBoard, Ui.canvas);
             Ui.drawUi(Game.activeBoard, Ui.canvas);
@@ -531,6 +531,7 @@ namespace ChessB
                 fullMove.setBlackChessNotation("1");
                 fullMoves.Add(fullMove);
             }
+
 
             Ui.dataGrid.ItemsSource = fullMoves;
 
