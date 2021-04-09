@@ -32,6 +32,9 @@ namespace ChessB
         public static Grid whiteImageGrid;
         public static Grid blackImageGrid;
 
+        public static Viewbox whiteImageVB;
+        public static Viewbox blackImageVB;
+
         public static int numBlackPieceCaptured = 0;
         public static int numWhitePieceCaptured = 0;
 
@@ -93,6 +96,8 @@ namespace ChessB
 
         public static DataGrid dataGrid;
 
+        public static bool whtiePerspective = true;
+
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
 
@@ -100,8 +105,6 @@ namespace ChessB
 
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
-
-
                 int xLocation = (i) % ((board.getBoardSize()));
                 int yLocation = (int)(i / board.getBoardSize());
 
@@ -114,7 +117,15 @@ namespace ChessB
                     fileLabel.FontSize = 24;
 
                     fileLabel.TextAlignment = TextAlignment.Center;
-                    fileLabel.Text = GetColumnName(xLocation);
+                    if (Ui.whtiePerspective)
+                    {
+                        fileLabel.Text = GetColumnName(xLocation);
+
+                    }
+                    else
+                    {
+                        fileLabel.Text = GetColumnName(Board.boardSize - 1 - xLocation);
+                    }
                     Canvas.SetBottom(fileLabel, -squareSize - 10);
                     Canvas.SetLeft(fileLabel, squareSize * xLocation);
                     Canvas.SetZIndex(fileLabel, 1000000);
@@ -129,7 +140,15 @@ namespace ChessB
                     fileLabel.Height = squareSize;
                     fileLabel.FontSize = 24;
                     fileLabel.TextAlignment = TextAlignment.Center;
-                    fileLabel.Text = (yLocation + 1).ToString();
+
+                    if (Ui.whtiePerspective)
+                    {
+                        fileLabel.Text = (yLocation + 1).ToString();
+                    }
+                    else
+                    {
+                        fileLabel.Text = (Board.boardSize - 1 - (yLocation) + 1).ToString();
+                    }
                     fileLabel.IsHitTestVisible = false;
 
                     Canvas.SetBottom(fileLabel, squareSize * yLocation - 10);
@@ -159,6 +178,22 @@ namespace ChessB
                 Canvas.SetLeft(tile, xLocation * squareSize);
                 canvas.Children.Add(tile);
             }
+        }
+
+        public static void switchPerspective()
+        {
+            Ui.canvas.Children.Clear();
+            Ui.whtiePerspective = !Ui.whtiePerspective;
+            Ui.drawBoardGrid(Game.activeBoard, Ui.canvas);
+            Ui.drawUi(Game.activeBoard, Ui.canvas);
+
+            int whiteImageVBRow = Grid.GetRow(whiteImageVB);
+            int blackImageVBRow = Grid.GetRow(blackImageVB);
+
+            Grid.SetRow(whiteImageVB, blackImageVBRow);
+            Grid.SetRow(blackImageVB, whiteImageVBRow);
+
+
         }
 
         public static void initializeUpgradeButtons()
@@ -354,8 +389,19 @@ namespace ChessB
             Piece[] piece = board.getPiece();
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
             {
-                int xLocation = (i) % ((board.getBoardSize()));
-                int yLocation = (int)(i / board.getBoardSize());
+                int xLocation;
+                int yLocation;
+                if (Ui.whtiePerspective)
+                {
+                    xLocation = (i) % ((board.getBoardSize()));
+                    yLocation = (int)(i / board.getBoardSize());
+                }
+                else
+                {
+                    xLocation = Board.boardSize - 1 - ((i) % ((board.getBoardSize())));
+                    yLocation = Board.boardSize - 1 - ((int)(i / board.getBoardSize()));
+                }
+
 
                 if (piece[i] != null)
                 {
@@ -518,8 +564,19 @@ namespace ChessB
 
             foreach (Move validMove in Ui.validMoves)
             {
-                int xLocation = (validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize()));
-                int yLocation = (int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize());
+                int xLocation;
+                int yLocation;
+                if (whtiePerspective)
+                {
+                    xLocation = (validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize()));
+                    yLocation = (int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize());
+                }
+                else
+                {
+                    xLocation = Board.boardSize - 1 - ((validMove.getEndLocation()) % ((Game.activeBoard.getBoardSize())));
+                    yLocation = Board.boardSize - 1 - ((int)(validMove.getEndLocation() / Game.activeBoard.getBoardSize()));
+                }
+
                 String VMImageEmptyTileURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMoveEmpty.PNG";
                 String VMImagePieceTileURL = "C:/Users/tompo/source/repos/ChessB/Images/ValidMovePiece.PNG";
                 Image validMoveImage = new Image();
@@ -554,8 +611,19 @@ namespace ChessB
 
         public static void drawCheckTile(int kingLocation)
         {
-            int xLocation = (kingLocation) % ((Game.activeBoard.getBoardSize()));
-            int yLocation = (int)(kingLocation / Game.activeBoard.getBoardSize());
+            int xLocation;
+            int yLocation;
+            if (whtiePerspective)
+            {
+                xLocation = (kingLocation) % ((Game.activeBoard.getBoardSize()));
+                yLocation = (int)(kingLocation / Game.activeBoard.getBoardSize());
+            }
+            else
+            {
+                xLocation = Board.boardSize - 1 - ((kingLocation) % ((Game.activeBoard.getBoardSize())));
+                yLocation = Board.boardSize - 1 - ((int)(kingLocation / Game.activeBoard.getBoardSize()));
+            }
+
 
             Image checkImage = new Image();
             String checkImageURL = "C:/Users/tompo/source/repos/ChessB/Images/red.PNG";
@@ -572,8 +640,21 @@ namespace ChessB
 
         public static void drawHighlightTile(int highLightLocation)
         {
-            int xLocation = (highLightLocation) % ((Game.activeBoard.getBoardSize()));
-            int yLocation = (int)(highLightLocation / Game.activeBoard.getBoardSize());
+            int xLocation;
+            int yLocation;
+
+            if (whtiePerspective)
+            {
+                xLocation = (highLightLocation) % ((Game.activeBoard.getBoardSize()));
+                yLocation = (int)(highLightLocation / Game.activeBoard.getBoardSize());
+
+            }
+            else
+            {
+                xLocation = Board.boardSize - 1 - ((highLightLocation) % ((Game.activeBoard.getBoardSize())));
+                yLocation = Board.boardSize - 1 - ((int)(highLightLocation / Game.activeBoard.getBoardSize()));
+            }
+
 
             Image highlightImage = new Image();
             String highlightImageURL = "C:/Users/tompo/source/repos/ChessB/Images/HighlightTile.PNG";

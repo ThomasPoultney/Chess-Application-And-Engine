@@ -57,12 +57,16 @@ namespace ChessB
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
             Ui.dataGrid = this.dataGrid1;
+            Ui.whiteImageVB = this.whiteCapturedVB;
+            Ui.blackImageVB = this.blackCapturedVB;
             //Ui.moveListBox = moveListBox;
+
 
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, this.boardCanvas);
             Ui.drawUi(board, this.boardCanvas);
             Ui.initializeUpgradeButtons();
+            Ui.switchPerspective();
 
             //initialise hoveredTileImage
             hoveredTileImage.Width = Ui.squareSize;
@@ -72,7 +76,7 @@ namespace ChessB
             hoveredTileImage.Source = hoveredTileImageSource;
             hoveredTileImage.IsHitTestVisible = false;
             Ui.hoveredTileImage = hoveredTileImage;
-        
+
         }
 
 

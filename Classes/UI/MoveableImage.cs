@@ -48,10 +48,20 @@ namespace ChessB
                     point = e.GetPosition(Ui.imageSelected);
                     Ui.resetPositionY = Canvas.GetTop(Ui.imageSelected);
                     Ui.resetPositionX = Canvas.GetLeft(Ui.imageSelected);
+                    int xLocation;
+                    int yLocation;
+                    if (Ui.whtiePerspective)
+                    {
+                        xLocation = (int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize);
+                        yLocation = Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize);
+                    }
+                    else
+                    {
+                        xLocation = Board.boardSize - 1 - ((int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize));
+                        yLocation = Board.boardSize - 1 - (Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize));
+                    }
 
-                    int xlocation = (int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize);
-                    int ylocation = Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize);
-                    pieceStartLocation = Board.boardSize * ylocation + xlocation;
+                    pieceStartLocation = Board.boardSize * yLocation + xLocation;
                     Ui.pieceSelected = Game.activeBoard.getPiece()[pieceStartLocation];
                     if (Ui.pieceSelected != null)
                     {
@@ -106,9 +116,19 @@ namespace ChessB
                 double leftPosition = Math.Round(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
                 Canvas.SetTop(Ui.imageSelected, topPosition);
                 Canvas.SetLeft(Ui.imageSelected, leftPosition);
+                int endXlocation;
+                int endYlocation;
+                if (Ui.whtiePerspective)
+                {
+                    endXlocation = (int)(leftPosition / Ui.squareSize);
+                    endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
+                }
+                else
+                {
+                    endXlocation = Board.boardSize - 1 - (int)(leftPosition / Ui.squareSize);
+                    endYlocation = (int)(topPosition / Ui.squareSize);
+                }
 
-                int endXlocation = (int)(leftPosition / Ui.squareSize);
-                int endYlocation = Board.boardSize - 1 - (int)(topPosition / Ui.squareSize);
                 int pieceEndLocation = Board.boardSize * endYlocation + endXlocation;
                 Move move = new Move(pieceStartLocation, pieceEndLocation, Game.activeBoard.getPiece()[pieceStartLocation]);
                 int boardSize = Game.activeBoard.getBoardSize();
