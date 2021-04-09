@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,6 +90,8 @@ namespace ChessB
         public static Move upgradeMove;
 
         public static List<Move> validMoves;
+
+        public static DataGrid dataGrid;
 
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
@@ -436,34 +439,58 @@ namespace ChessB
                 Ui.whiteScoreLabel.Content = "";
             }
 
-            moveListBox.Items.Clear();
+            // moveListBox.Items.Clear();
 
-
-            //Adds move notations to the move list
+            //Adds move notations to the dataGrid
             int moveNumber = 0;
+            List<FullMove> fullMoves = new List<FullMove>();
             foreach (Move move in board.getMoves())
             {
                 moveNumber++;
-                moveListBox.Items.Add(moveNumber + "\t" + move.getChessNotation());
+
+                if (moveNumber % 2 == 1)
+                {
+                    FullMove fullMove = new FullMove(((moveNumber / 2) + 1).ToString(), move.getChessNotation());
+                    fullMoves.Add(fullMove);
+                }
+                else
+                {
+                    fullMoves.Last().blackChessNotation = move.getChessNotation();
+                }
+
+                //moveListBox.Items.Add(moveNumber + "\t" + move.getChessNotation());
             }
+
+
+
+
 
 
             //adds end of game to move list UI;
             if (board.draw == true)
             {
-                Ui.moveListBox.Items.Add("1/2 - 1/2");
-                return;
+                FullMove fullMove = new FullMove("End", "1/2");
+                fullMove.setBlackChessNotation("1/2");
+                fullMoves.Add(fullMove);
             }
             else if (board.whiteWins == true)
             {
-                Ui.moveListBox.Items.Add("1 - 0");
+                FullMove fullMove = new FullMove("End", "1");
+                fullMove.setBlackChessNotation("0");
+                fullMoves.Add(fullMove);
             }
             else if (board.blackWins == true)
             {
-                Ui.moveListBox.Items.Add("0 - 1");
+                FullMove fullMove = new FullMove("End", "0");
+                fullMove.setBlackChessNotation("1");
+                fullMoves.Add(fullMove);
             }
 
+            Ui.dataGrid.ItemsSource = fullMoves;
+
             //removeUpgradeButtons();
+
+
         }
 
         public static void drawHoveredTileImage()

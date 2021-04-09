@@ -75,6 +75,7 @@
     <Compile Include="Classes\Board\Move.cs" />
     <Compile Include="Classes\Player\Player.cs" />
     <Compile Include="Classes\UI\drawableCanvas.cs" />
+    <Compile Include="Classes\UI\FullMove.cs" />
     <Compile Include="Classes\UI\MoveableImage.cs" />
     <Compile Include="Classes\Pieces\Bishop.cs" />
     <Compile Include="Classes\Board\Board.cs" />

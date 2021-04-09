@@ -25,7 +25,8 @@ namespace ChessB
         private MoveTag tag;
         //if another piece is involved e.g. castleing
         private Piece secondaryPiece;
-        private string chessNotation;
+        public string chessNotation { get; set; }
+        public int moveNumber { get; set; }
 
         public Move(int startLocation, int endLocation, Piece piece, MoveTag tag = MoveTag.none, Piece secondaryPiece = null)
         {
@@ -35,6 +36,7 @@ namespace ChessB
             this.tag = tag;
             this.secondaryPiece = secondaryPiece;
             this.chessNotation = "";
+            this.moveNumber = 0;
         }
 
         public Move(int startLocation, int endLocation, Piece piece, MoveTag tag = MoveTag.none)
@@ -45,6 +47,8 @@ namespace ChessB
             this.tag = tag;
             this.secondaryPiece = null;
             this.chessNotation = "";
+            this.moveNumber = 0;
+
         }
 
         public Move(int startLocation, int endLocation, Piece piece)
@@ -55,6 +59,8 @@ namespace ChessB
             this.tag = MoveTag.none;
             this.secondaryPiece = null;
             this.chessNotation = "";
+            this.moveNumber = 0;
+
         }
 
         public int getStartLocation()

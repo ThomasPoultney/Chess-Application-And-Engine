@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +16,12 @@ namespace ChessB
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
+    public class DataObject
+    {
+        public int A { get; set; }
+        public int B { get; set; }
+        public int C { get; set; }
+    }
 
     public partial class MainWindow : Window
     {
@@ -49,7 +56,8 @@ namespace ChessB
             Ui.blackImageGrid = this.blackCapturedGrid;
             Ui.whiteScoreLabel = this.whiteCapturedLabel;
             Ui.blackScoreLabel = this.blackCapturedLabel;
-            Ui.moveListBox = moveListBox;
+            Ui.dataGrid = this.dataGrid1;
+            //Ui.moveListBox = moveListBox;
 
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, this.boardCanvas);
@@ -64,7 +72,10 @@ namespace ChessB
             hoveredTileImage.Source = hoveredTileImageSource;
             hoveredTileImage.IsHitTestVisible = false;
             Ui.hoveredTileImage = hoveredTileImage;
+        
         }
+
+
 
 
         protected override void OnMouseMove(MouseEventArgs e)
