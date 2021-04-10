@@ -100,7 +100,7 @@ namespace ChessB
 
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
-
+            canvas.Children.Clear();
             Piece[] piece = board.getPiece();
 
             for (int i = board.getBoardSize() * board.getBoardSize() - 1; i >= 0; i--)
@@ -182,18 +182,13 @@ namespace ChessB
 
         public static void switchPerspective()
         {
-            canvas.Children.Clear();
             Ui.whtiePerspective = !Ui.whtiePerspective;
-            Ui.drawBoardGrid(Game.activeBoard, Ui.canvas);
-            Ui.drawUi(Game.activeBoard, Ui.canvas);
 
             int whiteImageVBRow = Grid.GetRow(whiteImageVB);
             int blackImageVBRow = Grid.GetRow(blackImageVB);
 
             Grid.SetRow(whiteImageVB, blackImageVBRow);
             Grid.SetRow(blackImageVB, whiteImageVBRow);
-
-
         }
 
         public static void initializeUpgradeButtons()
@@ -413,7 +408,6 @@ namespace ChessB
                     mpi.Height = squareSize;
 
                     Canvas.SetZIndex(mpi, 1500);
-                    // Canvas.SetTop(mpi, (board.getBoardSize() - 1 - yLocation) * squareSize);
                     Canvas.SetTop(mpi, (board.getBoardSize() - 1 - yLocation) * squareSize);
                     Canvas.SetLeft(mpi, xLocation * squareSize);
                     canvas.Children.Add(mpi);
@@ -484,8 +478,6 @@ namespace ChessB
             {
                 Ui.whiteScoreLabel.Content = "";
             }
-
-            // moveListBox.Items.Clear();
 
             //Adds move notations to the dataGrid
             int moveNumber = 0;

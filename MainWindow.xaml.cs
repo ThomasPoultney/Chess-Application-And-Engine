@@ -61,10 +61,19 @@ namespace ChessB
             Ui.blackImageVB = this.blackCapturedVB;
             //Ui.moveListBox = moveListBox;
 
-
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, Ui.canvas);
             Ui.drawUi(board, Ui.canvas);
+
+            Button button = new Button();
+            button.Width = 100;
+            button.Height = 100;
+            button.Click += ButtonClick;
+            Grid.SetRow(button, 2);
+            Grid.SetColumn(button, 2);
+            Ui.grid.Children.Add(button);
+
+
             Ui.initializeUpgradeButtons();
             //initialise hoveredTileImage
             hoveredTileImage.Width = Ui.squareSize;
@@ -75,10 +84,18 @@ namespace ChessB
             hoveredTileImage.IsHitTestVisible = false;
             Ui.hoveredTileImage = hoveredTileImage;
 
+
+
+
         }
 
+        private static void ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Ui.switchPerspective();
+            Ui.drawBoardGrid(Game.activeBoard, Ui.canvas);
+            Ui.drawUi(Game.activeBoard, Ui.canvas);
 
-
+        }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
