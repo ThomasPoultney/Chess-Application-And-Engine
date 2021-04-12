@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Timers;
 
 namespace ChessB
 {
@@ -16,18 +17,15 @@ namespace ChessB
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     /// 
-    public class DataObject
-    {
-        public int A { get; set; }
-        public int B { get; set; }
-        public int C { get; set; }
-    }
-
     public partial class MainWindow : Window
     {
         Point startingPosition = new Point(0, 0);
         Board board;
         Image hoveredTileImage = new Image();
+        DateTime blackStartTime;
+        TimeSpan blackTotalTime = TimeSpan.FromMinutes(15);
+
+
         public MainWindow()
         {
 
@@ -59,6 +57,7 @@ namespace ChessB
             Ui.dataGrid = this.dataGrid1;
             Ui.whiteImageVB = this.whiteCapturedVB;
             Ui.blackImageVB = this.blackCapturedVB;
+            Ui.blackTimer = this.blackTimer;
             //Ui.moveListBox = moveListBox;
 
             //drawBoard(board,grid);
@@ -72,7 +71,14 @@ namespace ChessB
             Grid.SetRow(button, 2);
             Grid.SetColumn(button, 2);
             Ui.grid.Children.Add(button);
+            //create a timer with a one second interval
+            Timer blackTime = new Timer(1000);
+            blackStartTime = DateTime.Now;
 
+            blackTime.Elapsed += blackTimeEvent;
+            blackTime.AutoReset = true;
+
+            blackTime.Enabled = true;
 
             Ui.initializeUpgradeButtons();
             //initialise hoveredTileImage
@@ -84,9 +90,15 @@ namespace ChessB
             hoveredTileImage.IsHitTestVisible = false;
             Ui.hoveredTileImage = hoveredTileImage;
 
+        }
 
-
-
+        private void blackTimeEvent(object sender, ElapsedEventArgs e)
+        {
+            this.Dispatcher.Invoke((Action)(() =>
+            {
+                TimeSpan timeElapsed = (e.SignalTime - blackStartTime);
+                blackTimer.Text = (blackTotalTime - timeElapsed).ToString(@"%m\:ss");
+            }));
         }
 
         private static void ButtonClick(object sender, RoutedEventArgs e)
@@ -135,12 +147,6 @@ namespace ChessB
 
             }
         }
-
-        /*-------------------------------------------------
-        ---------------Black Radio Buttons-----------------
-        -------------------------------------------------*/
-
-
 
     }
 }

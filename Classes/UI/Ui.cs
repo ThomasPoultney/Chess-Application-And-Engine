@@ -97,6 +97,8 @@ namespace ChessB
         public static DataGrid dataGrid;
 
         public static bool whtiePerspective = true;
+        public static TextBlock blackTimer;
+        public static TextBlock whiteTimer;
 
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
