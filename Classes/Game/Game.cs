@@ -12,5 +12,7 @@ namespace ChessB
         public static List<Move> validMoves;
         private static Player whitePlayer;
         private static Player blackPlayer;
+        public static DateTime blackStartTime;
+        public static TimeSpan blackTotalTime = TimeSpan.FromMinutes(10);
     }
 }

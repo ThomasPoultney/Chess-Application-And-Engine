@@ -62,11 +62,13 @@ namespace ChessB
         public List<Piece> rooksThatHaveMoved = new List<Piece>();
         public List<Piece> kingThatHaveMoved = new List<Piece>();
 
-
+        public static readonly int[][] numSquaresToEdge;
 
         public Board()
         {
             piece = new Piece[boardSize * boardSize];
+            preComputeDistanceToEdge();
+
 
         }
         //creates a new board with another boards values;
@@ -92,6 +94,24 @@ namespace ChessB
             this.kingThatHaveMoved = board.kingThatHaveMoved.ToList();
 
             this.moves = board.moves.ToList();
+        }
+
+        private static void preComputeDistanceToEdge()
+        {
+
+            for (int i = 0; i < boardSize * boardSize; i++)
+            {
+                int distanceToEast = boardSize - 1 - (i % boardSize);
+                int distanceToWest = i % boardSize;
+                int distanceToNorth = boardSize - 1 - (i / boardSize);
+                int distanceToSouth = (i / boardSize);
+                int distanceToNorthEast = Math.Min(distanceToEast, distanceToNorth);
+                int distanceToSouthEast = Math.Min(distanceToEast, distanceToSouth);
+                int distanceToSouthWest = Math.Min(distanceToWest, distanceToSouth);
+                int distanceToNorthWest = Math.Min(distanceToWest, distanceToNorth);
+
+
+            }
         }
 
         private List<Move> Moves { get => moves; set => moves = value; }

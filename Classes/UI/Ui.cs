@@ -57,6 +57,8 @@ namespace ChessB
         public static List<Image> hightlightImages = new List<Image>();
 
         public static UIElement tileSelected;
+
+
         public static Point ArrowStartingPosition;
 
         public static List<Line> arrows = new List<Line>();
@@ -83,6 +85,9 @@ namespace ChessB
         public static Image whiteBishopImage;
 
         public static Image blackRookImage;
+
+
+
         public static Image whiteRookImage;
 
         public static Image blackKnightImage;
@@ -160,6 +165,8 @@ namespace ChessB
                     canvas.Children.Add(fileLabel);
                 }
 
+
+
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
                 string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/whiteTournament.PNG";
                 string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/greenTournament.PNG";
@@ -179,7 +186,34 @@ namespace ChessB
                 Canvas.SetTop(tile, yLocation * squareSize);
                 Canvas.SetLeft(tile, xLocation * squareSize);
                 canvas.Children.Add(tile);
+
+
             }
+
+            //canvas.Children.Add(blackTimer);
+        }
+
+        public static void initializeBlackTimerUI()
+        {
+            blackTimer = new TextBlock();
+            blackTimer.Width = squareSize;
+            blackTimer.Height = squareSize;
+            blackTimer.FontSize = 32;
+            Canvas.SetTop(blackTimer, squareSize * (Board.boardSize + 1));
+            Canvas.SetLeft(blackTimer, squareSize * (Board.boardSize / 2));
+        }
+
+
+        public static void initializeHoveredTileImage()
+        {
+            Image hoveredTileImage = new Image();
+            hoveredTileImage.Width = Ui.squareSize;
+            hoveredTileImage.Height = Ui.squareSize;
+            String hoveredTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/hoveredTileImage.PNG";
+            ImageSource hoveredTileImageSource = new BitmapImage(new Uri(hoveredTileImageURL));
+            hoveredTileImage.Source = hoveredTileImageSource;
+            hoveredTileImage.IsHitTestVisible = false;
+            Ui.hoveredTileImage = hoveredTileImage;
         }
 
         public static void switchPerspective()

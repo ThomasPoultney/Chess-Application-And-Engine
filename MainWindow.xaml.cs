@@ -22,8 +22,7 @@ namespace ChessB
         Point startingPosition = new Point(0, 0);
         Board board;
         Image hoveredTileImage = new Image();
-        DateTime blackStartTime;
-        TimeSpan blackTotalTime = TimeSpan.FromMinutes(15);
+
 
 
         public MainWindow()
@@ -57,7 +56,7 @@ namespace ChessB
             Ui.dataGrid = this.dataGrid1;
             Ui.whiteImageVB = this.whiteCapturedVB;
             Ui.blackImageVB = this.blackCapturedVB;
-            Ui.blackTimer = this.blackTimer;
+            Ui.initializeBlackTimerUI();
             //Ui.moveListBox = moveListBox;
 
             //drawBoard(board,grid);
@@ -73,22 +72,15 @@ namespace ChessB
             Ui.grid.Children.Add(button);
             //create a timer with a one second interval
             Timer blackTime = new Timer(1000);
-            blackStartTime = DateTime.Now;
+            Game.blackStartTime = DateTime.Now;
 
             blackTime.Elapsed += blackTimeEvent;
             blackTime.AutoReset = true;
-
             blackTime.Enabled = true;
 
             Ui.initializeUpgradeButtons();
             //initialise hoveredTileImage
-            hoveredTileImage.Width = Ui.squareSize;
-            hoveredTileImage.Height = Ui.squareSize;
-            String hoveredTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/hoveredTileImage.PNG";
-            ImageSource hoveredTileImageSource = new BitmapImage(new Uri(hoveredTileImageURL));
-            hoveredTileImage.Source = hoveredTileImageSource;
-            hoveredTileImage.IsHitTestVisible = false;
-            Ui.hoveredTileImage = hoveredTileImage;
+            Ui.initializeHoveredTileImage();
 
         }
 
@@ -96,8 +88,8 @@ namespace ChessB
         {
             this.Dispatcher.Invoke((Action)(() =>
             {
-                TimeSpan timeElapsed = (e.SignalTime - blackStartTime);
-                blackTimer.Text = (blackTotalTime - timeElapsed).ToString(@"%m\:ss");
+                TimeSpan timeElapsed = (e.SignalTime - Game.blackStartTime);
+                Ui.blackTimer.Text = (Game.blackTotalTime - timeElapsed).ToString(@"%m\:ss");
             }));
         }
 
