@@ -96,6 +96,8 @@ namespace ChessB
         private static void ButtonClick(object sender, RoutedEventArgs e)
         {
             Ui.switchPerspective();
+            Ui.upgradeChoiceRequired = false;
+            Ui.imageSelected = null;
             Ui.drawBoardGrid(Game.activeBoard, Ui.canvas);
             Ui.drawUi(Game.activeBoard, Ui.canvas);
 

@@ -77,7 +77,7 @@
             </Grid>
         </Viewbox>
         <Viewbox x:Name="chessNotationVB" Grid.Column="2" Margin="0" Grid.Row="1" Stretch="Fill">
-            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserDeleteRows="False" HorizontalScrollBarVisibility="Disabled"
+            <DataGrid AutoGenerateColumns="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserDeleteRows="False" HorizontalScrollBarVisibility="Disabled" CanUserResizeRows="False"
             Height="200" 
             Name="dataGrid1" 
              Width="200" FontWeight="Bold" GridLinesVisibility="None" >
