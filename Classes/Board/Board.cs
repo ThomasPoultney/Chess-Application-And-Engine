@@ -62,6 +62,8 @@ namespace ChessB
         public List<Piece> rooksThatHaveMoved = new List<Piece>();
         public List<Piece> kingThatHaveMoved = new List<Piece>();
 
+        public static List<Board> boardStates = new List<Board>();
+
         public static readonly int[][] numSquaresToEdge;
 
         public Board()
@@ -232,6 +234,7 @@ namespace ChessB
             {
 
                 Board board = makeMoveOnNewBoardLightWeight(move);
+                boardStates.Add(board);
                 numPositions += board.moveGenerationTest(depth - 1);
                 move.getPiece().setLocation(move.getStartLocation());
 

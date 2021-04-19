@@ -37,7 +37,7 @@ namespace ChessB
             Game.activeBoard = board;
 
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            Console.WriteLine(board.moveGenerationTest(2));
+            //Console.WriteLine(board.moveGenerationTest(3));
             watch.Stop();
             var elapsedMs = watch.ElapsedMilliseconds;
             Console.WriteLine(elapsedMs + " ms spent generating moves.");
@@ -67,9 +67,7 @@ namespace ChessB
             button.Width = 100;
             button.Height = 100;
             button.Click += ButtonClick;
-            Grid.SetRow(button, 2);
-            Grid.SetColumn(button, 2);
-            Ui.grid.Children.Add(button);
+
             //create a timer with a one second interval
             Timer blackTime = new Timer(1000);
             Game.blackStartTime = DateTime.Now;
