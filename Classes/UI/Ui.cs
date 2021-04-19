@@ -193,15 +193,7 @@ namespace ChessB
             //canvas.Children.Add(blackTimer);
         }
 
-        public static void initializeBlackTimerUI()
-        {
-            blackTimer = new TextBlock();
-            blackTimer.Width = squareSize;
-            blackTimer.Height = squareSize;
-            blackTimer.FontSize = 32;
-            Canvas.SetTop(blackTimer, squareSize * (Board.boardSize + 1));
-            Canvas.SetLeft(blackTimer, squareSize * (Board.boardSize / 2));
-        }
+
 
 
         public static void initializeHoveredTileImage()

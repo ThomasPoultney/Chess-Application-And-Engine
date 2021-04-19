@@ -267,6 +267,17 @@ namespace ChessB
                     }
                 }
             }
+            if (Game.whitesTurn)
+            {
+                Game.startBlackTimer();
+
+            }
+            else
+            {
+                Game.startWhiteTimer();
+            }
+
+            Game.whitesTurn = !Game.whitesTurn;
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();
