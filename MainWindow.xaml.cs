@@ -59,6 +59,8 @@ namespace ChessB
             Ui.blackImageVB = this.blackCapturedVB;
             Ui.blackTimer = this.blackTimerTB;
             Ui.whiteTimer = this.whiteTimerTB;
+            Ui.whiteTimerVB = this.whiteTimerVB;
+            Ui.blackTimerVB = this.blackTimerVB;
 
             //Ui.moveListBox = moveListBox;
 
@@ -67,8 +69,11 @@ namespace ChessB
             Ui.drawUi(board, Ui.canvas);
 
             Button button = new Button();
-            button.Width = 100;
-            button.Height = 100;
+            Grid.SetRow(button, 4);
+            Grid.SetColumn(button, 0);
+            UiGrid.Children.Add(button);
+            button.Width = 50;
+            button.Height = 50;
             button.Click += ButtonClick;
 
             //create a timer with a one second interval

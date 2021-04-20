@@ -86,8 +86,6 @@ namespace ChessB
 
         public static Image blackRookImage;
 
-
-
         public static Image whiteRookImage;
 
         public static Image blackKnightImage;
@@ -102,8 +100,12 @@ namespace ChessB
         public static DataGrid dataGrid;
 
         public static bool whtiePerspective = true;
+
         public static TextBlock blackTimer;
         public static TextBlock whiteTimer;
+
+        public static Viewbox whiteTimerVB;
+        public static Viewbox blackTimerVB;
 
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
@@ -215,8 +217,14 @@ namespace ChessB
             int whiteImageVBRow = Grid.GetRow(whiteImageVB);
             int blackImageVBRow = Grid.GetRow(blackImageVB);
 
+            int whiteTimerVBRow = Grid.GetRow(whiteTimerVB);
+            int blackTimerVBRow = Grid.GetRow(blackTimerVB);
+
             Grid.SetRow(whiteImageVB, blackImageVBRow);
             Grid.SetRow(blackImageVB, whiteImageVBRow);
+
+            Grid.SetRow(whiteTimerVB, blackTimerVBRow);
+            Grid.SetRow(blackTimerVB, whiteTimerVBRow);
         }
 
         public static void initializeUpgradeButtons()
