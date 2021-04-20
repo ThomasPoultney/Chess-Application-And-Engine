@@ -79,6 +79,7 @@ namespace ChessB
             UiUpdatetimer.AutoReset = true;
             UiUpdatetimer.Enabled = true;
 
+
             Ui.initializeUpgradeButtons();
             //initialise hoveredTileImage
             Ui.initializeHoveredTileImage();
@@ -89,15 +90,14 @@ namespace ChessB
         {
             this.Dispatcher.Invoke((Action)(() =>
             {
-                Console.WriteLine(e.SignalTime);
                 if (Game.whitesTurn)
                 {
-                    TimeSpan whiteTimeElapsed = (Game.whiteStartTime - e.SignalTime);
+                    TimeSpan whiteTimeElapsed = (Game.whiteStartTime - DateTime.Now);
                     Ui.whiteTimer.Text = (Game.whiteTimeLeft + whiteTimeElapsed).ToString(@"%m\:ss");
                 }
                 else
                 {
-                    TimeSpan blackTimeElapsed = (Game.blackStartTime - e.SignalTime);
+                    TimeSpan blackTimeElapsed = (Game.blackStartTime - DateTime.Now);
                     Ui.blackTimer.Text = (Game.blackTimeLeft + blackTimeElapsed).ToString(@"%m\:ss");
                 }
             }));

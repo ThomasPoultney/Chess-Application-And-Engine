@@ -265,19 +265,21 @@ namespace ChessB
                         Ui.drawUi(boardAfterMove, Ui.canvas);
 
                     }
+
+                    if (Game.whitesTurn)
+                    {
+                        Game.startBlackTimer();
+                    }
+                    else
+                    {
+                        Game.startWhiteTimer();
+
+                    }
+
+                    Game.whitesTurn = !Game.whitesTurn;
                 }
             }
-            if (Game.whitesTurn)
-            {
-                Game.startBlackTimer();
 
-            }
-            else
-            {
-                Game.startWhiteTimer();
-            }
-
-            Game.whitesTurn = !Game.whitesTurn;
             Ui.pieceSelected = null;
             Ui.imageSelected = null;
             Ui.removeValidMovesImages();

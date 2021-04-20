@@ -25,17 +25,16 @@ namespace ChessB
 
         public static void startBlackTimer()
         {
-            TimeSpan timeElapsed = (Game.blackStartTime - DateTime.Now);
-            Game.blackTimeLeft += timeElapsed;
             Game.blackStartTime = DateTime.Now;
-
+            TimeSpan timeElapsed = (Game.whiteStartTime - DateTime.Now);
+            Game.whiteTimeLeft += timeElapsed;
         }
 
         public static void startWhiteTimer()
         {
-            TimeSpan timeElapsed = (Game.whiteStartTime - DateTime.Now);
-            Game.whiteTimeLeft += timeElapsed;
             Game.whiteStartTime = DateTime.Now;
+            TimeSpan timeElapsed = (Game.blackStartTime - DateTime.Now);
+            Game.blackTimeLeft += timeElapsed;
         }
     }
 }
