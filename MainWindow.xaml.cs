@@ -22,7 +22,7 @@ namespace ChessB
         Point startingPosition = new Point(0, 0);
         Board board;
         Image hoveredTileImage = new Image();
-
+        Timer UiUpdatetimer;
 
 
 
@@ -77,7 +77,7 @@ namespace ChessB
             button.Click += ButtonClick;
 
             //create a timer with a one second interval
-            Timer UiUpdatetimer = new Timer(100);
+            UiUpdatetimer = new Timer(100);
             Game.blackStartTime = DateTime.Now;
             Game.whiteStartTime = DateTime.Now;
             UiUpdatetimer.Elapsed += blackTimeEvent;
@@ -97,13 +97,28 @@ namespace ChessB
             {
                 if (Game.whitesTurn)
                 {
-                    TimeSpan whiteTimeElapsed = (Game.whiteStartTime - DateTime.Now);
-                    Ui.whiteTimer.Text = (Game.whiteTimeLeft + whiteTimeElapsed).ToString(@"%m\:ss");
+
+                    TimeSpan whiteTimeElapsed = (DateTime.Now - Game.whiteStartTime);
+
+                    if (whiteTimeElapsed > Game.whiteTimeLeft)
+                    {
+                        Console.WriteLine("Game Over");
+                        UiUpdatetimer.Stop();
+                    }
+
+                    Ui.whiteTimer.Text = (Game.whiteTimeLeft - whiteTimeElapsed).ToString(@"%m\:ss");
                 }
                 else
                 {
-                    TimeSpan blackTimeElapsed = (Game.blackStartTime - DateTime.Now);
-                    Ui.blackTimer.Text = (Game.blackTimeLeft + blackTimeElapsed).ToString(@"%m\:ss");
+                    TimeSpan blackTimeElapsed = (DateTime.Now - Game.blackStartTime);
+
+                    if (blackTimeElapsed > Game.blackTimeLeft)
+                    {
+                        Console.WriteLine("Game Over");
+                        UiUpdatetimer.Stop();
+                    }
+
+                    Ui.blackTimer.Text = (Game.blackTimeLeft - blackTimeElapsed).ToString(@"%m\:ss");
                 }
             }));
         }

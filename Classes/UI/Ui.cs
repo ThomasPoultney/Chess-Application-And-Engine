@@ -171,7 +171,7 @@ namespace ChessB
 
                 Point nextLocation = new Point(xLocation * squareSize, yLocation * squareSize);
                 string whiteTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/whiteTournament.PNG";
-                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/greenTournament.PNG";
+                string blackTileImageURL = "C:/Users/tompo/source/repos/ChessB/Images/darkBlueTile.PNG";
 
                 String nextImageURL = ((xLocation + yLocation) % 2 == 1) ? blackTileImageURL : whiteTileImageURL;
 
