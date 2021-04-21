@@ -19,7 +19,7 @@ namespace ChessB
         public static TimeSpan blackTimeLeft = blackTotalTime;
 
         public static DateTime whiteStartTime;
-        public static TimeSpan whiteTotalTime = TimeSpan.FromMinutes(0.1);
+        public static TimeSpan whiteTotalTime = TimeSpan.FromMinutes(10);
         public static TimeSpan whiteTimeLeft = whiteTotalTime;
 
 

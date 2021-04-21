@@ -68,11 +68,12 @@ namespace ChessB
                         }
 
                         //check if we can move forward two if piece hasnt moved yet and not on second from last rank and can moveforward
-                        if (piece[nextLocation + (board.getBoardSize() * 2)] == null)
+
+                        if (!board.pawnsThatHaveMoved.Contains(this))
                         {
-                            if (!board.pawnsThatHaveMoved.Contains(this))
+                            if (nextLocation + board.getBoardSize() <= (board.getBoardSize() * (board.getBoardSize() - 2)))
                             {
-                                if (nextLocation + board.getBoardSize() <= (board.getBoardSize() * (board.getBoardSize() - 2)))
+                                if (piece[nextLocation + (board.getBoardSize() * 2)] == null)
                                 {
 
                                     Move move = new Move(nextLocation, nextLocation + (board.getBoardSize() * 2), this);
