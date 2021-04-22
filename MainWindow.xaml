@@ -15,6 +15,7 @@
             <RowDefinition Height="18*"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
 
@@ -23,13 +24,13 @@
             <ColumnDefinition Width="13*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
-        <Viewbox x:Name="boardVB" Grid.Column="0" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="0" >
+        <Viewbox x:Name="boardVB" Grid.Column="0" Grid.Row="1" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.RowSpan="4" Margin="0" >
 
 
             <Canvas x:Name="boardCanvas" MinWidth="200" MinHeight="200" Width="500" Height="500" />
 
         </Viewbox>
-        <Viewbox x:Name="whiteCapturedVB" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Viewbox x:Name="whiteCapturedVB" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid x:Name="whiteCapturedGrid" HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -96,9 +97,26 @@
                 <TextBlock x:Name="blackTimerTB" Margin="0" TextWrapping="Wrap" Text="10:00" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
         </Viewbox>
-        <Viewbox x:Name="whiteTimerVB" Grid.Column="2" Grid.Row="3" Stretch="Fill">
+        <Viewbox x:Name="whiteTimerVB" Grid.Column="2" Grid.Row="4" Stretch="Fill">
             <Border BorderBrush="Black" BorderThickness="1" Height="50" Width="202">
                 <TextBlock x:Name="whiteTimerTB" Margin="0" TextWrapping="Wrap" Text="10:00" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+        </Viewbox>
+
+        <Viewbox x:Name="UiControls" Grid.Column="2" Grid.Row="3"  Stretch="Fill">
+            <Border BorderBrush="Black" BorderThickness="1" Width="300">
+                <Grid x:Name="UiControlsGrid"  Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="ResignBtn" Content="Resign" Grid.Column="0" />
+                    <Button x:Name="switchPerspectiveBtn" Content="SP" Grid.Column="1" />
+                    <Button x:Name="prevMoveBtn" Content="&lt;" Grid.Column="2" />
+                    <Button x:Name="nextMoveBtn" Content=">" Grid.Column="3" />
+                </Grid>
             </Border>
         </Viewbox>
     </Grid>

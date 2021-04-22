@@ -67,15 +67,7 @@ namespace ChessB
             //drawBoard(board,grid);
             Ui.drawBoardGrid(board, Ui.canvas);
             Ui.drawUi(board, Ui.canvas);
-
-            Button button = new Button();
-            Grid.SetRow(button, 4);
-            Grid.SetColumn(button, 0);
-            UiGrid.Children.Add(button);
-            button.Width = 50;
-            button.Height = 50;
-            button.Click += ButtonClick;
-
+            switchPerspectiveBtn.Click += SpBtnClick;
             //create a timer with a one second interval
             UiUpdatetimer = new Timer(100);
             Game.blackStartTime = DateTime.Now;
@@ -123,7 +115,7 @@ namespace ChessB
             }));
         }
 
-        private static void ButtonClick(object sender, RoutedEventArgs e)
+        private static void SpBtnClick(object sender, RoutedEventArgs e)
         {
             Ui.switchPerspective();
             Ui.upgradeChoiceRequired = false;
