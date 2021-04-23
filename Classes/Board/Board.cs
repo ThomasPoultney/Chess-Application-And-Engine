@@ -69,7 +69,9 @@ namespace ChessB
         public Board()
         {
             piece = new Piece[boardSize * boardSize];
+
             preComputeDistanceToEdge();
+
 
 
         }

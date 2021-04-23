@@ -68,6 +68,7 @@ namespace ChessB
             Ui.drawBoardGrid(board, Ui.canvas);
             Ui.drawUi(board, Ui.canvas);
             switchPerspectiveBtn.Click += SpBtnClick;
+            ResignBtn.Click += ResignBtnClick;
             //create a timer with a one second interval
             UiUpdatetimer = new Timer(100);
             Game.blackStartTime = DateTime.Now;
@@ -81,6 +82,15 @@ namespace ChessB
             //initialise hoveredTileImage
             Ui.initializeHoveredTileImage();
 
+        }
+
+        private void ResignBtnClick(object sender, RoutedEventArgs e)
+        {
+            Game.activeBoard = new Board();
+            Game.activeBoard.generateBoardFromFEN();
+            Game.activeBoard.setIsWhiteTurn(true);
+            Game.activeBoard.setValidMoves(Game.activeBoard.generateValidMoves(Game.activeBoard));
+            Ui.drawUi(Game.activeBoard, Ui.canvas);
         }
 
         private void blackTimeEvent(object sender, ElapsedEventArgs e)
