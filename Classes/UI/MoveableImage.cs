@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Timers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
+using Microsoft.Win32;
 
 namespace ChessB
 {
@@ -276,6 +278,14 @@ namespace ChessB
 
                     }
 
+                    MediaPlayer mediaPlayer = new MediaPlayer();
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        mediaPlayer.Open(new Uri(openFileDialog.FileName));
+                        mediaPlayer.Play();
+                    }
                     Game.whitesTurn = !Game.whitesTurn;
                 }
             }
