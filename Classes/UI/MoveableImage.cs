@@ -112,8 +112,13 @@ namespace ChessB
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             Ui.removeHoveredTileImage();
+
+
+
             if (Ui.imageSelected != null)
             {
+
+
                 double topPosition = Math.Round(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
                 double leftPosition = Math.Round(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize) * Ui.squareSize;
                 Canvas.SetTop(Ui.imageSelected, topPosition);
@@ -261,8 +266,12 @@ namespace ChessB
 
                     if (Ui.upgradeChoiceRequired == false)
                     {
+
+
                         Game.activeBoard = boardAfterMove;
+                        Game.boardStates.Add(boardAfterMove);
                         //Console.WriteLine(boardAfterMove.moveGenerationTest(3));
+                        Ui.moveBeingDisplayed++;
                         Console.WriteLine(boardAfterMove.getIsWhiteTurn() + " " + boardAfterMove.getValidMoves().Count);
                         Ui.drawUi(boardAfterMove, Ui.canvas);
 
@@ -289,12 +298,15 @@ namespace ChessB
                     //}
                     Game.whitesTurn = !Game.whitesTurn;
                 }
-            }
 
-            Ui.pieceSelected = null;
-            Ui.imageSelected = null;
-            Ui.removeValidMovesImages();
+
+
+                Ui.pieceSelected = null;
+                Ui.imageSelected = null;
+                Ui.removeValidMovesImages();
+            }
         }
+
 
 
 

@@ -37,6 +37,7 @@ namespace ChessB
 
             board.setValidMoves(board.generateValidMoves(board));
             Game.activeBoard = board;
+            Game.boardStates.Add(board);
             var watch = System.Diagnostics.Stopwatch.StartNew();
             //Console.WriteLine(board.moveGenerationTest(3));
             watch.Stop();
@@ -70,6 +71,7 @@ namespace ChessB
             switchPerspectiveBtn.Click += SpBtnClick;
             ResignBtn.Click += ResignBtnClick;
             prevMoveBtn.Click += prevMoveBtnClick;
+            nextMoveBtn.Click += nextMoveBtnClick;
             //create a timer with a one second interval
             UiUpdatetimer = new Timer(100);
             Game.blackStartTime = DateTime.Now;
@@ -85,8 +87,20 @@ namespace ChessB
 
         }
 
+
+
         private void prevMoveBtnClick(object sender, RoutedEventArgs e)
         {
+            if (Ui.moveBeingDisplayed > 0)
+            {
+                Game.activeBoard = Game.boardStates[Ui.moveBeingDisplayed - 1];
+                Ui.moveBeingDisplayed--;
+                Ui.drawUi(Game.activeBoard, Ui.canvas);
+            }
+            else
+            {
+                Console.WriteLine("Cant show previous move, already in starting position");
+            }
 
         }
 

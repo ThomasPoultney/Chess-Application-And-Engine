@@ -107,6 +107,8 @@ namespace ChessB
         public static Viewbox whiteTimerVB;
         public static Viewbox blackTimerVB;
 
+        public static int moveBeingDisplayed = 0;
+
         public static void drawBoardGrid(Board board, Canvas canvas)
         {
             canvas.Children.Clear();
