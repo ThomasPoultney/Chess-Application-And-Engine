@@ -88,7 +88,19 @@ namespace ChessB
         }
 
 
-
+        private void nextMoveBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (Ui.moveBeingDisplayed < Game.boardStates.Count - 1)
+            {
+                Game.activeBoard = Game.boardStates[Ui.moveBeingDisplayed + 1];
+                Ui.moveBeingDisplayed++;
+                Ui.drawUi(Game.activeBoard, Ui.canvas);
+            }
+            else
+            {
+                Console.WriteLine("Already displaying current Move");
+            }
+        }
         private void prevMoveBtnClick(object sender, RoutedEventArgs e)
         {
             if (Ui.moveBeingDisplayed > 0)
