@@ -279,13 +279,14 @@ namespace ChessB
                     }
 
                     MediaPlayer mediaPlayer = new MediaPlayer();
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
-                    if (openFileDialog.ShowDialog() == true)
-                    {
-                        mediaPlayer.Open(new Uri(openFileDialog.FileName));
-                        mediaPlayer.Play();
-                    }
+                    //OpenFileDialog openFileDialog = new OpenFileDialog();
+                    //openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3|All files (*.*)|*.*";
+                    //if (openFileDialog.ShowDialog() == true)
+                    //{
+                    string soundEffectString = "";
+                    // mediaPlayer.Open(new Uri(soundEffectString));
+                    mediaPlayer.Play();
+                    //}
                     Game.whitesTurn = !Game.whitesTurn;
                 }
             }

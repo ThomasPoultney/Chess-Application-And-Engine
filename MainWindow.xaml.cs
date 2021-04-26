@@ -69,6 +69,7 @@ namespace ChessB
             Ui.drawUi(board, Ui.canvas);
             switchPerspectiveBtn.Click += SpBtnClick;
             ResignBtn.Click += ResignBtnClick;
+            prevMoveBtn.Click += prevMoveBtnClick;
             //create a timer with a one second interval
             UiUpdatetimer = new Timer(100);
             Game.blackStartTime = DateTime.Now;
@@ -81,6 +82,11 @@ namespace ChessB
             Ui.initializeUpgradeButtons();
             //initialise hoveredTileImage
             Ui.initializeHoveredTileImage();
+
+        }
+
+        private void prevMoveBtnClick(object sender, RoutedEventArgs e)
+        {
 
         }
 

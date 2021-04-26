@@ -403,6 +403,12 @@ namespace ChessB
             return finalvalidMoves;
         }
 
+        public void unMakeMoveOnThisBoard(Move move)
+        {
+
+
+        }
+
         public Board makeMoveOnNewBoardLightWeight(Move move)
         {
             //creates a new board with duplicate values 
@@ -490,6 +496,7 @@ namespace ChessB
                     boardAfterMove.rooksThatHaveMoved.Add(piece);
                 }
             }
+
 
             boardAfterMove.setPieceAtLocation(pieceEndLocation, piece);
             boardAfterMove.setPieceAtLocation(pieceStartLocation, null);

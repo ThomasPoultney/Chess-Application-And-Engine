@@ -458,6 +458,8 @@ namespace ChessB
 
             blackCapturedImagesList.Clear();
             whiteCapturedImageList.Clear();
+            blackImageGrid.Children.Clear();
+            whiteImageGrid.Children.Clear();
             int j = 0;
             //adds all captured pieces to the UI
             foreach (MoveableImage image in board.getBlackCapturedImages())
