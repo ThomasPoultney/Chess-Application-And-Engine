@@ -41,70 +41,75 @@ namespace ChessB
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (Ui.moveBeingDisplayed == Game.boardStates.Count - 1)
             {
-                if (Ui.imageSelected == null && Ui.upgradeChoiceRequired == false)
-                {
 
-                    Ui.imageSelected = this;
-                    point = e.GetPosition(Ui.imageSelected);
-                    Ui.resetPositionY = Canvas.GetTop(Ui.imageSelected);
-                    Ui.resetPositionX = Canvas.GetLeft(Ui.imageSelected);
-                    int xLocation;
-                    int yLocation;
-                    if (Ui.whtiePerspective)
+
+                if (Mouse.LeftButton == MouseButtonState.Pressed)
+                {
+                    if (Ui.imageSelected == null && Ui.upgradeChoiceRequired == false)
                     {
-                        xLocation = (int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize);
-                        yLocation = Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize);
+
+                        Ui.imageSelected = this;
+                        point = e.GetPosition(Ui.imageSelected);
+                        Ui.resetPositionY = Canvas.GetTop(Ui.imageSelected);
+                        Ui.resetPositionX = Canvas.GetLeft(Ui.imageSelected);
+                        int xLocation;
+                        int yLocation;
+                        if (Ui.whtiePerspective)
+                        {
+                            xLocation = (int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize);
+                            yLocation = Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize);
+                        }
+                        else
+                        {
+                            xLocation = Board.boardSize - 1 - ((int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize));
+                            yLocation = Board.boardSize - 1 - (Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize));
+                        }
+
+                        pieceStartLocation = Board.boardSize * yLocation + xLocation;
+                        Ui.pieceSelected = Game.activeBoard.getPiece()[pieceStartLocation];
+                        if (Ui.pieceSelected != null)
+                        {
+                            if (Ui.pieceSelected.getIsWhite() != Game.activeBoard.getIsWhiteTurn())
+                            {
+                                Ui.imageSelected = null;
+                                return;
+                            }
+                        }
+
+                        Board activeBoard = Game.activeBoard;
+                        Piece pieceSelected = Ui.pieceSelected;
+                        Piece[] pieceArray = activeBoard.getPiece();
+
+                        int pieceLocation = -5;
+
+                        for (int i = 0; i < activeBoard.getBoardSize() * activeBoard.getBoardSize(); i++)
+                        {
+                            if (pieceArray[i] == pieceSelected)
+                            {
+                                pieceLocation = i;
+                                break;
+                            }
+                        }
+
+                        if (Ui.pieceSelected.GetType() == typeof(King))
+                        {
+                            Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation,
+                                                                                    activeBoard.generateBlackAttackingMoves(pieceArray),
+                                                                                    activeBoard.generateWhiteAttackingMoves(pieceArray)));
+                        }
+                        else
+                        {
+                            Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation));
+                        }
+                        Ui.drawValidMoves();
+
                     }
                     else
                     {
-                        xLocation = Board.boardSize - 1 - ((int)(Canvas.GetLeft(Ui.imageSelected) / Ui.squareSize));
-                        yLocation = Board.boardSize - 1 - (Board.boardSize - 1 - (int)(Canvas.GetTop(Ui.imageSelected) / Ui.squareSize));
+                        return;
                     }
-
-                    pieceStartLocation = Board.boardSize * yLocation + xLocation;
-                    Ui.pieceSelected = Game.activeBoard.getPiece()[pieceStartLocation];
-                    if (Ui.pieceSelected != null)
-                    {
-                        if (Ui.pieceSelected.getIsWhite() != Game.activeBoard.getIsWhiteTurn())
-                        {
-                            Ui.imageSelected = null;
-                            return;
-                        }
-                    }
-
-                    Board activeBoard = Game.activeBoard;
-                    Piece pieceSelected = Ui.pieceSelected;
-                    Piece[] pieceArray = activeBoard.getPiece();
-
-                    int pieceLocation = -5;
-
-                    for (int i = 0; i < activeBoard.getBoardSize() * activeBoard.getBoardSize(); i++)
-                    {
-                        if (pieceArray[i] == pieceSelected)
-                        {
-                            pieceLocation = i;
-                            break;
-                        }
-                    }
-
-                    if (Ui.pieceSelected.GetType() == typeof(King))
-                    {
-                        Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation,
-                                                                                activeBoard.generateBlackAttackingMoves(pieceArray),
-                                                                                activeBoard.generateWhiteAttackingMoves(pieceArray)));
-                    }
-                    else
-                    {
-                        Ui.validMoves = activeBoard.removeMovesThatPutInCheck(pieceSelected.generateValidMoves(activeBoard, pieceArray, pieceLocation));
-                    }
-                    Ui.drawValidMoves();
-
-                }
-                else
-                {
-                    return;
                 }
             }
         }
